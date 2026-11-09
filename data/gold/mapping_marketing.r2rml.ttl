@@ -1,0 +1,370 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix yx: <http://sgcc.fj/ontology/marketing#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix map: <http://sgcc.fj/mapping/marketing#> .
+
+map:yx186_O_ORG a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.O_ORG" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{ORG_NO}" ; rr:class yx:SupplyOrg ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_orgNo ;
+    rr:objectMap [ rr:column "ORG_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_orgName ;
+    rr:objectMap [ rr:column "ORG_NAME" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_pOrgNo ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{P_ORG_NO}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_pOrgNoValue ;
+    rr:objectMap [ rr:column "P_ORG_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_orgType ;
+    rr:objectMap [ rr:column "ORG_TYPE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:SupplyOrg_sortNo ;
+    rr:objectMap [ rr:column "SORT_NO" ; rr:datatype xsd:integer ] ] .
+
+map:yx186_C_CONS a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.C_CONS" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Consumer/{CONS_ID}" ; rr:class yx:Consumer ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_consId ;
+    rr:objectMap [ rr:column "CONS_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_consNo ;
+    rr:objectMap [ rr:column "CONS_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_consName ;
+    rr:objectMap [ rr:column "CONS_NAME" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_elecAddr ;
+    rr:objectMap [ rr:column "ELEC_ADDR" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_orgNo ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{ORG_NO}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_orgNoValue ;
+    rr:objectMap [ rr:column "ORG_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_tradeCode ;
+    rr:objectMap [ rr:column "TRADE_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_elecTypeCode ;
+    rr:objectMap [ rr:column "ELEC_TYPE_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_voltCode ;
+    rr:objectMap [ rr:column "VOLT_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_contractCap ;
+    rr:objectMap [ rr:column "CONTRACT_CAP" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_runCap ;
+    rr:objectMap [ rr:column "RUN_CAP" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_statusCode ;
+    rr:objectMap [ rr:column "STATUS_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_buildDate ;
+    rr:objectMap [ rr:column "BUILD_DATE" ; rr:datatype xsd:date ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_cancelDate ;
+    rr:objectMap [ rr:column "CANCEL_DATE" ; rr:datatype xsd:date ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Consumer_lodeAttrCode ;
+    rr:objectMap [ rr:column "LODE_ATTR_CODE" ; rr:datatype xsd:string ] ] .
+
+map:yx186_C_CONTACT a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.C_CONTACT" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Contact/{CONTACT_ID}" ; rr:class yx:Contact ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_contactId ;
+    rr:objectMap [ rr:column "CONTACT_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_consId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/Consumer/{CONS_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_consIdValue ;
+    rr:objectMap [ rr:column "CONS_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_contactName ;
+    rr:objectMap [ rr:column "CONTACT_NAME" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_mobile ;
+    rr:objectMap [ rr:column "MOBILE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_officeTel ;
+    rr:objectMap [ rr:column "OFFICE_TEL" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Contact_contactMode ;
+    rr:objectMap [ rr:column "CONTACT_MODE" ; rr:datatype xsd:string ] ] .
+
+map:yx186_C_MP a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.C_MP" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/MeteringPoint/{MP_ID}" ; rr:class yx:MeteringPoint ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_mpId ;
+    rr:objectMap [ rr:column "MP_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_mpNo ;
+    rr:objectMap [ rr:column "MP_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_mpName ;
+    rr:objectMap [ rr:column "MP_NAME" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_consId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/Consumer/{CONS_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_consIdValue ;
+    rr:objectMap [ rr:column "CONS_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_mpAddr ;
+    rr:objectMap [ rr:column "MP_ADDR" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_voltCode ;
+    rr:objectMap [ rr:column "VOLT_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_mpAttrCode ;
+    rr:objectMap [ rr:column "MP_ATTR_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_statusCode ;
+    rr:objectMap [ rr:column "STATUS_CODE" ; rr:datatype xsd:string ] ] .
+
+map:yx186_D_METER a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.D_METER" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Meter/{METER_ID}" ; rr:class yx:Meter ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_meterId ;
+    rr:objectMap [ rr:column "METER_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_assetNo ;
+    rr:objectMap [ rr:column "ASSET_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_madeNo ;
+    rr:objectMap [ rr:column "MADE_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_manufacturer ;
+    rr:objectMap [ rr:column "MANUFACTURER" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_typeCode ;
+    rr:objectMap [ rr:column "TYPE_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_wiringMode ;
+    rr:objectMap [ rr:column "WIRING_MODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_tFactor ;
+    rr:objectMap [ rr:column "T_FACTOR" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Meter_instDate ;
+    rr:objectMap [ rr:column "INST_DATE" ; rr:datatype xsd:date ] ] .
+
+map:yx186_R_READ a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.R_READ" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/MeterReading/{READ_ID}" ; rr:class yx:MeterReading ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_readId ;
+    rr:objectMap [ rr:column "READ_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_mpId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/MeteringPoint/{MP_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_mpIdValue ;
+    rr:objectMap [ rr:column "MP_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_ym ;
+    rr:objectMap [ rr:column "YM" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_lastRead ;
+    rr:objectMap [ rr:column "LAST_READ" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_thisRead ;
+    rr:objectMap [ rr:column "THIS_READ" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_readDate ;
+    rr:objectMap [ rr:column "READ_DATE" ; rr:datatype xsd:date ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_readTypeCode ;
+    rr:objectMap [ rr:column "READ_TYPE_CODE" ; rr:datatype xsd:string ] ] .
+
+map:yx186_A_RCVBL_FLOW a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.A_RCVBL_FLOW" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Receivable/{RCVBL_ID}" ; rr:class yx:Receivable ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblId ;
+    rr:objectMap [ rr:column "RCVBL_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_consNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_C_CONS ;
+      rr:joinCondition [ rr:child "CONS_NO" ; rr:parent "CONS_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_consNoValue ;
+    rr:objectMap [ rr:column "CONS_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblYm ;
+    rr:objectMap [ rr:column "RCVBL_YM" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_tSettlePq ;
+    rr:objectMap [ rr:column "T_SETTLE_PQ" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblAmt ;
+    rr:objectMap [ rr:column "RCVBL_AMT" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvedAmt ;
+    rr:objectMap [ rr:column "RCVED_AMT" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_penalty ;
+    rr:objectMap [ rr:column "PENALTY" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_settleFlag ;
+    rr:objectMap [ rr:column "SETTLE_FLAG" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_relDate ;
+    rr:objectMap [ rr:column "REL_DATE" ; rr:datatype xsd:date ] ] .
+
+map:yx186_A_PAY_FLOW a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.A_PAY_FLOW" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Payment/{CHARGE_ID}" ; rr:class yx:Payment ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_chargeId ;
+    rr:objectMap [ rr:column "CHARGE_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_consNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_C_CONS ;
+      rr:joinCondition [ rr:child "CONS_NO" ; rr:parent "CONS_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_consNoValue ;
+    rr:objectMap [ rr:column "CONS_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_rcvblId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/Receivable/{RCVBL_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_rcvblIdValue ;
+    rr:objectMap [ rr:column "RCVBL_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_chargeDate ;
+    rr:objectMap [ rr:column "CHARGE_DATE" ; rr:datatype xsd:dateTime ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_rcvAmt ;
+    rr:objectMap [ rr:column "RCV_AMT" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_payMode ;
+    rr:objectMap [ rr:column "PAY_MODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_acctOrgNo ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{ACCT_ORG_NO}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Payment_acctOrgNoValue ;
+    rr:objectMap [ rr:column "ACCT_ORG_NO" ; rr:datatype xsd:string ] ] .
+
+map:yx186_A_RCVBL_FLOW_HIS a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.A_RCVBL_FLOW_HIS" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Receivable/{RCVBL_ID}" ; rr:class yx:Receivable ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblId ;
+    rr:objectMap [ rr:column "RCVBL_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_consNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_C_CONS ;
+      rr:joinCondition [ rr:child "CONS_NO" ; rr:parent "CONS_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_consNoValue ;
+    rr:objectMap [ rr:column "CONS_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblYm ;
+    rr:objectMap [ rr:column "RCVBL_YM" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_tSettlePq ;
+    rr:objectMap [ rr:column "T_SETTLE_PQ" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvblAmt ;
+    rr:objectMap [ rr:column "RCVBL_AMT" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_rcvedAmt ;
+    rr:objectMap [ rr:column "RCVED_AMT" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_penalty ;
+    rr:objectMap [ rr:column "PENALTY" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_settleFlag ;
+    rr:objectMap [ rr:column "SETTLE_FLAG" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_relDate ;
+    rr:objectMap [ rr:column "REL_DATE" ; rr:datatype xsd:date ] ] .
+
+map:cjxt_R_TMNL_RUN a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "cjxt.R_TMNL_RUN" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Terminal/{TERMINAL_ID}" ; rr:class yx:Terminal ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_terminalId ;
+    rr:objectMap [ rr:column "TERMINAL_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_tmnlAssetNo ;
+    rr:objectMap [ rr:column "TMNL_ASSET_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_tmnlTypeCode ;
+    rr:objectMap [ rr:column "TMNL_TYPE_CODE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_terminalAddr ;
+    rr:objectMap [ rr:column "TERMINAL_ADDR" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_orgNo ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{ORG_NO}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_orgNoValue ;
+    rr:objectMap [ rr:column "ORG_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_runStatus ;
+    rr:objectMap [ rr:column "RUN_STATUS" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Terminal_instDate ;
+    rr:objectMap [ rr:column "INST_DATE" ; rr:datatype xsd:date ] ] .
+
+map:cjxt_E_DATA_MP a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "cjxt.E_DATA_MP" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/CollectionPoint/{ID}" ; rr:class yx:CollectionPoint ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_id ;
+    rr:objectMap [ rr:column "ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_terminalId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/Terminal/{TERMINAL_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_terminalIdValue ;
+    rr:objectMap [ rr:column "TERMINAL_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_mpSn ;
+    rr:objectMap [ rr:column "MP_SN" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_mpId ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/MeteringPoint/{MP_ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_mpIdValue ;
+    rr:objectMap [ rr:column "MP_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_consNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_C_CONS ;
+      rr:joinCondition [ rr:child "CONS_NO" ; rr:parent "CONS_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_consNoValue ;
+    rr:objectMap [ rr:column "CONS_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_meterAssetNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_D_METER ;
+      rr:joinCondition [ rr:child "METER_ASSET_NO" ; rr:parent "ASSET_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_meterAssetNoValue ;
+    rr:objectMap [ rr:column "METER_ASSET_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:CollectionPoint_tFactor ;
+    rr:objectMap [ rr:column "T_FACTOR" ; rr:datatype xsd:decimal ] ] .
+
+map:cjxt_E_MP_DAY_READ a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "cjxt.E_MP_DAY_READ" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/DailyFrozenReading/{ID}/{DATA_DATE}" ; rr:class yx:DailyFrozenReading ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_id ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/CollectionPoint/{ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_idValue ;
+    rr:objectMap [ rr:column "ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_dataDate ;
+    rr:objectMap [ rr:column "DATA_DATE" ; rr:datatype xsd:date ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_papR ;
+    rr:objectMap [ rr:column "PAP_R" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_prpR ;
+    rr:objectMap [ rr:column "PRP_R" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_rapR ;
+    rr:objectMap [ rr:column "RAP_R" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyFrozenReading_colTime ;
+    rr:objectMap [ rr:column "COL_TIME" ; rr:datatype xsd:dateTime ] ] .
+
+map:cjxt_E_MP_DAY_ENERGY a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "cjxt.E_MP_DAY_ENERGY" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/DailyEnergy/{ID}/{DATA_DATE}" ; rr:class yx:DailyEnergy ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_id ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/CollectionPoint/{ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_idValue ;
+    rr:objectMap [ rr:column "ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_dataDate ;
+    rr:objectMap [ rr:column "DATA_DATE" ; rr:datatype xsd:date ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_papE ;
+    rr:objectMap [ rr:column "PAP_E" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_prpE ;
+    rr:objectMap [ rr:column "PRP_E" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:DailyEnergy_rapE ;
+    rr:objectMap [ rr:column "RAP_E" ; rr:datatype xsd:decimal ] ] .
+
+map:cjxt_E_MP_POWER_CURVE a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "cjxt.E_MP_POWER_CURVE" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/LoadCurvePoint/{ID}/{DATA_TIME}" ; rr:class yx:LoadCurvePoint ] ;
+  rr:predicateObjectMap [ rr:predicate yx:LoadCurvePoint_id ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/CollectionPoint/{ID}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:LoadCurvePoint_idValue ;
+    rr:objectMap [ rr:column "ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:LoadCurvePoint_dataTime ;
+    rr:objectMap [ rr:column "DATA_TIME" ; rr:datatype xsd:dateTime ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:LoadCurvePoint_p ;
+    rr:objectMap [ rr:column "P" ; rr:datatype xsd:decimal ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:LoadCurvePoint_q ;
+    rr:objectMap [ rr:column "Q" ; rr:datatype xsd:decimal ] ] .
+
+map:kf95598_t_kf_workorder a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "kf95598.t_kf_workorder" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/WorkOrder/{APP_NO}" ; rr:class yx:WorkOrder ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_appNo ;
+    rr:objectMap [ rr:column "APP_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_acceptTime ;
+    rr:objectMap [ rr:column "ACCEPT_TIME" ; rr:datatype xsd:dateTime ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_busiType ;
+    rr:objectMap [ rr:column "BUSI_TYPE" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_custNo ;
+    rr:objectMap [ rr:parentTriplesMap map:yx186_C_CONS ;
+      rr:joinCondition [ rr:child "CUST_NO" ; rr:parent "CONS_NO" ] ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_custNoValue ;
+    rr:objectMap [ rr:column "CUST_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_custName ;
+    rr:objectMap [ rr:column "CUST_NAME" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_contactTel ;
+    rr:objectMap [ rr:column "CONTACT_TEL" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_acceptContent ;
+    rr:objectMap [ rr:column "ACCEPT_CONTENT" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_handleOrg ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/SupplyOrg/{HANDLE_ORG}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_handleOrgValue ;
+    rr:objectMap [ rr:column "HANDLE_ORG" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_handleStatus ;
+    rr:objectMap [ rr:column "HANDLE_STATUS" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_finishTime ;
+    rr:objectMap [ rr:column "FINISH_TIME" ; rr:datatype xsd:dateTime ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:WorkOrder_satisfyCode ;
+    rr:objectMap [ rr:column "SATISFY_CODE" ; rr:datatype xsd:string ] ] .
+
+map:kf95598_t_kf_visit a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "kf95598.t_kf_visit" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/ReturnVisit/{VISIT_ID}" ; rr:class yx:ReturnVisit ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_visitId ;
+    rr:objectMap [ rr:column "VISIT_ID" ; rr:datatype xsd:integer ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_appNo ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/WorkOrder/{APP_NO}" ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_appNoValue ;
+    rr:objectMap [ rr:column "APP_NO" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_visitTime ;
+    rr:objectMap [ rr:column "VISIT_TIME" ; rr:datatype xsd:dateTime ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_visitResult ;
+    rr:objectMap [ rr:column "VISIT_RESULT" ; rr:datatype xsd:string ] ] ;
+  rr:predicateObjectMap [ rr:predicate yx:ReturnVisit_satisfyScore ;
+    rr:objectMap [ rr:column "SATISFY_SCORE" ; rr:datatype xsd:decimal ] ] .
+
+map:MeteringPoint_installedMeter a rr:TriplesMap ;
+  rr:logicalTable [ rr:tableName "yx186.C_METER_MP_RELA" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/MeteringPoint/{MP_ID}" ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeteringPoint_installedMeter ;
+    rr:objectMap [ rr:template "http://sgcc.fj/data/Meter/{METER_ID}" ] ] .
+
+map:Receivable_arrearsAmt a rr:TriplesMap ;
+  rr:logicalTable [ rr:sqlQuery "SELECT RCVBL_ID, ROUND(RCVBL_AMT - RCVED_AMT, 2) AS ARREARS_AMT FROM yx186.A_RCVBL_FLOW" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/Receivable/{RCVBL_ID}" ] ;
+  rr:predicateObjectMap [ rr:predicate yx:Receivable_arrearsAmt ;
+    rr:objectMap [ rr:column "ARREARS_AMT" ; rr:datatype xsd:decimal ] ] .
+
+map:MeterReading_readEnergy a rr:TriplesMap ;
+  rr:logicalTable [ rr:sqlQuery "SELECT r.READ_ID, ROUND((r.THIS_READ - r.LAST_READ) * d.T_FACTOR, 2) AS READ_PQ FROM yx186.R_READ r JOIN yx186.C_METER_MP_RELA rl ON rl.MP_ID = r.MP_ID JOIN yx186.D_METER d ON d.METER_ID = rl.METER_ID" ] ;
+  rr:subjectMap [ rr:template "http://sgcc.fj/data/MeterReading/{READ_ID}" ] ;
+  rr:predicateObjectMap [ rr:predicate yx:MeterReading_readEnergy ;
+    rr:objectMap [ rr:column "READ_PQ" ; rr:datatype xsd:decimal ] ] .

@@ -1,0 +1,51 @@
+query_id,exec_count_90d,submitter,avg_cost_ms,sql
+Q001,18420,rpt_service,5772,"SELECT yhbh, yhmc, ydsz, gddw, ydlb, hylb, dydj, htrl, yhzt, lhrq, lxr, lxdh FROM ads_yx_khda_cx WHERE yhbh = '3523000123456' "
+Q002,15233,rpt_service,5512,SELECT * FROM ads_yx_khda_cx WHERE gddw LIKE '%鼓楼%' AND yhzt = '1' ORDER BY lhrq DESC LIMIT 50
+Q003,12871,rpt_service,8528,"SELECT hh, hm, gddw, dfny, ysdf, ssdf, qfje, wyj, fxrq FROM ads_yx_qfmx_cx WHERE gddw = '台江城区供电所' ORDER BY qfje DESC"
+Q004,9655,rpt_service,5826,SELECT * FROM ads_yx_kh360 WHERE hh = '3561000088123'
+Q005,8410,rpt_service,5132,"SELECT hh, hm, gddw, ydlb, ny, ydl, ysdf FROM ads_yx_ydl_fx WHERE ny = '202508' ORDER BY ydl DESC LIMIT 100"
+Q006,7302,rpt_service,1468,SELECT * FROM ads_kf_gd_cx WHERE ywlx = '03' AND slsj >= '2025-08-01' ORDER BY slsj DESC
+Q007,6120,rpt_service,4258,"SELECT cldw, tjyf, gdzs, tsgds, bxgds, tsl, pjmyd FROM ads_kf_gd_kb WHERE tjyf = '2025-08'"
+Q008,4980,rpt_service,6597,"SELECT hh, hm, gddw, htrl, rq, zdfh, pjfh, fzl FROM ads_cj_dkh_fh WHERE rq = '2025-12-29' AND fzl > 0.8"
+Q009,3204,analyst_lin,5885,"SELECT k.gddw_mc, COUNT(DISTINCT q.hh) AS qf_hs, ROUND(SUM(q.qfje), 2) AS qf_je
+FROM dwd_yx_df_ysmx q JOIN dwd_yx_kh_jbxx k ON k.hh = q.hh
+WHERE q.jqbz = '0' GROUP BY k.gddw_mc ORDER BY qf_je DESC"
+Q010,2877,analyst_lin,2285,"SELECT k.ydlb, q.dfny, ROUND(SUM(q.jsdl), 2) AS dl, ROUND(SUM(q.ysje), 2) AS je
+FROM dwd_yx_df_ysmx q JOIN dwd_yx_kh_jbxx k ON k.hh = q.hh
+GROUP BY k.ydlb, q.dfny ORDER BY q.dfny"
+Q011,2150,analyst_chen,6164,"SELECT j.jffs, COUNT(*) AS bs, ROUND(SUM(j.jfje), 2) AS je
+FROM dwd_yx_jf_mx j WHERE j.jfsj >= '2025-07-01' GROUP BY j.jffs"
+Q012,1990,analyst_chen,2065,"SELECT c.hh, c.cbny, c.cjdl, y.jsdl, ROUND(c.cjdl - y.jsdl, 2) AS diff
+FROM dwd_yx_cbsz c JOIN dwd_yx_df_ysmx y ON y.hh = c.hh AND y.dfny = c.cbny
+WHERE ABS(c.cjdl - y.jsdl) > 0.01"
+Q013,1764,analyst_wu,7951,"SELECT r.hh, ROUND(SUM(r.zxygdl), 2) AS cj_dl, y.jsdl AS yx_dl
+FROM dwd_cj_rdl r JOIN dwd_yx_df_ysmx y ON y.hh = r.hh AND y.dfny = '202512'
+WHERE r.sjrq BETWEEN '2025-12-01' AND '2025-12-31' GROUP BY r.hh, y.jsdl"
+Q014,1530,analyst_wu,6393,"SELECT j.jldbh, j.dnbzcbh, j.zhbl, r.sjrq, r.zxygsz, r.zxygdl
+FROM dwd_yx_jld_xx j JOIN dwd_cj_rdl r ON r.dnbzcbh = j.dnbzcbh
+WHERE r.sjrq = '2025-12-15'"
+Q015,1288,analyst_zheng,3321,"SELECT g.cldw, g.ywlx, COUNT(*) AS n, ROUND(AVG(g.hfpf), 2) AS score
+FROM dwd_kf_gd_mx g WHERE g.slsj LIKE '2025-0%' GROUP BY g.cldw, g.ywlx"
+Q016,1102,analyst_zheng,8140,"SELECT g.hh, k.hm, k.ydsz, COUNT(*) AS bx_cs
+FROM dwd_kf_gd_mx g JOIN dwd_yx_kh_jbxx k ON k.hh = g.hh
+WHERE g.ywlx = '01' GROUP BY g.hh, k.hm, k.ydsz HAVING COUNT(*) >= 3"
+Q017,980,analyst_lin,3627,"SELECT z.gddw_mc, z.zdlx, COUNT(*) AS n FROM dwd_cj_zd_xx z
+WHERE z.yxzt = '1' GROUP BY z.gddw_mc, z.zdlx"
+Q018,856,analyst_chen,4322,"SELECT k.hh, k.hm, k.htrl, MAX(f.yggl) AS max_p
+FROM dwd_cj_fhqx f JOIN dwd_yx_kh_jbxx k ON k.hh = f.hh
+GROUP BY k.hh, k.hm, k.htrl HAVING MAX(f.yggl) > k.htrl * 0.9"
+Q019,640,analyst_wu,8079,"SELECT c.cons_no, c.cons_name, c.elec_addr, o.org_name
+FROM ods_yx186_c_cons c JOIN ods_yx186_o_org o ON o.org_no = c.org_no
+WHERE c.status_code = '9'"
+Q020,512,analyst_zheng,435,"SELECT w.app_no, w.cust_no, c.cons_no, w.cust_name, c.cons_name
+FROM ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_c_cons c ON c.cons_no = w.cust_no
+WHERE c.cons_name IS NULL OR TRIM(w.cust_name) <> c.cons_name"
+Q021,433,analyst_lin,3620,"SELECT m.mp_no, d.asset_no, p.meter_asset_no, d.t_factor, p.t_factor
+FROM ods_yx186_c_mp m JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id
+JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id
+JOIN ods_cjxt_e_data_mp p ON p.mp_id = m.mp_id
+WHERE d.t_factor <> p.t_factor OR d.asset_no <> p.meter_asset_no"
+Q022,310,analyst_chen,7411,"SELECT q.hh, q.qfys, q.ljqfje, j.zjjfsj FROM dws_yx_kh_qf_hz q
+LEFT JOIN dws_yx_kh_jf_hz j ON j.hh = q.hh WHERE q.qfys >= 2"
+Q023,96,analyst_wu,6888,"SELECT hh, hm, ydsz FROM dwd_yx_kh_jbxx_bak WHERE hh LIKE '3512%'"
+Q024,41,analyst_lin,2752,SELECT * FROM tmp_qf_hh_20251201 ORDER BY qfje DESC LIMIT 20

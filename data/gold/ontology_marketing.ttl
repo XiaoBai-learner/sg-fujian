@@ -1,0 +1,809 @@
+@prefix yx: <http://sgcc.fj/ontology/marketing#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://sgcc.fj/ontology/marketing> a owl:Ontology ;
+  rdfs:label "营销域本体（福州试点，PoC 真值）"@zh .
+
+yx:SupplyOrg a owl:Class ; rdfs:label "供电单位"@zh ; skos:definition "电力企业内部的供电管理单位，含市公司、县公司、供电所"@zh .
+
+yx:Consumer a owl:Class ; rdfs:label "用电客户"@zh ; skos:definition "与供电企业建立供用电关系的客户"@zh .
+
+yx:Contact a owl:Class ; rdfs:label "客户联系人"@zh ; skos:definition "用电客户的联系人"@zh .
+
+yx:MeteringPoint a owl:Class ; rdfs:label "计量点"@zh ; skos:definition "用于电能计量结算或考核的点"@zh .
+
+yx:Meter a owl:Class ; rdfs:label "电能表"@zh ; skos:definition "电能表资产"@zh .
+
+yx:MeterReading a owl:Class ; rdfs:label "抄表示数"@zh ; skos:definition "按月抄见的电能表示数"@zh .
+
+yx:Receivable a owl:Class ; rdfs:label "应收电费"@zh ; skos:definition "按电费年月发行的应收电费"@zh .
+
+yx:Payment a owl:Class ; rdfs:label "缴费记录"@zh ; skos:definition "客户缴纳电费的实收记录"@zh .
+
+yx:Terminal a owl:Class ; rdfs:label "采集终端"@zh ; skos:definition "集中器、专变终端等采集设备"@zh .
+
+yx:CollectionPoint a owl:Class ; rdfs:label "采集测量点"@zh ; skos:definition "采集终端下挂的测量点，对应营销计量点"@zh .
+
+yx:DailyFrozenReading a owl:Class ; rdfs:label "日冻结示数"@zh ; skos:definition "采集终端每日零点冻结的电能示数"@zh .
+
+yx:DailyEnergy a owl:Class ; rdfs:label "日电量"@zh ; skos:definition "按测量点计算的日电量"@zh .
+
+yx:LoadCurvePoint a owl:Class ; rdfs:label "负荷曲线点"@zh ; skos:definition "测量点按时间采集的功率"@zh .
+
+yx:WorkOrder a owl:Class ; rdfs:label "95598工单"@zh ; skos:definition "95598 受理的客户诉求工单"@zh .
+
+yx:ReturnVisit a owl:Class ; rdfs:label "工单回访"@zh ; skos:definition "工单办结后的客户回访"@zh .
+
+yx:SupplyOrg_orgNo a owl:DatatypeProperty ;
+  rdfs:label "供电单位编码"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range xsd:string .
+
+yx:SupplyOrg_orgName a owl:DatatypeProperty ;
+  rdfs:label "供电单位名称"@zh ;
+  skos:altLabel "供电单位"@zh ;
+  skos:altLabel "所属单位"@zh ;
+  skos:altLabel "管理单位"@zh ;
+  skos:altLabel "所属供电单位"@zh ;
+  skos:altLabel "单位"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range xsd:string .
+
+yx:SupplyOrg_pOrgNo a owl:ObjectProperty ;
+  rdfs:label "上级供电单位编码"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range yx:SupplyOrg .
+
+yx:SupplyOrg_pOrgNoValue a owl:DatatypeProperty ;
+  rdfs:label "上级供电单位编码"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range xsd:string .
+
+yx:SupplyOrg_orgType a owl:DatatypeProperty ;
+  rdfs:label "单位类别"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range xsd:string .
+
+yx:SupplyOrg_sortNo a owl:DatatypeProperty ;
+  rdfs:label "排序号"@zh ;
+  rdfs:domain yx:SupplyOrg ;
+  rdfs:range xsd:integer .
+
+yx:Consumer_consId a owl:DatatypeProperty ;
+  rdfs:label "客户标识"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:integer .
+
+yx:Consumer_consNo a owl:DatatypeProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_consName a owl:DatatypeProperty ;
+  rdfs:label "用户名称"@zh ;
+  skos:altLabel "户名"@zh ;
+  skos:altLabel "客户名称"@zh ;
+  skos:altLabel "客户名"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_elecAddr a owl:DatatypeProperty ;
+  rdfs:label "用电地址"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_orgNo a owl:ObjectProperty ;
+  rdfs:label "管理单位"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range yx:SupplyOrg .
+
+yx:Consumer_orgNoValue a owl:DatatypeProperty ;
+  rdfs:label "管理单位"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_tradeCode a owl:DatatypeProperty ;
+  rdfs:label "行业分类代码"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_elecTypeCode a owl:DatatypeProperty ;
+  rdfs:label "用电类别"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_voltCode a owl:DatatypeProperty ;
+  rdfs:label "供电电压等级"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_contractCap a owl:DatatypeProperty ;
+  rdfs:label "合同容量（kVA）"@zh ;
+  skos:altLabel "合同容量"@zh ;
+  skos:altLabel "签约容量"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:decimal .
+
+yx:Consumer_runCap a owl:DatatypeProperty ;
+  rdfs:label "运行容量（kVA）"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:decimal .
+
+yx:Consumer_statusCode a owl:DatatypeProperty ;
+  rdfs:label "用户状态"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Consumer_buildDate a owl:DatatypeProperty ;
+  rdfs:label "立户日期"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:date .
+
+yx:Consumer_cancelDate a owl:DatatypeProperty ;
+  rdfs:label "销户日期"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:date .
+
+yx:Consumer_lodeAttrCode a owl:DatatypeProperty ;
+  rdfs:label "负荷性质"@zh ;
+  rdfs:domain yx:Consumer ;
+  rdfs:range xsd:string .
+
+yx:Contact_contactId a owl:DatatypeProperty ;
+  rdfs:label "联系人标识"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:integer .
+
+yx:Contact_consId a owl:ObjectProperty ;
+  rdfs:label "所属客户标识"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range yx:Consumer .
+
+yx:Contact_consIdValue a owl:DatatypeProperty ;
+  rdfs:label "所属客户标识"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:integer .
+
+yx:Contact_contactName a owl:DatatypeProperty ;
+  rdfs:label "联系人姓名"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:string .
+
+yx:Contact_mobile a owl:DatatypeProperty ;
+  rdfs:label "联系人手机号码"@zh ;
+  skos:altLabel "联系电话"@zh ;
+  skos:altLabel "手机号码"@zh ;
+  skos:altLabel "手机"@zh ;
+  skos:altLabel "联系方式"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:string .
+
+yx:Contact_officeTel a owl:DatatypeProperty ;
+  rdfs:label "办公电话"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:string .
+
+yx:Contact_contactMode a owl:DatatypeProperty ;
+  rdfs:label "联系人类别"@zh ;
+  rdfs:domain yx:Contact ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_mpId a owl:DatatypeProperty ;
+  rdfs:label "计量点标识"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:integer .
+
+yx:MeteringPoint_mpNo a owl:DatatypeProperty ;
+  rdfs:label "计量点编号"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_mpName a owl:DatatypeProperty ;
+  rdfs:label "计量点名称"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_consId a owl:ObjectProperty ;
+  rdfs:label "所属客户标识"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range yx:Consumer .
+
+yx:MeteringPoint_consIdValue a owl:DatatypeProperty ;
+  rdfs:label "所属客户标识"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:integer .
+
+yx:MeteringPoint_mpAddr a owl:DatatypeProperty ;
+  rdfs:label "计量点地址"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_voltCode a owl:DatatypeProperty ;
+  rdfs:label "计量点电压等级"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_mpAttrCode a owl:DatatypeProperty ;
+  rdfs:label "计量点性质"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:MeteringPoint_statusCode a owl:DatatypeProperty ;
+  rdfs:label "计量点状态"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range xsd:string .
+
+yx:Meter_meterId a owl:DatatypeProperty ;
+  rdfs:label "电能表标识"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:integer .
+
+yx:Meter_assetNo a owl:DatatypeProperty ;
+  rdfs:label "电能表资产编号"@zh ;
+  skos:altLabel "表号"@zh ;
+  skos:altLabel "电能表资产号"@zh ;
+  skos:altLabel "资产号"@zh ;
+  skos:altLabel "电表编号"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:string .
+
+yx:Meter_madeNo a owl:DatatypeProperty ;
+  rdfs:label "出厂编号"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:string .
+
+yx:Meter_manufacturer a owl:DatatypeProperty ;
+  rdfs:label "生产厂家"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:string .
+
+yx:Meter_typeCode a owl:DatatypeProperty ;
+  rdfs:label "电能表类型"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:string .
+
+yx:Meter_wiringMode a owl:DatatypeProperty ;
+  rdfs:label "接线方式"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:string .
+
+yx:Meter_tFactor a owl:DatatypeProperty ;
+  rdfs:label "综合倍率"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:decimal .
+
+yx:Meter_instDate a owl:DatatypeProperty ;
+  rdfs:label "装表日期"@zh ;
+  rdfs:domain yx:Meter ;
+  rdfs:range xsd:date .
+
+yx:MeterReading_readId a owl:DatatypeProperty ;
+  rdfs:label "抄表记录标识"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:integer .
+
+yx:MeterReading_mpId a owl:ObjectProperty ;
+  rdfs:label "计量点标识"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range yx:MeteringPoint .
+
+yx:MeterReading_mpIdValue a owl:DatatypeProperty ;
+  rdfs:label "计量点标识"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:integer .
+
+yx:MeterReading_ym a owl:DatatypeProperty ;
+  rdfs:label "抄表年月"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:string .
+
+yx:MeterReading_lastRead a owl:DatatypeProperty ;
+  rdfs:label "上次抄见示数"@zh ;
+  skos:altLabel "上月示数"@zh ;
+  skos:altLabel "起码"@zh ;
+  skos:altLabel "上次示数"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:decimal .
+
+yx:MeterReading_thisRead a owl:DatatypeProperty ;
+  rdfs:label "本次抄见示数"@zh ;
+  skos:altLabel "本月示数"@zh ;
+  skos:altLabel "止码"@zh ;
+  skos:altLabel "本次示数"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:decimal .
+
+yx:MeterReading_readDate a owl:DatatypeProperty ;
+  rdfs:label "抄表日期"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:date .
+
+yx:MeterReading_readTypeCode a owl:DatatypeProperty ;
+  rdfs:label "抄表方式"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:string .
+
+yx:Receivable_rcvblId a owl:DatatypeProperty ;
+  rdfs:label "应收电费标识"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:integer .
+
+yx:Receivable_consNo a owl:ObjectProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range yx:Consumer .
+
+yx:Receivable_consNoValue a owl:DatatypeProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:string .
+
+yx:Receivable_rcvblYm a owl:DatatypeProperty ;
+  rdfs:label "电费年月"@zh ;
+  skos:altLabel "账期"@zh ;
+  skos:altLabel "应收年月"@zh ;
+  skos:altLabel "电费月份"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:string .
+
+yx:Receivable_tSettlePq a owl:DatatypeProperty ;
+  rdfs:label "结算电量（kWh）"@zh ;
+  skos:altLabel "结算电量"@zh ;
+  skos:altLabel "月用电量"@zh ;
+  skos:altLabel "电量"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:decimal .
+
+yx:Receivable_rcvblAmt a owl:DatatypeProperty ;
+  rdfs:label "应收电费金额（元）"@zh ;
+  skos:altLabel "应收电费"@zh ;
+  skos:altLabel "应收金额"@zh ;
+  skos:altLabel "电费"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:decimal .
+
+yx:Receivable_rcvedAmt a owl:DatatypeProperty ;
+  rdfs:label "实收电费金额（元）"@zh ;
+  skos:altLabel "实收电费"@zh ;
+  skos:altLabel "实收金额"@zh ;
+  skos:altLabel "已缴金额"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:decimal .
+
+yx:Receivable_penalty a owl:DatatypeProperty ;
+  rdfs:label "电费违约金（元）"@zh ;
+  skos:altLabel "违约金"@zh ;
+  skos:altLabel "滞纳金"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:decimal .
+
+yx:Receivable_settleFlag a owl:DatatypeProperty ;
+  rdfs:label "结清标志"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:string .
+
+yx:Receivable_relDate a owl:DatatypeProperty ;
+  rdfs:label "电费发行日期"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:date .
+
+yx:Payment_chargeId a owl:DatatypeProperty ;
+  rdfs:label "缴费记录标识"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:integer .
+
+yx:Payment_consNo a owl:ObjectProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range yx:Consumer .
+
+yx:Payment_consNoValue a owl:DatatypeProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:string .
+
+yx:Payment_rcvblId a owl:ObjectProperty ;
+  rdfs:label "对应应收标识"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range yx:Receivable .
+
+yx:Payment_rcvblIdValue a owl:DatatypeProperty ;
+  rdfs:label "对应应收标识"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:integer .
+
+yx:Payment_chargeDate a owl:DatatypeProperty ;
+  rdfs:label "缴费时间"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:dateTime .
+
+yx:Payment_rcvAmt a owl:DatatypeProperty ;
+  rdfs:label "缴费金额（元）"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:decimal .
+
+yx:Payment_payMode a owl:DatatypeProperty ;
+  rdfs:label "缴费方式"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:string .
+
+yx:Payment_acctOrgNo a owl:ObjectProperty ;
+  rdfs:label "收费单位"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range yx:SupplyOrg .
+
+yx:Payment_acctOrgNoValue a owl:DatatypeProperty ;
+  rdfs:label "收费单位"@zh ;
+  rdfs:domain yx:Payment ;
+  rdfs:range xsd:string .
+
+yx:Terminal_terminalId a owl:DatatypeProperty ;
+  rdfs:label "终端标识"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:integer .
+
+yx:Terminal_tmnlAssetNo a owl:DatatypeProperty ;
+  rdfs:label "终端资产编号"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:string .
+
+yx:Terminal_tmnlTypeCode a owl:DatatypeProperty ;
+  rdfs:label "终端类型"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:string .
+
+yx:Terminal_terminalAddr a owl:DatatypeProperty ;
+  rdfs:label "终端逻辑地址"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:string .
+
+yx:Terminal_orgNo a owl:ObjectProperty ;
+  rdfs:label "终端所属供电单位"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range yx:SupplyOrg .
+
+yx:Terminal_orgNoValue a owl:DatatypeProperty ;
+  rdfs:label "终端所属供电单位"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:string .
+
+yx:Terminal_runStatus a owl:DatatypeProperty ;
+  rdfs:label "终端运行状态"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:string .
+
+yx:Terminal_instDate a owl:DatatypeProperty ;
+  rdfs:label "终端投运日期"@zh ;
+  rdfs:domain yx:Terminal ;
+  rdfs:range xsd:date .
+
+yx:CollectionPoint_id a owl:DatatypeProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:integer .
+
+yx:CollectionPoint_terminalId a owl:ObjectProperty ;
+  rdfs:label "所属终端标识"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range yx:Terminal .
+
+yx:CollectionPoint_terminalIdValue a owl:DatatypeProperty ;
+  rdfs:label "所属终端标识"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:integer .
+
+yx:CollectionPoint_mpSn a owl:DatatypeProperty ;
+  rdfs:label "测量点序号"@zh ;
+  skos:altLabel "测量点号"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:integer .
+
+yx:CollectionPoint_mpId a owl:ObjectProperty ;
+  rdfs:label "营销计量点标识"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range yx:MeteringPoint .
+
+yx:CollectionPoint_mpIdValue a owl:DatatypeProperty ;
+  rdfs:label "营销计量点标识"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:integer .
+
+yx:CollectionPoint_consNo a owl:ObjectProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range yx:Consumer .
+
+yx:CollectionPoint_consNoValue a owl:DatatypeProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:string .
+
+yx:CollectionPoint_meterAssetNo a owl:ObjectProperty ;
+  rdfs:label "电能表资产编号"@zh ;
+  skos:altLabel "表号"@zh ;
+  skos:altLabel "电能表资产号"@zh ;
+  skos:altLabel "资产号"@zh ;
+  skos:altLabel "电表编号"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range yx:Meter .
+
+yx:CollectionPoint_meterAssetNoValue a owl:DatatypeProperty ;
+  rdfs:label "电能表资产编号"@zh ;
+  skos:altLabel "表号"@zh ;
+  skos:altLabel "电能表资产号"@zh ;
+  skos:altLabel "资产号"@zh ;
+  skos:altLabel "电表编号"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:string .
+
+yx:CollectionPoint_tFactor a owl:DatatypeProperty ;
+  rdfs:label "综合倍率（采集侧）"@zh ;
+  rdfs:domain yx:CollectionPoint ;
+  rdfs:range xsd:decimal .
+
+yx:DailyFrozenReading_id a owl:ObjectProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range yx:CollectionPoint .
+
+yx:DailyFrozenReading_idValue a owl:DatatypeProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:integer .
+
+yx:DailyFrozenReading_dataDate a owl:DatatypeProperty ;
+  rdfs:label "日冻结日期"@zh ;
+  skos:altLabel "冻结日期"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:date .
+
+yx:DailyFrozenReading_papR a owl:DatatypeProperty ;
+  rdfs:label "正向有功总示数"@zh ;
+  skos:altLabel "正向有功总"@zh ;
+  skos:altLabel "正向有功示数"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:decimal .
+
+yx:DailyFrozenReading_prpR a owl:DatatypeProperty ;
+  rdfs:label "正向无功总示数"@zh ;
+  skos:altLabel "正向无功总"@zh ;
+  skos:altLabel "正向无功示数"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:decimal .
+
+yx:DailyFrozenReading_rapR a owl:DatatypeProperty ;
+  rdfs:label "反向有功总示数"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:decimal .
+
+yx:DailyFrozenReading_colTime a owl:DatatypeProperty ;
+  rdfs:label "采集时间"@zh ;
+  rdfs:domain yx:DailyFrozenReading ;
+  rdfs:range xsd:dateTime .
+
+yx:DailyEnergy_id a owl:ObjectProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range yx:CollectionPoint .
+
+yx:DailyEnergy_idValue a owl:DatatypeProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range xsd:integer .
+
+yx:DailyEnergy_dataDate a owl:DatatypeProperty ;
+  rdfs:label "数据日期"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range xsd:date .
+
+yx:DailyEnergy_papE a owl:DatatypeProperty ;
+  rdfs:label "日正向有功电量（kWh）"@zh ;
+  skos:altLabel "日电量"@zh ;
+  skos:altLabel "日用电量"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range xsd:decimal .
+
+yx:DailyEnergy_prpE a owl:DatatypeProperty ;
+  rdfs:label "日正向无功电量（kvarh）"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range xsd:decimal .
+
+yx:DailyEnergy_rapE a owl:DatatypeProperty ;
+  rdfs:label "日反向有功电量（kWh）"@zh ;
+  rdfs:domain yx:DailyEnergy ;
+  rdfs:range xsd:decimal .
+
+yx:LoadCurvePoint_id a owl:ObjectProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:LoadCurvePoint ;
+  rdfs:range yx:CollectionPoint .
+
+yx:LoadCurvePoint_idValue a owl:DatatypeProperty ;
+  rdfs:label "测量点标识"@zh ;
+  rdfs:domain yx:LoadCurvePoint ;
+  rdfs:range xsd:integer .
+
+yx:LoadCurvePoint_dataTime a owl:DatatypeProperty ;
+  rdfs:label "曲线数据时间"@zh ;
+  rdfs:domain yx:LoadCurvePoint ;
+  rdfs:range xsd:dateTime .
+
+yx:LoadCurvePoint_p a owl:DatatypeProperty ;
+  rdfs:label "有功功率（kW）"@zh ;
+  skos:altLabel "负荷"@zh ;
+  skos:altLabel "有功负荷"@zh ;
+  rdfs:domain yx:LoadCurvePoint ;
+  rdfs:range xsd:decimal .
+
+yx:LoadCurvePoint_q a owl:DatatypeProperty ;
+  rdfs:label "无功功率（kvar）"@zh ;
+  rdfs:domain yx:LoadCurvePoint ;
+  rdfs:range xsd:decimal .
+
+yx:WorkOrder_appNo a owl:DatatypeProperty ;
+  rdfs:label "工单编号"@zh ;
+  skos:altLabel "工单号"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_acceptTime a owl:DatatypeProperty ;
+  rdfs:label "受理时间"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:dateTime .
+
+yx:WorkOrder_busiType a owl:DatatypeProperty ;
+  rdfs:label "业务类型"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_custNo a owl:ObjectProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range yx:Consumer .
+
+yx:WorkOrder_custNoValue a owl:DatatypeProperty ;
+  rdfs:label "用户编号"@zh ;
+  skos:altLabel "户号"@zh ;
+  skos:altLabel "客户编号"@zh ;
+  skos:altLabel "用户号"@zh ;
+  skos:altLabel "客户号"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_custName a owl:DatatypeProperty ;
+  rdfs:label "工单登记客户名称"@zh ;
+  skos:altLabel "客户名称"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_contactTel a owl:DatatypeProperty ;
+  rdfs:label "来电联系电话"@zh ;
+  skos:altLabel "来电号码"@zh ;
+  skos:altLabel "联系电话"@zh ;
+  skos:altLabel "主叫号码"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_acceptContent a owl:DatatypeProperty ;
+  rdfs:label "受理内容"@zh ;
+  skos:altLabel "诉求内容"@zh ;
+  skos:altLabel "工单内容"@zh ;
+  skos:altLabel "来电内容"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_handleOrg a owl:ObjectProperty ;
+  rdfs:label "处理单位"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range yx:SupplyOrg .
+
+yx:WorkOrder_handleOrgValue a owl:DatatypeProperty ;
+  rdfs:label "处理单位"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_handleStatus a owl:DatatypeProperty ;
+  rdfs:label "工单处理状态"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:WorkOrder_finishTime a owl:DatatypeProperty ;
+  rdfs:label "办结时间"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:dateTime .
+
+yx:WorkOrder_satisfyCode a owl:DatatypeProperty ;
+  rdfs:label "客户满意度评价"@zh ;
+  rdfs:domain yx:WorkOrder ;
+  rdfs:range xsd:string .
+
+yx:ReturnVisit_visitId a owl:DatatypeProperty ;
+  rdfs:label "回访记录标识"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range xsd:integer .
+
+yx:ReturnVisit_appNo a owl:ObjectProperty ;
+  rdfs:label "工单编号"@zh ;
+  skos:altLabel "工单号"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range yx:WorkOrder .
+
+yx:ReturnVisit_appNoValue a owl:DatatypeProperty ;
+  rdfs:label "工单编号"@zh ;
+  skos:altLabel "工单号"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range xsd:string .
+
+yx:ReturnVisit_visitTime a owl:DatatypeProperty ;
+  rdfs:label "回访时间"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range xsd:dateTime .
+
+yx:ReturnVisit_visitResult a owl:DatatypeProperty ;
+  rdfs:label "回访结果说明"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range xsd:string .
+
+yx:ReturnVisit_satisfyScore a owl:DatatypeProperty ;
+  rdfs:label "回访满意度评分（1-5分）"@zh ;
+  skos:altLabel "回访评分"@zh ;
+  skos:altLabel "满意度评分"@zh ;
+  skos:altLabel "满意度"@zh ;
+  rdfs:domain yx:ReturnVisit ;
+  rdfs:range xsd:decimal .
+
+yx:MeteringPoint_installedMeter a owl:ObjectProperty ;
+  rdfs:label "安装电能表"@zh ;
+  rdfs:domain yx:MeteringPoint ;
+  rdfs:range yx:Meter .
+
+yx:Receivable_arrearsAmt a owl:DatatypeProperty ;
+  rdfs:label "欠费金额"@zh ;
+  skos:altLabel "欠费"@zh ;
+  skos:altLabel "欠费金额(元)"@zh ;
+  rdfs:domain yx:Receivable ;
+  rdfs:range xsd:decimal ;
+  skos:note "派生属性：SELECT RCVBL_ID, ROUND(RCVBL_AMT - RCVED_AMT, 2) AS ARREARS_AMT FROM yx186.A_RCVBL_FLOW"@zh .
+
+yx:MeterReading_readEnergy a owl:DatatypeProperty ;
+  rdfs:label "抄见电量"@zh ;
+  skos:altLabel "抄表电量"@zh ;
+  rdfs:domain yx:MeterReading ;
+  rdfs:range xsd:decimal ;
+  skos:note "派生属性：SELECT r.READ_ID, ROUND((r.THIS_READ - r.LAST_READ) * d.T_FACTOR, 2) AS READ_PQ FROM yx186.R_READ r JOIN yx186.C_METER_MP_RELA rl ON rl.MP_ID = r.MP_ID JOIN yx186.D_METER d ON d.METER_ID = rl.METER_ID"@zh .

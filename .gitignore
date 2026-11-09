@@ -1,0 +1,4 @@
+__pycache__/
+.pytest_cache/
+# 沙箱库可由 python3 datagen/build.py 重建
+data/sandbox/

@@ -1,8 +1,10 @@
-"""构建流水线：元数据 → 证据 → 本体/映射（OntoWing 校验与导出）→ R2RML 实跑 → 语义索引 → 评测。
+"""构建流水线：元数据 → 证据 → 本体/映射/规则（OntoWing 校验与导出）→ R2RML 实跑 → 规则推理 → 语义索引 → 评测。
 
 产物写到 artifacts/：
   ontology.ttl            OntoWing 导出的 OWL（owl-core/1）
   mapping.r2rml.ttl       OntoWing 导出的 R2RML（r2rml-record/1）
+  rules.ttl               OntoWing 导出的 SWRL 规则（swrl-simple/1）
+  wing_rules.json         OntoWing 规则编辑器 JSON（wing-rules-editor/2，含约束）
   wing_model.json         OntoWing 模型编辑器 JSON（wing-model-editor/1）
   wing_pipeline.json      OntoWing 数据管道编辑器 JSON（wing-pipeline-editor/2）
   fact_plane_snapshots.json  校验用的表字典快照
@@ -12,7 +14,7 @@ import json
 import time
 from dataclasses import dataclass
 
-from . import metadata, verify, wing
+from . import metadata, reason, verify, wing
 from .builder import OntologyBuild
 from .config import ARTIFACTS
 from .evaluate import evaluate
@@ -27,6 +29,7 @@ class BuildResult:
     semantic: SemanticIndex
     ontology_ttl: str
     mapping_ttl: str
+    rules_ttl: str
     report: dict
 
 
@@ -57,7 +60,10 @@ def run(source="auto", execute_r2rml=True, run_eval=True, write=True):
     pipe_report = _step(steps, "OntoWing 校验数据管道映射（wing-pipeline-editor/2）",
                         lambda: wing.validate_pipeline(b.pipeline, b.model, b.snapshots))
     steps[-1]["detail"] = _brief(pipe_report)
-    if not model_report["valid"] or not pipe_report["valid"]:
+    rules_report = _step(steps, "OntoWing 校验规则与约束（wing-rules-editor/2）",
+                         lambda: wing.validate_rules(b.rules, b.model))
+    steps[-1]["detail"] = _brief(rules_report)
+    if not model_report["valid"] or not pipe_report["valid"] or not rules_report["valid"]:
         raise RuntimeError("OntoWing 校验未通过，见 build_report.json")
 
     onto, _, oprof, oloss = _step(steps, "OntoWing 导出 ontology.ttl", lambda: wing.render("model", b.model))
@@ -66,12 +72,23 @@ def run(source="auto", execute_r2rml=True, run_eval=True, write=True):
                                      lambda: wing.render("pipeline", b.pipeline, b.model))
     steps[-1]["detail"] = {"profile": mprof, "export_losses": mloss, "bytes": len(mapping.encode())}
 
-    r2rml = None
+    rules_ttl, _, rprof, rloss = _step(steps, "OntoWing 导出 rules.ttl（SWRL）", lambda: wing.render("rules", b.rules, b.model))
+    steps[-1]["detail"] = {"profile": rprof, "export_losses": rloss,
+                           "exported_rules": rules_ttl.count("rule:source_code")}
+
+    r2rml, reasoning = None, None
     if execute_r2rml:
         r2rml = _step(steps, "Morph-KGC 在沙箱数据上执行 R2RML", lambda: verify.check(mapping, b.pipeline, b.model))
+        graph = r2rml.pop("graph")
         steps[-1]["detail"] = {k: v for k, v in r2rml.items() if k != "relations"}
+        reasoning = _step(steps, "在实例图上执行 SWRL 规则并检查约束（对照独立 SQL 口径）",
+                          lambda: reason.run(graph, onto, rules_ttl, b.rules, b.rule_meta, b.model))
+        steps[-1]["detail"] = {"passed": reasoning["passed"], "rounds": reasoning["rounds"],
+                               "rules": [(x["name"], x["inferred"], x["sql_check"]) for x in reasoning["rules"]],
+                               "constraint_violations": sum(c["violations"] for c in reasoning["constraints"])}
+        del graph
 
-    sem = _step(steps, "从导出文件构建语义索引", lambda: SemanticIndex(onto, mapping, b.pipeline))
+    sem = _step(steps, "从导出文件构建语义索引", lambda: SemanticIndex(onto, mapping, b.pipeline, rules_ttl, b.rule_meta))
     steps[-1]["detail"] = {"concepts": len(sem.concepts), "predicates": len(sem.preds),
                            "mapped_columns": len(sem.column_pred)}
 
@@ -90,17 +107,19 @@ def run(source="auto", execute_r2rml=True, run_eval=True, write=True):
               "summary": b.summary(), "decisions": b.decisions, "relations": [
                   {k: r[k] for k in ("id", "name", "child", "child_col", "parent", "parent_col", "provenance")}
                   for r in b.relations],
-              "wing_validation": {"model": model_report, "pipeline": pipe_report},
-              "r2rml_execution": r2rml, "evaluation": evaluation}
+              "rules": b.rule_meta,
+              "wing_validation": {"model": model_report, "pipeline": pipe_report, "rules": rules_report},
+              "r2rml_execution": r2rml, "reasoning": reasoning, "evaluation": evaluation}
     if write:
         ARTIFACTS.mkdir(exist_ok=True)
         (ARTIFACTS / "ontology.ttl").write_text(onto, encoding="utf-8")
         (ARTIFACTS / "mapping.r2rml.ttl").write_text(mapping, encoding="utf-8")
-        for name, obj in (("wing_model.json", b.model), ("wing_pipeline.json", b.pipeline),
+        (ARTIFACTS / "rules.ttl").write_text(rules_ttl, encoding="utf-8")
+        for name, obj in (("wing_model.json", b.model), ("wing_pipeline.json", b.pipeline), ("wing_rules.json", b.rules),
                           ("fact_plane_snapshots.json", b.snapshots), ("build_report.json", report)):
             (ARTIFACTS / name).write_text(json.dumps(obj, ensure_ascii=False, indent=1, default=list),
                                           encoding="utf-8")
-    return BuildResult(b, ev, sem, onto, mapping, report)
+    return BuildResult(b, ev, sem, onto, mapping, rules_ttl, report)
 
 
 def _brief(r):

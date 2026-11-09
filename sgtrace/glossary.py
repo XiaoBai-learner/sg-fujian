@@ -42,7 +42,6 @@ TABLE_TERMS = {
     ("CONTACT",): ("Contact", "客户联系人", "participant", "cim:Person"),
     ("MP",): ("MeteringPoint", "计量点", "resource", "cim:UsagePoint"),
     ("METER",): ("Meter", "电能表", "resource", "cim:Meter"),
-    ("METER", "MP", "RELA"): ("MeterInstallation", "计量点电能表关系", "resource", "cim:MeterServiceWork"),
     ("READ",): ("MeterReading", "抄表示数", "event", "cim:MeterReading"),
     ("RCVBL", "FLOW"): ("Receivable", "应收电费", "account", "cim:AccountMovement"),
     ("PAY", "FLOW"): ("Payment", "缴费记录", "account", "cim:Receipt"),
@@ -53,6 +52,49 @@ TABLE_TERMS = {
     ("MP", "POWER", "CURVE"): ("LoadCurvePoint", "负荷曲线点", "metric", "cim:IntervalReading"),
     ("KF", "WORKORDER"): ("WorkOrder", "95598工单", "event", "cim:ServiceRequest"),
     ("KF", "VISIT"): ("ReturnVisit", "工单回访", "event", "cim:Activity"),
+}
+
+# 上位类（抽象类，不直接对应物理表）：id → (中文名, OntoWing top_category, CIM 参考, 说明)
+TOP_CLASSES = {
+    "Party": ("参与方", "participant", "cim:OrganisationRole", "与供用电业务相关的单位与人员"),
+    "Asset": ("计量与采集设备", "resource", "cim:Asset", "安装在现场的电能表、采集终端等设备资产"),
+    "UsagePointBase": ("计量位置", "resource", "cim:UsagePoint", "电能计量或数据采集的逻辑位置"),
+    "MeasurementData": ("计量数据", "metric", "cim:MeasurementValue", "示数、电量、负荷等计量与采集数据"),
+    "BillingRecord": ("电费账务", "account", "cim:AccountMovement", "电费应收、实收等账务记录"),
+    "ServiceEvent": ("客户服务事件", "event", "cim:ServiceRequest", "客户诉求、工单及其回访"),
+}
+
+# 具体概念 → 上位类
+CONCEPT_PARENT = {
+    "SupplyOrg": "Party", "Consumer": "Party", "Contact": "Party",
+    "Meter": "Asset", "Terminal": "Asset",
+    "MeteringPoint": "UsagePointBase", "CollectionPoint": "UsagePointBase",
+    "MeterReading": "MeasurementData", "DailyFrozenReading": "MeasurementData",
+    "DailyEnergy": "MeasurementData", "LoadCurvePoint": "MeasurementData",
+    "Receivable": "BillingRecord", "Payment": "BillingRecord",
+    "WorkOrder": "ServiceEvent", "ReturnVisit": "ServiceEvent",
+}
+
+# 关系的业务名称：(源概念, 目标概念) → 名称。同一对概念之间有多条外键或自引用时，改用外键列的业务名。
+RELATION_VERBS = {
+    ("Consumer", "SupplyOrg"): "归属供电单位",
+    ("Contact", "Consumer"): "所属客户",
+    ("MeteringPoint", "Consumer"): "所属客户",
+    ("MeteringPoint", "Meter"): "安装电能表",
+    ("MeterReading", "MeteringPoint"): "抄表计量点",
+    ("Receivable", "Consumer"): "应收客户",
+    ("Payment", "Consumer"): "缴费客户",
+    ("Payment", "Receivable"): "冲抵应收",
+    ("Terminal", "SupplyOrg"): "运维单位",
+    ("CollectionPoint", "Terminal"): "所属终端",
+    ("CollectionPoint", "MeteringPoint"): "对应计量点",
+    ("CollectionPoint", "Consumer"): "所属客户",
+    ("CollectionPoint", "Meter"): "采集电能表",
+    ("DailyFrozenReading", "CollectionPoint"): "所属测量点",
+    ("DailyEnergy", "CollectionPoint"): "所属测量点",
+    ("LoadCurvePoint", "CollectionPoint"): "所属测量点",
+    ("WorkOrder", "Consumer"): "诉求客户",
+    ("ReturnVisit", "WorkOrder"): "回访工单",
 }
 
 # 同义词组：组内任一词在比较前替换为组内第一个词（长词优先匹配）

@@ -297,8 +297,44 @@ class QAEngine:
             return m.group(1)
         return self._Q.sub("", q).strip() or q
 
+    def _rule_answer(self, question, label):
+        """问的是规则推导出的业务分类（如“欠费客户”）：返回规则链与涉及的源字段。
+        匹配用原问题做包含判断（“重点关注客户是怎么来的”），取最长的命中名称。"""
+        target, best_len = None, 0
+        for cid, name in self.sem.concepts.items():
+            if not any(r["head"] == cid for r in self.sem.rules):
+                continue
+            if (name in question or name == label) and len(name) > best_len:
+                target, best_len = cid, len(name)
+        if target is None:
+            return None
+        by_head = {r["head"]: r for r in self.sem.rules}
+        chain, stack, seen = [], [target], set()
+        while stack:
+            cid = stack.pop()
+            r = by_head.get(cid)
+            if r is None or r["id"] in seen:
+                continue
+            seen.add(r["id"])
+            cols = []
+            for pid in r["uses_predicates"]:
+                for t, c in self.sem.preds[pid].columns:
+                    if t.split(".")[0] in SOURCE_DBS:
+                        cols.append(self._source_info(f"{t}.{c}"))
+            chain.append({"rule": r["name"], "level": r["level"], "nl": r["nl"], "swrl": r["swrl"],
+                          "source": r["source"], "head": self.sem.concepts.get(cid, cid),
+                          "uses_classes": [self.sem.concepts.get(x, x) for x in r["uses_classes"]],
+                          "fields": cols})
+            stack.extend(x for x in r["uses_classes"] if x in by_head)
+        label = self.sem.concepts[target]
+        return {"label": label, "status": "rule", "concept": target, "concept_label": self.sem.concepts[target],
+                "chain": chain, "answers": [], "referenced_by": [], "derived_metrics": [], "near_misses": []}
+
     def answer_question(self, question):
         label = self.extract_label(question)
+        ruled = self._rule_answer(question, label)
+        if ruled:
+            return ruled
         hits = []
         for qcol, pid, names in self.source:
             s, hit = best_similarity(label, names, self.opt.synonyms)

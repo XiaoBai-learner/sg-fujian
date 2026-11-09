@@ -1,8 +1,8 @@
 """OntoWing 适配层：以库的方式调用 OntoWing 的纯领域代码。
 
 只使用 app.domain 下不依赖 Django / 数据库 / 网络的模块：
-  modeling_profiles.validate_editor         静态校验（schema、引用、字段字典、键与关联规则）
-  modeling_artifacts.projection.render_member  导出 ontology.ttl（OWL）与 mapping.ttl（R2RML）
+  modeling_profiles.validate_editor         静态校验：本体、数据管道映射（字段字典、键与关联）、规则与约束
+  modeling_artifacts.projection.render_member  导出 ontology.ttl（OWL）、mapping.ttl（R2RML）、rules.ttl（SWRL）
 
 不走 OntoWing HTTP 服务：它需要 Manager 签发的 JWT、角色绑定文件和 MySQL 业务库，本地无法独立运行。
 """
@@ -61,6 +61,11 @@ def validate_pipeline(pipeline, model, snapshots):
     mp, _ = _modules()
     return mp.validate_editor(_bytes(pipeline), "pipeline", model=_bytes(model), model_id=MODEL_ID,
                               fact_plane_snapshots=_bytes(snapshots))
+
+
+def validate_rules(rules, model):
+    mp, _ = _modules()
+    return mp.validate_editor(_bytes(rules), "rules", model=_bytes(model))
 
 
 def render(kind, editor, model=None):

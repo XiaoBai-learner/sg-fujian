@@ -8,12 +8,19 @@
   关系      外键推断：列名同名或以“_<键名>”结尾 + 类型一致（命名约定），
             以及任务 SQL / 热点 SQL 中 JOIN 等值条件追溯到源字段（关联证据）
   属性      非外键列一列一属性；名称取 DDL 注释 > 领域词表；别名取血缘下游中台列的注释
+  关联表    只有自身主键 + 两个外键（+ 日期）的表不建概念，转成两个概念之间的多对多关系（R2RML 由关联表产出三元组）
+  层次      具体概念挂到领域上位类（参与方 / 设备 / 计量位置 / 计量数据 / 电费账务 / 客户服务事件），
+            规则推导出的派生类（欠费客户、投诉工单…）是具体概念的子类
+  关系命名  领域动词（归属供电单位、冲抵应收…）> 外键列注释；每条关系有反向关系
+  规则      见 rules.py：派生类、规则链、约束，OntoWing wing-rules-editor/2 校验并导出 SWRL
 """
 from collections import Counter, defaultdict
 
 from .config import SOURCE_DBS, SYSTEM_TITLES
 from .evidence import Evidence, strip_code_desc
-from .glossary import COLUMN_EXACT, COLUMN_TOKENS, SENSITIVE_HINTS, TABLE_TERMS
+from .glossary import (COLUMN_EXACT, COLUMN_TOKENS, CONCEPT_PARENT, RELATION_VERBS, SENSITIVE_HINTS,
+                       TABLE_TERMS, TOP_CLASSES)
+from . import rules as rulebook
 from .text import camel, strip
 
 DATATYPES = {"varchar": "string", "char": "string", "text": "string", "bigint": "integer", "int": "integer",
@@ -64,9 +71,12 @@ class OntologyBuild:
         self._scope()
         self._concepts()
         self._relations()
+        self._link_tables()
+        self._name_relations()
         self._identity()
         self._attributes()
         self._editors()
+        self._rules()
 
     # ------------------------------------------------------------ 范围
     def _scope(self):
@@ -198,6 +208,60 @@ class OntologyBuild:
         self.log.append(f"关系 {len(self.relations)} 条（命名约定 {prov['naming_convention']}，"
                         f"任务 SQL 关联 {prov['task_sql_join']}，热点 SQL 关联 {prov['hot_sql_join']}）")
 
+    # ------------------------------------------------------------ 关联表 → 多对多关系
+    def _link_tables(self):
+        tbl = {t.qname: t for t in self.tables}
+        out_fk = defaultdict(list)
+        for r in self.fk_all:
+            out_fk[r["child"]].append(r)
+        self.links = []
+        for cid, c in list(self.concepts.items()):
+            if len(c["tables"]) != 1:
+                continue
+            t = tbl[c["main"]]
+            fks = out_fk.get(t.qname, [])
+            others = [col for col in t.columns if col.name not in t.primary_key
+                      and col.name not in {r["child_col"] for r in fks}]
+            if len(fks) != 2 or any(wing_datatype(col.data_type) not in ("date", "datetime") for col in others):
+                continue
+            if any(r["parent"] == t.qname for r in self.fk_all):
+                continue  # 被别人引用的不是纯关联表
+            a, b = sorted(fks, key=lambda r: r["child_col"])
+            ca, cb = self.table_concept[a["parent"]], self.table_concept[b["parent"]]
+            if (cb, ca) in RELATION_VERBS and (ca, cb) not in RELATION_VERBS:
+                a, b, ca, cb = b, a, cb, ca   # 方向以领域动词为准（计量点 安装电能表）
+            self.links.append({"table": t.qname, "concept": cid, "from_fk": a, "to_fk": b,
+                               "source_id": ca, "target_id": cb})
+            del self.concepts[cid]
+            self.decisions.append({"type": "link_table", "table": t.qname,
+                                   "reason": f"只有主键和两个外键（{a['child_col']}、{b['child_col']}），"
+                                             f"转为 {self.concepts[ca]['name']} 与 {self.concepts[cb]['name']} 之间的关系"})
+        link_tables = {l["table"] for l in self.links}
+        self.relations = [r for r in self.relations if r["child"] not in link_tables]
+        if self.links:
+            self.log.append(f"关联表 {len(self.links)} 张转为多对多关系：{'、'.join(l['table'] for l in self.links)}")
+
+    def _name_relations(self):
+        tbl = {t.qname: t for t in self.tables}
+        pair_count = Counter((r["source_id"], r["target_id"]) for r in self.relations)
+        for r in self.relations:
+            col = tbl[r["child"]].col(r["child_col"])
+            col_name = strip_code_desc(col.comment) if col and col.comment else column_name_guess(r["child_col"])[0]
+            verb = RELATION_VERBS.get((r["source_id"], r["target_id"]))
+            if r["source_id"] == r["target_id"] or pair_count[(r["source_id"], r["target_id"])] > 1 or not verb:
+                verb, basis = col_name, "column_comment"
+            else:
+                basis = "glossary_verb"
+            r["name"], r["name_basis"] = verb, basis
+            child_name = self.concepts[r["source_id"]]["name"]
+            r["inverse_name"] = f"下属{child_name}" if r["source_id"] == r["target_id"] else f"拥有{child_name}"
+        for l in self.links:
+            verb = RELATION_VERBS.get((l["source_id"], l["target_id"]))
+            l["id"] = f"{l['source_id']}_via{l['concept']}"
+            l["name"] = verb or self.concepts[l["target_id"]]["name"]
+        self.log.append(f"关系命名：领域动词 {sum(r['name_basis'] == 'glossary_verb' for r in self.relations)} 条，"
+                        f"外键注释 {sum(r['name_basis'] == 'column_comment' for r in self.relations)} 条")
+
     # ------------------------------------------------------------ 实体标识
     def _identity(self):
         refs = Counter((r["parent"], r["parent_col"]) for r in self.fk_all)
@@ -268,19 +332,46 @@ class OntologyBuild:
     def _editors(self):
         tbl = {t.qname: t for t in self.tables}
         concepts = []
+        used_tops = {CONCEPT_PARENT[c] for c in self.concepts if c in CONCEPT_PARENT}
+        for tid, (zh, top, cim, desc) in TOP_CLASSES.items():
+            if tid in used_tops:
+                concepts.append({"id": tid, "name": zh, "top_category": top, "parents": [], "disjoint_with": [],
+                                 "description": f"领域上位类：{desc}；CIM 参考：{cim}（待专家确认）",
+                                 "english_name": tid})
+        self.abstract = sorted(used_tops)
         for cid, c in self.concepts.items():
             desc = f"源表：{'、'.join(c['tables'])}（{SYSTEM_TITLES[c['db']]}）"
             if c["cim"]:
                 desc += f"；CIM 参考：{c['cim']}（待专家确认）"
-            concepts.append({"id": cid, "name": c["name"], "top_category": c["top_category"], "parents": [],
-                             "disjoint_with": [], "description": desc, "english_name": cid})
+            parent = CONCEPT_PARENT.get(cid)
+            concepts.append({"id": cid, "name": c["name"], "top_category": c["top_category"],
+                             "parents": [parent] if parent else [], "disjoint_with": [], "description": desc,
+                             "english_name": cid})
         attrs = [{"id": a["id"], "name": a["name"], "concept_id": a["concept_id"], "datatype": a["datatype"],
                   "sensitivity": a["sensitivity"], "aliases": a["aliases"],
                   "description": f"命名依据：{a['basis']}"} for a in self.attributes]
-        rels = [{"id": r["id"], "name": r["name"], "source_id": r["source_id"], "target_id": r["target_id"],
-                 "symmetric": False, "transitive": False, "functional": True, "inverse_id": None,
-                 "description": f"{r['child']}.{r['child_col']} → {r['parent']}.{r['parent_col']}；"
-                                f"依据：{'、'.join(r['provenance'])}"} for r in self.relations]
+        rels = []
+        for r in self.relations:
+            inv = f"{r['id']}_inverse"
+            rels.append({"id": r["id"], "name": r["name"], "source_id": r["source_id"], "target_id": r["target_id"],
+                         "symmetric": False, "transitive": False, "functional": True, "inverse_id": inv,
+                         "description": f"{r['child']}.{r['child_col']} → {r['parent']}.{r['parent_col']}；"
+                                        f"依据：{'、'.join(r['provenance'])}"})
+            rels.append({"id": inv, "name": r["inverse_name"], "source_id": r["target_id"],
+                         "target_id": r["source_id"], "symmetric": False, "transitive": False, "functional": False,
+                         "inverse_id": r["id"], "description": f"{r['name']} 的反向关系"})
+        for cid in sorted(self.alt_keys):
+            if self.alt_keys[cid]:
+                rels.append({"id": f"{cid}_sameAs", "name": f"同一{self.concepts[cid]['name']}（标识对齐）",
+                             "source_id": cid, "target_id": cid, "symmetric": True, "transitive": True,
+                             "functional": False, "inverse_id": None,
+                             "description": f"{self.concepts[cid]['name']} 同时被 {'、'.join(self.alt_keys[cid])} 和 "
+                                            f"{'、'.join(self.identity[cid])} 引用，按 owl:sameAs 语义合并"})
+        for l in self.links:
+            rels.append({"id": l["id"], "name": l["name"], "source_id": l["source_id"], "target_id": l["target_id"],
+                         "symmetric": False, "transitive": False, "functional": False, "inverse_id": None,
+                         "description": f"多对多，经关联表 {l['table']}（{l['from_fk']['child_col']} → "
+                                        f"{l['to_fk']['child_col']}）"})
         self.model = {"format_version": "wing-model-editor/1", "concepts": concepts, "attributes": attrs,
                       "relations": rels, "annotations": []}
 
@@ -305,9 +396,12 @@ class OntologyBuild:
                     bid_of[(cid, tuple(key))] = bid
                     for alt in self.alt_keys.get(cid, []):
                         abid = f"{bid}__by_{alt}"
+                        # 备用键实体与主标识实体是同一对象：用“标识对齐”关系连到主绑定，物化后合并
                         bindings.append({"id": abid, "concept_id": cid, **fact_plane(t.db, t.name),
                                          "identity_scope": f"{cid}_by_{alt}", "key_columns": [alt],
-                                         "attributes": [], "references": []})
+                                         "attributes": [], "references": [{
+                                             "relation_id": f"{cid}_sameAs", "parent_binding_id": bid,
+                                             "joins": [{"child": k, "parent": k} for k in key]}]})
                         bid_of[(cid, (alt,))] = abid
         by_id = {b["id"]: b for b in bindings}
         for b in bindings:
@@ -323,22 +417,63 @@ class OntologyBuild:
                     continue
                 b["references"].append({"relation_id": r["id"], "parent_binding_id": parent,
                                         "joins": [{"child": col.name, "parent": r["parent_col"]}]})
+        # 关联表：主语用“源概念”的标识模板，产出 源概念 —关系→ 目标概念
+        for l in self.links:
+            t = tbl[l["table"]]
+            fa, fb = l["from_fk"], l["to_fk"]
+            tgt_bid = bid_of.get((l["target_id"], (fb["parent_col"],)))
+            # 主语必须与源概念某个绑定的标识一致：主标识或备用键标识
+            if self.identity[l["source_id"]] == [fa["parent_col"]]:
+                scope = l["source_id"]
+            elif fa["parent_col"] in self.alt_keys.get(l["source_id"], []):
+                scope = f"{l['source_id']}_by_{fa['parent_col']}"
+            else:
+                scope = None
+            if scope is None or tgt_bid is None:
+                self.decisions.append({"type": "link_table_unmapped", "table": l["table"],
+                                       "reason": "两端实体标识与关联列不一致，未生成映射"})
+                continue
+            planes.append(fact_plane(t.db, t.name))
+            bindings.append({"id": l["table"].replace(".", "__"), "concept_id": l["source_id"],
+                             **fact_plane(t.db, t.name), "identity_scope": scope,
+                             "key_columns": [fa["child_col"]], "attributes": [],
+                             # 关联表外键列可空：空值行不产生三元组（显式声明，OntoWing 给出警告）
+                             **({"null_key_policy": "skip"} if t.col(fa["child_col"]).nullable else {}),
+                             "references": [{"relation_id": l["id"], "parent_binding_id": tgt_bid,
+                                             "joins": [{"child": fb["child_col"], "parent": fb["parent_col"]}]}]})
         self.pipeline = {"format_version": "wing-pipeline-editor/2", "fact_planes": planes, "bindings": bindings}
         self.bindings = by_id
 
         items = []
-        for c in self.concepts.values():
-            for q in c["tables"]:
-                t = tbl[q]
-                pk = set(t.primary_key)
-                items.append({"reference": fact_plane(t.db, t.name), "dictionary": {
-                    "table_name": t.name,
-                    "columns": [{"name": col.name, "data_type": col.data_type, "nullable": col.nullable,
-                                 "primary_key": col.name in pk, "position": col.position} for col in t.columns]}})
+        snap_tables = [q for c in self.concepts.values() for q in c["tables"]] + [l["table"] for l in self.links]
+        for q in snap_tables:
+            t = tbl[q]
+            pk = set(t.primary_key)
+            items.append({"reference": fact_plane(t.db, t.name), "dictionary": {
+                "table_name": t.name,
+                "columns": [{"name": col.name, "data_type": col.data_type, "nullable": col.nullable,
+                             "primary_key": col.name in pk, "position": col.position} for col in t.columns]}})
         self.snapshots = {"profile": "current-fact-plane-definitions/2", "items": items}
         n_alt = sum(1 for b in bindings if "__by_" in b["id"])
+        self.log.append(f"层次：上位类 {len(self.abstract)} 个，具体概念 {len(self.concepts)} 个均已挂接上位类；"
+                        f"关系 {len(rels)} 条（含反向 {len(self.relations)}，多对多 {len(self.links)}）")
         self.log.append(f"数据管道映射：{len(bindings)} 个绑定（含备用键绑定 {n_alt}），"
                         f"{sum(len(b['references']) for b in bindings)} 条关联")
+
+    # ------------------------------------------------------------ 规则
+    def _rules(self):
+        derived, editor, meta, skipped = rulebook.derive(self)
+        self.model["concepts"].extend(derived)
+        self.derived = derived
+        self.rules = editor
+        self.rule_meta = meta
+        for sk in skipped:
+            self.decisions.append({"type": "rule_skipped", **sk})
+        chains = sum(1 for m in meta if any(it.get("kind") == "class" and it["predicate"] in {d["id"] for d in derived}
+                                            for it in m["body"]))
+        self.log.append(f"规则 {len(editor['rules'])} 条（事实规则 {sum(r['level'] == 'FR' for r in editor['rules'])}，"
+                        f"建议规则 {sum(r['level'] == 'DR' for r in editor['rules'])}，引用其他规则结论的 {chains} 条），"
+                        f"派生类 {len(derived)} 个，约束 {len(editor['constraints'])} 条")
 
     # ------------------------------------------------------------ 供问答使用的索引
     def column_names(self, qname, col):
@@ -361,7 +496,9 @@ class OntologyBuild:
         return list(dict.fromkeys(n for n in names if n))
 
     def summary(self):
-        return {"concepts": len(self.concepts), "attributes": len(self.attributes),
-                "relations": len(self.relations), "bindings": len(self.pipeline["bindings"]),
+        return {"concepts": len(self.concepts), "abstract_classes": len(self.abstract),
+                "derived_classes": len(self.derived), "attributes": len(self.attributes),
+                "relations": len(self.model["relations"]), "rules": len(self.rules["rules"]),
+                "constraints": len(self.rules["constraints"]), "bindings": len(self.pipeline["bindings"]),
                 "tables_in_scope": len(self.tables), "tables_excluded": [t.qname for t in self.excluded],
                 "metadata_source": self.meta_source}

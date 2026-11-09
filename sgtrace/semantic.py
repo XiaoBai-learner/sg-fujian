@@ -29,14 +29,34 @@ class Predicate:
 
 
 class SemanticIndex:
-    def __init__(self, ontology_ttl, mapping_ttl, pipeline):
+    def __init__(self, ontology_ttl, mapping_ttl, pipeline, rules_ttl="", rule_meta=None):
         self.onto = rdflib.Graph().parse(data=ontology_ttl, format="turtle")
         self.map = rdflib.Graph().parse(data=mapping_ttl, format="turtle", publicID="urn:map:")
         db_of = {b["id"]: b["schema_name"] for b in pipeline["bindings"]}
         self.concepts = {}
+        self.parents = {}
+        self.comments = {}
         for c in self.onto.subjects(RDF.type, RDFS.Class):
             cid = str(c).removeprefix(ALITA_NS)
             self.concepts[cid] = self._label(c)
+            self.parents[cid] = sorted(str(o).removeprefix(ALITA_NS) for o in self.onto.objects(c, RDFS.subClassOf))
+            self.comments[cid] = str(self.onto.value(c, RDFS.comment) or "")
+        # 规则：从导出的 rules.ttl 读取（只含 OntoWing 导出的事实规则），元数据补充中文名与说明
+        self.rules = []
+        rule_meta = {m["id"]: m for m in (rule_meta or [])}
+        if rules_ttl:
+            from .reason import parse_rules
+            exported = {r["id"].split(":")[0]: r for r in parse_rules(rules_ttl)}
+        else:
+            exported = {}
+        for rid, m in rule_meta.items():
+            r = exported.get(rid)
+            body_classes = sorted({it["predicate"] for it in m["body"] if it.get("kind") == "class"})
+            body_preds = sorted({it["predicate"] for it in m["body"] if it.get("kind") in ("attribute", "relation")})
+            self.rules.append({"id": rid, "name": m["name"], "level": m["level"], "nl": m["nl"],
+                               "source": m["source"], "head": m["head"], "uses_classes": body_classes,
+                               "uses_predicates": body_preds, "swrl": r["source"] if r else "",
+                               "exported": r is not None})
         self.preds = {}
         for p in self.onto.subjects(RDF.type, RDF.Property):
             pid = str(p).removeprefix(ALITA_NS)
@@ -73,7 +93,7 @@ class SemanticIndex:
                         rel_targets.append((pid, otpl.split("{")[0]))
         self.relation_target = {}   # relation id -> (父表, 父键列)
         for pid, prefix in rel_targets:
-            if prefix in self.subject_key:
+            if prefix in self.subject_key and not pid.endswith("_sameAs"):
                 self.relation_target[pid] = self.subject_key[prefix]
 
     def _label(self, node):
@@ -84,7 +104,7 @@ class SemanticIndex:
 
     def _bind(self, pid, table, col):
         p = self.preds.get(pid)
-        if p is None:
+        if p is None or pid.endswith("_sameAs"):   # 标识对齐不是业务字段
             return
         if (table, col) not in p.columns:
             p.columns.append((table, col))
@@ -110,6 +130,12 @@ class SemanticIndex:
             for table, col in p.columns:
                 out.append((f"{table}.{col}", pid, names))
         return out
+
+    def rules_for_class(self, cid):
+        """推导出该类的规则、以及在规则体里用到该类的规则。"""
+        return {"derived_by": [r for r in self.rules if r["head"] == cid],
+                "used_by": [r for r in self.rules if cid in r["uses_classes"]
+                            or any(self.preds[x].domain == cid for x in r["uses_predicates"] if x in self.preds)]}
 
     def describe(self, qcol):
         table, col = qcol.rsplit(".", 1)
@@ -145,17 +171,44 @@ class SemanticIndex:
         return sorted(out)
 
     def graph(self):
-        nodes = [{"id": cid, "label": lab} for cid, lab in self.concepts.items()]
+        mapped = {p.domain for p in self.preds.values() if p.columns}
+        derived = {r["head"] for r in self.rules}
+        nodes = []
+        for cid, lab in self.concepts.items():
+            kind = "derived" if cid in derived else ("concrete" if cid in mapped else "abstract")
+            nodes.append({"id": cid, "label": lab, "kind": kind, "parents": self.parents.get(cid, []),
+                          "comment": self.comments.get(cid, "")})
         attrs = defaultdict(list)
         edges = []
+        inverse = {}
+        for pid in self.preds:
+            inv = self.onto.value(rdflib.URIRef(ALITA_NS + pid), rdflib.OWL.inverseOf)
+            if inv is not None:
+                inverse[pid] = str(inv).removeprefix(ALITA_NS)
         for pid, p in self.preds.items():
             item = {"id": pid, "label": p.label, "alt_labels": p.alt_labels,
                     "columns": [f"{t}.{c}" for t, c in p.columns]}
             if p.kind == "attribute":
                 attrs[p.domain].append(item)
+            elif pid.endswith("_inverse"):
+                continue   # 反向关系作为正向边的属性展示
             else:
-                edges.append({"id": pid, "source": p.domain, "target": p.range, "label": p.label, **item})
+                edges.append({"id": pid, "source": p.domain, "target": p.range, "label": p.label,
+                              "kind": "identity" if pid.endswith("_sameAs") else "relation",
+                              "inverse_label": self.preds[f"{pid}_inverse"].label if f"{pid}_inverse" in self.preds else "",
+                              **item})
         for n in nodes:
             n["attributes"] = attrs.get(n["id"], [])
             n["tables"] = sorted({c.rsplit(".", 1)[0] for a in n["attributes"] for c in a["columns"]})
-        return {"nodes": nodes, "edges": edges}
+            n["subclasses"] = [m["id"] for m in nodes if n["id"] in m["parents"]]
+        for n in nodes:
+            for par in n["parents"]:
+                edges.append({"id": f"{n['id']}__isa__{par}", "source": n["id"], "target": par, "label": "是一种",
+                              "kind": "subclass", "columns": []})
+        rule_nodes = []
+        pred_domain = {pid: p.domain for pid, p in self.preds.items()}
+        for r in self.rules:
+            uses = sorted(set(r["uses_classes"]) | {pred_domain[x] for x in r["uses_predicates"] if x in pred_domain})
+            rule_nodes.append({**r, "uses": uses,
+                               "predicate_labels": {x: self.preds[x].label for x in r["uses_predicates"] if x in self.preds}})
+        return {"nodes": nodes, "edges": edges, "rules": rule_nodes}

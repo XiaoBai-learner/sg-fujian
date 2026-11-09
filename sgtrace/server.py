@@ -38,7 +38,8 @@ app = FastAPI(title="sgtrace 字段溯源 PoC", docs_url="/api/docs", openapi_ur
 _lock = threading.Lock()
 _state = {"result": None, "engine": None, "last_build": 0.0}
 
-ARTIFACT_FILES = {"ontology.ttl": "text/turtle", "mapping.r2rml.ttl": "text/turtle",
+ARTIFACT_FILES = {"ontology.ttl": "text/turtle", "mapping.r2rml.ttl": "text/turtle", "rules.ttl": "text/turtle",
+                  "wing_rules.json": "application/json",
                   "wing_model.json": "application/json", "wing_pipeline.json": "application/json",
                   "fact_plane_snapshots.json": "application/json", "build_report.json": "application/json"}
 
@@ -220,7 +221,7 @@ def build(req: BuildRequest):
             "wing_validation": {k: {"valid": v["valid"], "checks": v.get("checks"),
                                     "diagnostics": v.get("diagnostics", [])[:20]}
                                 for k, v in rep["wing_validation"].items()},
-            "r2rml_execution": rep["r2rml_execution"],
+            "r2rml_execution": rep["r2rml_execution"], "reasoning": rep.get("reasoning"), "rules": rep.get("rules"),
             "evaluation": None if ev is None else {k: ev[k] for k in ("system", "baseline_keyword", "ablations")}
             | {"holdout": {k: ev["holdout"][k] for k in ("overall", "by_group", "baseline_keyword")},
                "misses": [r for r in ev["rows"] + ev["holdout"]["rows"] if not r["strict"]]}}

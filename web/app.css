@@ -51,7 +51,7 @@ th { background: #f7f8fa; font-weight: 600; color: #3a4252; }
 .metric span { color: var(--muted); font-size: 12px; }
 .onto-layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); gap: 16px; }
 @media (max-width: 1000px) { .onto-layout { grid-template-columns: 1fr; } }
-#graph { width: 100%; height: 560px; border: 1px solid var(--line); border-radius: 6px; background: #fbfcfd; }
+#graph { width: 100%; height: 630px; border: 1px solid var(--line); border-radius: 6px; background: #fbfcfd; }
 #graph .node { cursor: pointer; }
 #graph .node rect { stroke-width: 1.5; fill: #fff; }
 #graph .node.selected rect { stroke-width: 3; fill: #eef5ff; }
@@ -74,3 +74,20 @@ th { background: #f7f8fa; font-weight: 600; color: #3a4252; }
 .mono { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12.5px; }
 details summary { cursor: pointer; color: var(--primary); font-size: 12.5px; margin-top: 4px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.sys-abstract { stroke: #3a4252; background: #3a4252; } .sys-derived { stroke: #1b7a3d; background: #1b7a3d; }
+#graph .node.k-abstract rect { fill: #eef0f4; }
+#graph .node.k-derived rect { stroke-dasharray: 4 2; fill: #f1faf4; }
+#graph .node.rule polygon { fill: #fff6ec; stroke: #b25b00; stroke-width: 1.5; }
+#graph .node.rule.dr polygon { stroke-dasharray: 3 2; }
+#graph .node.rule text { font-size: 11px; }
+#graph .node.rule.selected polygon { stroke-width: 3; fill: #ffe9cf; }
+#graph .edge.isa { stroke: #3a4252; stroke-width: 1; }
+#graph .edge.rel { stroke: #8a95a8; }
+#graph .edge.rule-in { stroke: #b25b00; stroke-dasharray: 4 3; stroke-width: 1; }
+#graph .edge.rule-out { stroke: #b25b00; stroke-width: 1.6; }
+#graph .edge.hl { stroke: var(--primary); stroke-width: 2.4; stroke-dasharray: none; }
+#graph .band { font-size: 11px; fill: #8a93a3; }
+.concept-list .group { font-size: 12px; color: var(--muted); align-self: center; margin-left: 6px; }
+fieldset { border: 0; padding: 0; margin: 0; }
+.detail-card a { color: var(--primary); }

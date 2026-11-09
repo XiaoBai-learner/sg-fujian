@@ -19,7 +19,7 @@ MySQL information_schema ─┐
 （或 DDL 文件回退）        ├─ sgtrace.builder ─→ wing-model-editor/1 + wing-pipeline-editor/2
 DataWorks 血缘导出 + 任务 SQL ┤                       │
 热点 SQL 日志 ─────────────┘                       ▼ OntoWing 领域库（validate_editor / render_member）
-                                         ontology.ttl（OWL） + mapping.ttl（R2RML）
+                                         ontology.ttl（OWL） + mapping.ttl（R2RML） + rules.ttl（SWRL）
                                                    │            │
                                      Morph-KGC 在沙箱实跑校验     ▼
                                                    sgtrace.semantic（只读导出文件建索引）
@@ -39,6 +39,20 @@ DataWorks 血缘导出 + 任务 SQL ┤                       │
   - 同一 (表, 列) 只能对应一种 datatype。
 - **问答只走本体 + R2RML**：源字段候选全部来自 `SemanticIndex`（解析导出的 TTL），不直接查 DDL。中台列名注释只用于判定页面背后的中台表，再沿血缘追到源字段。
 
+## 本体结构（对象 · 关系 · 规则）
+
+- **层次**：6 个上位类（参与方、计量与采集设备、计量位置、计量数据、电费账务、客户服务事件），下挂 15 个业务对象；7 个规则派生类（欠费客户、投诉工单等）是业务对象的子类。层次关系写在 `glossary.py` 的 `TOP_CLASSES` 和 `CONCEPT_PARENT` 里，属于待专家确认的领域知识。
+- **关系**：外键推断出 20 条一对多关系，命名优先用领域动词（`RELATION_VERBS`，如“归属供电单位”“冲抵应收”），每条都配有反向关系。另有 2 条按标识对齐的同一性关系（*_sameAs）。
+- **关联表**：只有“主键 + 两个外键 + 日期”的表不建成概念，而是转成多对多关系。当前只有 C_METER_MP_RELA，转成“计量点 安装电能表”。
+- **规则**（`sgtrace/rules.py`）：共 7 条，6 条事实规则 + 1 条建议规则，另有 6 条约束。
+  - 规则通过属性或关系把对象连起来，并且可以引用其他规则的结论，例如“重点关注客户 = 欠费客户 ∧ 投诉客户”。
+  - 规则用“源表.列”书写，构建时再解析成本体里的属性或关系。码值取自 DDL 注释，阈值是领域假设，标注了待业务确认。
+- **执行与核对**：
+  - `sgtrace/reason.py` 在 R2RML 物化出的实例图上，前向链执行 OntoWing 导出的 SWRL。
+  - 每条规则都有一条独立 SQL（`cross_check`），在原库上重算结果，两边数量必须一致。
+  - 约束检查在实例上完成，因为 OntoWing 不导出约束（导出损失记为 `rule_constraints`）。
+  - 建议规则（DR）OntoWing 不导出为事实规则，只用于展示，并给出 SQL 计数供参考。
+
 ## 目录
 
 ```
@@ -46,7 +60,9 @@ sgtrace/                溯源服务
   config.py             路径、MySQL（.env）、OntoWing 位置
   metadata.py           读 MySQL information_schema / 解析 DDL；在 MySQL 建库
   evidence.py           血缘（导出 + 任务 SQL 解析 + 命名约定）、JOIN 证据、热度
-  glossary.py           人工领域词表：缩写、同义词组、CIM 对应（待专家确认）
+  glossary.py           人工领域词表：缩写、同义词组、上位类与层次、关系动词、CIM 对应（待专家确认）
+  rules.py              业务规则、派生类、约束，以及每条规则的独立 SQL 核对口径
+  reason.py             在实例图上执行 SWRL 规则、检查约束
   builder.py            生成 OntoWing model/pipeline 编辑器 JSON 与表字典快照
   wing.py               OntoWing 适配层
   verify.py             Morph-KGC 在沙箱 SQLite 上执行 R2RML
@@ -112,8 +128,10 @@ scripts/public.sh stop
 
 - 本机 MySQL 已建 4 个库共 60 张表，只有表结构。从 `information_schema` 读到的结构与 DDL 文件逐表一致，MySQL 和 DDL 两条来源生成的本体也完全相同。
 
-- 本体：16 个概念、91 个属性、22 条关系。数据管道映射：19 个绑定。OntoWing 静态校验通过（sources=pass）。
-- R2RML 实跑：68 万个三元组，没有空概念。唯一 1 个悬空引用是根单位 `351` 不在组织表中，这是数据如此，不是映射错误。
+- 本体规模：6 个上位类、15 个业务对象、7 个派生类、89 个属性、43 条关系（含反向关系和同一性关系）、7 条规则、6 条约束；数据管道映射 19 个绑定。
+- OntoWing 校验：本体、数据管道映射、规则三类全部通过。
+- R2RML 实跑：68 万个三元组，按标识对齐合并了 1240 个 IRI。唯一 1 个悬空引用是根单位 `351` 不在组织表里，这是数据本身的情况。
+- 规则推理：6 条事实规则的推理结果与独立 SQL 全部一致（欠费客户 47、投诉客户 113、重点关注客户 14 等），6 条约束没有违反；推理耗时约 7 秒。
 - 严格准确率：
 
   | 数据集 | 本系统 | 关键词基线 |

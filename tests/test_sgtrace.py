@@ -42,6 +42,58 @@ def test_wing_validates_model_and_pipeline(result):
     assert v["pipeline"]["checks"]["sources"] == "pass"
 
 
+def test_wing_validates_rules(result):
+    v = result.report["wing_validation"]["rules"]
+    assert v["valid"], v["diagnostics"]
+
+
+def test_every_business_object_has_a_parent_class(result):
+    model = result.build.model
+    concrete = set(result.build.concepts)
+    by_id = {c["id"]: c for c in model["concepts"]}
+    assert all(by_id[c]["parents"] for c in concrete)
+    tops = {p for c in concrete for p in by_id[c]["parents"]}
+    assert tops <= set(result.build.abstract) and len(tops) == 6
+    assert "rdfs:subClassOf alita:Party" in result.ontology_ttl
+
+
+def test_link_table_becomes_relation_not_concept(result):
+    assert "MeterInstallation" not in result.build.concepts
+    rel = next(r for r in result.build.model["relations"] if r["id"] == "MeteringPoint_viaMeterMpRela")
+    assert (rel["source_id"], rel["target_id"], rel["name"]) == ("MeteringPoint", "Meter", "安装电能表")
+    assert 'rr:tableName "C_METER_MP_RELA"' in result.mapping_ttl
+
+
+def test_relations_have_business_names_and_inverses(result):
+    rels = {r["id"]: r for r in result.build.model["relations"]}
+    assert rels["Receivable_consNo"]["name"] == "应收客户"
+    assert rels["Payment_rcvblId"]["name"] == "冲抵应收"
+    inv = rels[rels["Receivable_consNo"]["inverse_id"]]
+    assert (inv["source_id"], inv["target_id"]) == ("Consumer", "Receivable")
+
+
+def test_rules_link_objects_and_chain(result):
+    rules = {r["id"]: r for r in result.semantic.rules}
+    assert len(rules) == 7 and sum(r["exported"] for r in rules.values()) == 6   # DR 不导出
+    assert set(rules["keyAttentionConsumer"]["uses_classes"]) == {"ArrearsConsumer", "ComplainingConsumer"}
+    assert "Receivable_consNo" in rules["arrearsConsumer"]["uses_predicates"]   # 规则通过关系连接两个对象
+    assert "alita:ComplaintWorkOrder(?w) ^ alita:WorkOrder_custNo(?w, ?c)" in result.rules_ttl
+    g = result.semantic.graph()
+    kinds = {n["id"]: n["kind"] for n in g["nodes"]}
+    assert kinds["ArrearsConsumer"] == "derived" and kinds["Party"] == "abstract" and kinds["Consumer"] == "concrete"
+
+
+def test_rule_question_returns_chain():
+    from sgtrace.qa import QAEngine
+    r = pipeline.run("ddl", execute_r2rml=False, run_eval=False, write=False)
+    a = QAEngine(r.build, r.semantic, r.evidence).answer_question("重点关注客户是怎么来的")
+    assert a["status"] == "rule"
+    names = [c["rule"] for c in a["chain"]]
+    assert names[0] == "重点关注客户认定" and {"欠费客户认定", "投诉客户认定", "投诉工单认定"} <= set(names)
+    fields = {f["column"] for c in a["chain"] for f in c["fields"]}
+    assert {"yx186.A_RCVBL_FLOW.SETTLE_FLAG", "kf95598.t_kf_workorder.BUSI_TYPE"} <= fields
+
+
 def test_noise_tables_excluded(result):
     excluded = set(result.build.summary()["tables_excluded"])
     assert excluded == {"yx186.C_CONS_BAK_20230601", "yx186.TMP_CONS_CHK"}
@@ -88,8 +140,15 @@ def test_free_question():
 
 
 @pytest.mark.slow
-def test_r2rml_executes_on_sandbox():
+def test_r2rml_and_rules_execute_on_sandbox():
     r = pipeline.run("ddl", execute_r2rml=True, run_eval=False, write=False)
     x = r.report["r2rml_execution"]
     assert x["ran"] and x["passed"], x
     assert x["empty_concepts"] == []
+    assert x["relations"]["MeteringPoint_viaMeterMpRela"]["triples"] == 640
+    assert x["identity_merged"] > 0
+    rs = r.report["reasoning"]
+    assert rs["passed"], rs["rules"]
+    assert all(c["violations"] == 0 for c in rs["constraints"]), rs["constraints"]
+    chained = next(y for y in rs["rules"] if y["rule"] == "keyAttentionConsumer")
+    assert chained["inferred"] == chained["sql_check"] > 0

@@ -87,7 +87,9 @@ python3 datagen/build.py                   # 重新生成 data/（会先删除�
 
 MySQL：本机是 `/usr/local/mysql`（9.3.0，不在 PATH 中）。凭据放在项目根目录 `.env`（已 gitignore），包含 `MYSQL_HOST`、`MYSQL_PORT`、`MYSQL_USER`、`MYSQL_PASSWORD`。演示页上点“在 MySQL 中建库建表”会创建 `yx186`、`cjxt`、`kf95598`、`sgfj_dataplatform` 四个库，执行 DROP + CREATE，只建表结构。未配置时自动退回读 DDL 文件，两条路径产出同一份元数据结构。
 
-## 当前结果（DDL 来源，2026-11-09）
+## 当前结果（2026-11-09）
+
+- 本机 MySQL 已建 4 个库共 60 张表，只有表结构。从 `information_schema` 读到的结构与 DDL 文件逐表一致，MySQL 和 DDL 两条来源生成的本体也完全相同。
 
 - 本体：16 个概念、91 个属性、22 条关系。数据管道映射：19 个绑定。OntoWing 静态校验通过（sources=pass）。
 - R2RML 实跑：68 万个三元组，没有空概念。唯一 1 个悬空引用是根单位 `351` 不在组织表中，这是数据如此，不是映射错误。

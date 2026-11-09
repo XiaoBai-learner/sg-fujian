@@ -54,7 +54,8 @@ sgtrace/                溯源服务
   qa.py                 截图溯源与自由提问
   evaluate.py           对 gold 评测：开发集、留出集、关键词基线、消融
   pipeline.py           串起全流程并写 artifacts/
-  server.py             FastAPI 演示服务（127.0.0.1:8765，无鉴权，仅本机）
+  server.py             FastAPI 演示服务：本机模式（127.0.0.1:8765，无鉴权）/ 公网模式（SGTRACE_PUBLIC=1）
+scripts/public.sh       公网演示：启动公网模式服务 + cloudflared 临时隧道（start|stop|status）
 web/                    演示前端（无构建步骤）：构建本体与映射 / 本体浏览 / 字段溯源问答
 artifacts/              构建产物（gitignore）：ontology.ttl、mapping.r2rml.ttl、wing_*.json、build_report.json
 datagen/                测试数据生成器（确定性）
@@ -86,6 +87,26 @@ python3 datagen/build.py                   # 重新生成 data/（会先删除�
 ```
 
 MySQL：本机是 `/usr/local/mysql`（9.3.0，不在 PATH 中）。凭据放在项目根目录 `.env`（已 gitignore），包含 `MYSQL_HOST`、`MYSQL_PORT`、`MYSQL_USER`、`MYSQL_PASSWORD`。演示页上点“在 MySQL 中建库建表”会创建 `yx186`、`cjxt`、`kf95598`、`sgfj_dataplatform` 四个库，执行 DROP + CREATE，只建表结构。未配置时自动退回读 DDL 文件，两条路径产出同一份元数据结构。
+
+## 公网演示
+
+```bash
+scripts/public.sh start    # 打印 https://*.trycloudflare.com 地址；用户名 demo，口令在 .public_token
+scripts/public.sh status
+scripts/public.sh stop
+```
+
+- 服务仍只监听 127.0.0.1:8766，对外完全依赖 cloudflared 出站隧道。不开放端口，也不改路由器或防火墙。
+- 公网模式和本机模式的区别：
+  - 所有路径都要 Basic 认证，口令比较用常量时间。
+  - 认证失败按 CF-Connecting-IP 限流，10 分钟内最多 20 次。
+  - 禁用 MySQL 建库接口和 /api/docs。
+  - 构建串行执行，60 秒一次。
+  - 状态和错误信息里不返回本机路径、MySQL 账号和异常细节。
+  - 加 CSP、X-Frame-Options 等安全头。
+- 临时隧道（trycloudflare）没有 SLA，每次启动地址都会变，电脑休眠或断网后就失效。如果要长期使用，需要 Cloudflare 账号和自有域名，建命名隧道，再加 Cloudflare Access。
+- 口令存放在 `.public_token`，权限 600，已 gitignore。轮换口令：先删除这个文件，再执行 `scripts/public.sh stop && scripts/public.sh start`。
+- 演示数据全部是生成的，但服务连着本机 MySQL 的 root 账号，只读 information_schema。不要在公网模式下放开建库接口。
 
 ## 当前结果（2026-11-09）
 
@@ -122,4 +143,4 @@ MySQL：本机是 `/usr/local/mysql`（9.3.0，不在 PATH 中）。凭据放在
 - `glossary.py` 是人工领域知识，消融里单独报告它的贡献。CIM 对应标注为“待专家确认”。
 - 新增业务领域时，单独建一套 `sources_<领域>.py`、词表和本体，不要并入营销域。
 - 不要提交 `.env`、真实客户数据或产物。所有姓名、电话、编号都是生成的。
-- 演示服务没有鉴权，只能监听 127.0.0.1。
+- 两种模式都只监听 127.0.0.1。本机模式没有鉴权；对外只能走 `scripts/public.sh`（公网模式 + 隧道），不能直接监听 0.0.0.0。

@@ -41,10 +41,11 @@ async function refreshStatus() {
   try {
     const s = await api("/api/status");
     const w = s.ontowing, m = s.mysql;
+    if (s.public) { $("#btn-mysql").hidden = true; $("#mysql-msg").textContent = "公网演示模式：已禁用建库，构建每 60 秒限一次。"; }
     const dbs = Object.entries(m.databases || {}).map(([k, v]) => `${k}:${v}`).join(" ");
     $("#status").innerHTML = [
       `OntoWing：${w.available ? `<span class="badge ok">可用</span> ${esc(w.commit)}` : `<span class="badge bad">不可用</span> ${esc(w.error)}`}`,
-      `MySQL：${!m.configured ? '<span class="badge warn">未配置 .env</span>' : m.connected ? `<span class="badge ok">已连接</span> ${esc(m.target)} ${esc(dbs || "（未建库）")}` : `<span class="badge bad">连接失败</span> ${esc(m.error || "")}`}`,
+      `MySQL：${!m.configured ? '<span class="badge warn">未配置 .env</span>' : m.connected ? `<span class="badge ok">已连接</span> ${esc(m.target || "")} ${esc(dbs || "（未建库）")}` : `<span class="badge bad">连接失败</span> ${esc(m.error || "")}`}`,
       `沙箱数据：${s.sandbox ? '<span class="badge ok">就绪</span>' : '<span class="badge warn">缺失</span>'}`,
     ].join("<br>");
   } catch (e) { $("#status").textContent = "服务不可用：" + e.message; }
@@ -80,7 +81,7 @@ function renderBuild(r) {
   html += `<div class="card"><h2>本体规模</h2><div class="grid">
     ${metric(s.concepts, "概念（类）")}${metric(s.attributes, "属性")}${metric(s.relations, "关系")}
     ${metric(s.bindings, "数据管道绑定")}${metric(s.tables_in_scope, "纳入的源表")}${metric(s.tables_excluded.length, "剔除的噪声表")}</div>
-    <p class="hint">元数据来源：${esc(s.metadata_source === "mysql" ? "MySQL information_schema" : "DDL 文件")}；OntoWing ${esc(r.ontowing.commit)}（${esc(r.ontowing.backend)}）</p></div>`;
+    <p class="hint">元数据来源：${esc(s.metadata_source === "mysql" ? "MySQL information_schema" : "DDL 文件")}；OntoWing ${esc(r.ontowing.commit)}${r.ontowing.backend ? `（${esc(r.ontowing.backend)}）` : ""}</p></div>`;
   const wv = r.wing_validation;
   html += `<div class="card"><h2>OntoWing 静态校验</h2><table><thead><tr><th>对象</th><th>结果</th><th>检查项</th><th>诊断</th></tr></thead><tbody>
     ${["model", "pipeline"].map((k) => `<tr><td>${k === "model" ? "本体（wing-model-editor/1）" : "数据管道映射（wing-pipeline-editor/2）"}</td>

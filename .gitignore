@@ -7,3 +7,7 @@ __pycache__/
 data/sandbox/
 # 构建产物可由服务或 sgtrace.pipeline 重建
 artifacts/
+# 公网演示访问口令，禁止提交
+.public_token
+.cloudflared/
+.run/

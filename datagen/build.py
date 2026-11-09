@@ -17,8 +17,9 @@ from dataplatform import ETLS, build_ods, odps_task_sql, select_sql
 from gen import build as gen_rows
 from hotsql import HOT_SQL
 from lineage import Lineage, equivalents
+from mysql_ddl import render as render_mysql
 from ontology import build_ontology_ttl, build_r2rml_ttl
-from pages import PAGES, REQUESTS
+from pages import HOLDOUT_PAGES, HOLDOUT_REQUESTS, PAGES, REQUESTS
 from sources import TABLES, resolve_comments
 
 ROOT = Path(__file__).resolve().parent.parent / "data"
@@ -144,6 +145,11 @@ def main():
         tasks.append(e)
     main_db.commit()
 
+    md = inp / "ddl" / "mysql"
+    md.mkdir(parents=True)
+    for db, text in render_mysql(TABLES, ods, ETLS).items():
+        (md / f"{db}.sql").write_text(text, encoding="utf-8")
+
     d = inp / "ddl" / "platform"
     d.mkdir(parents=True)
     (d / "schema.sql").write_text(
@@ -189,52 +195,53 @@ def main():
               [[q, n, u, rnd.randint(80, 9000), s] for q, n, u, s in HOT_SQL])
 
     # ---------- 需求（截图 OCR 结果） + 答案 ----------
-    req_dir = inp / "requests"
-    req_dir.mkdir(parents=True)
-    answers = []
-    index_lines = []
-    for rid, pid, dept, asked, low_ctx in REQUESTS:
-        pg = PAGES[pid]
-        exprs = [f[2] if len(f) > 2 else f[1].split(".")[-1] for f in pg["fields"]]
-        sql = f"SELECT {', '.join(exprs)} FROM {pg['frm']}"
-        if pg.get("where"):
-            sql += f" WHERE {pg['where']}"
-        sql += f" ORDER BY {pg['order']} LIMIT 6"
-        data = main_db.execute(sql).fetchall()
-        assert data, f"{pid} 页面查询为空"
-        labels = [f[0] for f in pg["fields"]]
-        ocr = [] if low_ctx else [pg["nav"], pg["title"]]
-        ocr.append("  ".join(labels))
-        ocr += ["  ".join(fmt(v) or "-" for v in r) for r in data]
-        ocr.append(f"共 {rnd.randint(30, 900)} 条  < 1 2 3 ... >")
-        req = {
-            "request_id": rid, "from_dept": dept,
-            "email_subject": f"【取数需求】{'' if low_ctx else pg['title']}页面字段来源确认",
-            "email_body": f"中台同事你好：附件截图{'是' + pg['system'] + '的' + pg['title'] + '页面' if not low_ctx else '是我们日常用的一个页面'}，"
-                          f"麻烦帮忙确认以下字段分别来自哪个系统的哪张表、哪个字段：{'、'.join(asked)}。谢谢！",
-            "screenshot_ocr": "\n".join(ocr),
-            "asked_fields": asked,
-        }
-        (req_dir / f"{rid}.json").write_text(json.dumps(req, ensure_ascii=False, indent=2), encoding="utf-8")
-        index_lines.append([rid, pid, dept, "低" if low_ctx else "正常", len(asked)])
+    def emit_requests(req_dir, answers_path, pages, requests):
+        req_dir.mkdir(parents=True)
+        answers, index_lines = [], []
+        for rid, pid, dept, asked, low_ctx in requests:
+            pg = pages[pid]
+            exprs = [f[2] if len(f) > 2 else f[1].split(".")[-1] for f in pg["fields"]]
+            sql = f"SELECT {', '.join(exprs)} FROM {pg['frm']}"
+            if pg.get("where"):
+                sql += f" WHERE {pg['where']}"
+            sql += f" ORDER BY {pg['order']} LIMIT 6"
+            data = main_db.execute(sql).fetchall()
+            assert data, f"{pid} 页面查询为空"
+            labels = [f[0] for f in pg["fields"]]
+            ocr = [] if low_ctx else [pg["nav"], pg["title"]]
+            ocr.append("  ".join(labels))
+            ocr += ["  ".join(fmt(v) or "-" for v in r) for r in data]
+            ocr.append(f"共 {rnd.randint(30, 900)} 条  < 1 2 3 ... >")
+            req = {
+                "request_id": rid, "from_dept": dept,
+                "email_subject": f"【取数需求】{'' if low_ctx else pg['title']}页面字段来源确认",
+                "email_body": f"中台同事你好：附件截图{'是' + pg['system'] + '的' + pg['title'] + '页面' if not low_ctx else '是我们日常用的一个页面'}，"
+                              f"麻烦帮忙确认以下字段分别来自哪个系统的哪张表、哪个字段：{'、'.join(asked)}。谢谢！",
+                "screenshot_ocr": "\n".join(ocr),
+                "asked_fields": asked,
+            }
+            (req_dir / f"{rid}.json").write_text(json.dumps(req, ensure_ascii=False, indent=2), encoding="utf-8")
+            index_lines.append([rid, pid, dept, "低" if low_ctx else "正常", len(asked)])
+            fmap = {f[0]: f[1] for f in pg["fields"]}
+            for lab in asked:
+                page_col = fmap[lab]
+                is_source_page = page_col.count(".") == 2
+                origins, kind, _ = lin.trace(page_col)
+                origins = sorted(origins)
+                eq = sorted({x for o in origins for x in equivalents(o)} - set(origins))
+                answers.append([rid, pid, lab, "" if is_source_page else page_col, ";".join(origins), kind, ";".join(eq)])
+        write_csv(req_dir / "_index.csv", ["request_id", "page_id", "from_dept", "context_level", "n_fields"], index_lines)
+        write_csv(answers_path,
+                  ["request_id", "page_id", "field_label", "platform_column", "source_columns", "derivation", "acceptable_equivalents"],
+                  answers)
+        return answers
 
-        fmap = {f[0]: f[1] for f in pg["fields"]}
-        for lab in asked:
-            page_col = fmap[lab]
-            is_source_page = page_col.count(".") == 2
-            origins, kind, _ = lin.trace(page_col if is_source_page else page_col)
-            origins = sorted(origins)
-            eq = sorted({x for o in origins for x in equivalents(o)} - set(origins))
-            answers.append([rid, pid, lab, "" if is_source_page else page_col, ";".join(origins), kind, ";".join(eq)])
-
-    write_csv(req_dir / "_index.csv", ["request_id", "page_id", "from_dept", "context_level", "n_fields"], index_lines)
-    write_csv(gold / "answers.csv",
-              ["request_id", "page_id", "field_label", "platform_column", "source_columns", "derivation", "acceptable_equivalents"],
-              answers)
+    answers = emit_requests(inp / "requests", gold / "answers.csv", PAGES, REQUESTS)
+    holdout = emit_requests(inp / "requests_holdout", gold / "answers_holdout.csv", HOLDOUT_PAGES, HOLDOUT_REQUESTS)
 
     # ---------- 页面定义（真值，含背后表） ----------
     write_csv(gold / "pages.csv", ["page_id", "title", "system", "backing_table", "field_label", "backing_column"],
-              [[pid, p["title"], p["system"], p["frm"].split(" ")[0], f[0], f[1]] for pid, p in PAGES.items() for f in p["fields"]])
+              [[pid, p["title"], p["system"], p["frm"].split(" ")[0], f[0], f[1]] for pid, p in {**PAGES, **HOLDOUT_PAGES}.items() for f in p["fields"]])
 
     # ---------- 完整血缘（真值） ----------
     write_csv(gold / "lineage_full.csv",
@@ -256,7 +263,8 @@ def main():
 
     main_db.close()
     print(f"源表 {len(TABLES)} 张，中台表 {len(ods) + len(ETLS)} 张，血缘边 {len(lin.edges)}（导出 {len(exported)}），"
-          f"热点 SQL {len(HOT_SQL)} 条，需求 {len(REQUESTS)} 个，待溯源字段 {len(answers)} 个")
+          f"热点 SQL {len(HOT_SQL)} 条，需求 {len(REQUESTS)} 个 / 字段 {len(answers)} 个，"
+          f"留出集需求 {len(HOLDOUT_REQUESTS)} 个 / 字段 {len(holdout)} 个")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,58 @@
+-- 本地 MySQL 替身库：cjxt（只有表结构）
+CREATE DATABASE IF NOT EXISTS `cjxt` DEFAULT CHARACTER SET utf8mb4;
+USE `cjxt`;
+
+DROP TABLE IF EXISTS `R_TMNL_RUN`;
+CREATE TABLE `R_TMNL_RUN` (
+  `TERMINAL_ID` bigint NOT NULL,
+  `TMNL_ASSET_NO` varchar(32) NOT NULL,
+  `TMNL_TYPE_CODE` varchar(4) COMMENT '终端类型 01集中器 02专变终端',
+  `TERMINAL_ADDR` varchar(32),
+  `ORG_NO` varchar(16),
+  `RUN_STATUS` varchar(2),
+  `INST_DATE` date,
+  PRIMARY KEY (`TERMINAL_ID`),
+  UNIQUE KEY `UK_R_TMNL_RUN_TMNL_ASSET_NO` (`TMNL_ASSET_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='终端运行档案';
+
+DROP TABLE IF EXISTS `E_DATA_MP`;
+CREATE TABLE `E_DATA_MP` (
+  `ID` bigint NOT NULL,
+  `TERMINAL_ID` bigint COMMENT '所属终端标识',
+  `MP_SN` bigint COMMENT '测量点序号',
+  `MP_ID` bigint,
+  `CONS_NO` varchar(16),
+  `METER_ASSET_NO` varchar(32),
+  `T_FACTOR` decimal(10,2),
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `E_MP_DAY_READ`;
+CREATE TABLE `E_MP_DAY_READ` (
+  `ID` bigint NOT NULL,
+  `DATA_DATE` date NOT NULL,
+  `PAP_R` decimal(14,2) COMMENT '正向有功总示数',
+  `PRP_R` decimal(14,2),
+  `RAP_R` decimal(14,2),
+  `COL_TIME` datetime,
+  PRIMARY KEY (`ID`, `DATA_DATE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `E_MP_DAY_ENERGY`;
+CREATE TABLE `E_MP_DAY_ENERGY` (
+  `ID` bigint NOT NULL,
+  `DATA_DATE` date NOT NULL COMMENT '数据日期',
+  `PAP_E` decimal(14,2),
+  `PRP_E` decimal(14,2),
+  `RAP_E` decimal(14,2),
+  PRIMARY KEY (`ID`, `DATA_DATE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `E_MP_POWER_CURVE`;
+CREATE TABLE `E_MP_POWER_CURVE` (
+  `ID` bigint NOT NULL,
+  `DATA_TIME` datetime NOT NULL,
+  `P` decimal(12,4),
+  `Q` decimal(12,4) COMMENT '无功功率（kvar）',
+  PRIMARY KEY (`ID`, `DATA_TIME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

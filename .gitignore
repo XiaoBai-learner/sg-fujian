@@ -1,4 +1,9 @@
 __pycache__/
 .pytest_cache/
+.venv/
+# 本地 MySQL 凭据，禁止提交
+.env
 # 沙箱库可由 python3 datagen/build.py 重建
 data/sandbox/
+# 构建产物可由服务或 sgtrace.pipeline 重建
+artifacts/

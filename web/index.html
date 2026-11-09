@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>营销域字段溯源 PoC</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>营销域字段溯源 PoC</h1>
+    <p class="sub">业务截图字段 → 领域本体 → R2RML 映射 → 源系统原表原字段（本体建模与导出由 OntoWing 完成）</p>
+  </div>
+  <div id="status" class="status" aria-live="polite">检查环境中…</div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="功能">
+  <button role="tab" id="tab-build" aria-controls="panel-build" aria-selected="true">1 构建本体与映射</button>
+  <button role="tab" id="tab-onto" aria-controls="panel-onto" aria-selected="false" tabindex="-1">2 本体浏览</button>
+  <button role="tab" id="tab-qa" aria-controls="panel-qa" aria-selected="false" tabindex="-1">3 字段溯源问答</button>
+</nav>
+
+<main>
+  <!-- ======================= 1 构建 ======================= -->
+  <section id="panel-build" role="tabpanel" aria-labelledby="tab-build">
+    <div class="card">
+      <h2>输入</h2>
+      <p>表结构从本地 MySQL 的 <code>information_schema</code> 读取（4 个库，只有表结构）；证据来自 DataWorks 血缘导出、任务 SQL、热点 SQL 日志。</p>
+      <div class="row">
+        <button id="btn-mysql" class="secondary">在 MySQL 中建库建表</button>
+        <label>表结构来源
+          <select id="build-source">
+            <option value="auto">自动（优先 MySQL）</option>
+            <option value="mysql">MySQL information_schema</option>
+            <option value="ddl">DDL 文件</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="opt-r2rml" checked> 在沙箱数据上执行 R2RML（约 30 秒）</label>
+        <label class="check"><input type="checkbox" id="opt-eval" checked> 运行评测</label>
+        <button id="btn-build" class="primary">构建本体与数据管道映射</button>
+      </div>
+      <div id="mysql-msg" class="msg" aria-live="polite"></div>
+    </div>
+    <div id="build-out"></div>
+  </section>
+
+  <!-- ======================= 2 本体 ======================= -->
+  <section id="panel-onto" role="tabpanel" aria-labelledby="tab-onto" hidden>
+    <div class="onto-layout">
+      <div class="card graph-card">
+        <div class="row between">
+          <h2>概念与关系</h2>
+          <div class="legend">
+            <span><i class="dot sys-yx186"></i>营销业务应用</span>
+            <span><i class="dot sys-cjxt"></i>用电信息采集</span>
+            <span><i class="dot sys-kf95598"></i>95598 客服</span>
+          </div>
+        </div>
+        <svg id="graph" role="img" aria-label="本体概念关系图，点击概念查看属性"></svg>
+        <p class="hint">点击概念查看属性、别名与映射到的物理字段。下方列表与图内容一致，可用键盘浏览。</p>
+        <ul id="concept-list" class="concept-list"></ul>
+      </div>
+      <div class="card detail-card" id="concept-detail" aria-live="polite">
+        <p class="hint">选择一个概念</p>
+      </div>
+    </div>
+    <div class="card">
+      <h2>导出文件（OntoWing）</h2>
+      <div class="row" id="artifact-links"></div>
+      <pre id="artifact-view" class="code" tabindex="0" aria-label="导出文件内容"></pre>
+    </div>
+  </section>
+
+  <!-- ======================= 3 问答 ======================= -->
+  <section id="panel-qa" role="tabpanel" aria-labelledby="tab-qa" hidden>
+    <div class="card">
+      <h2>直接提问</h2>
+      <form id="ask-form" class="row">
+        <label for="ask-input" class="sr-only">问题</label>
+        <input id="ask-input" type="text" placeholder="例如：户号属于什么表？" value="户号属于什么表？" maxlength="200">
+        <button class="primary" type="submit">提问</button>
+      </form>
+      <div id="ask-out" aria-live="polite"></div>
+    </div>
+    <div class="card">
+      <h2>截图需求（OCR 文本 + 要问的字段）</h2>
+      <div class="row">
+        <label>载入样例
+          <select id="sample-select"><option value="">— 选择需求邮件 —</option></select>
+        </label>
+      </div>
+      <p id="sample-mail" class="mail"></p>
+      <label for="ocr-input">截图 OCR 文本</label>
+      <textarea id="ocr-input" rows="9" spellcheck="false"></textarea>
+      <label for="fields-input">要问的字段（用顿号或逗号分隔）</label>
+      <input id="fields-input" type="text">
+      <div class="row"><button id="btn-trace" class="primary">溯源</button></div>
+      <div id="trace-out" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

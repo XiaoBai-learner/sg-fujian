@@ -16,10 +16,19 @@
 ```bash
 cd product-demo
 npm install
-npm run dev
+npm run start
 ```
 
 默认地址为 <http://127.0.0.1:4180>。
+
+生产构建预览：
+
+```bash
+npm run build
+npm run preview
+```
+
+不要直接双击 `index.html` 或从 `file://` 打开，React 模块和 history 路由需要通过本地 HTTP 服务访问。
 
 构建检查：
 

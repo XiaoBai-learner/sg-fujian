@@ -11,3 +11,11 @@ artifacts/
 .public_token
 .cloudflared/
 .run/
+.app_password
+var/
+frontend/node_modules/
+frontend/dist/
+product-demo/node_modules/
+product-demo/dist/
+dist-images/
+.env.docker

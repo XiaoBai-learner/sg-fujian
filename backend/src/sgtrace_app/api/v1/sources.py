@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..dependencies import get_session
+from ...infrastructure.db.models import SourceConnectionModel
 from ...modules.sources.connections.service import SourceService
 
 router = APIRouter(prefix="/sources", tags=["sources"])
@@ -15,7 +16,7 @@ class CreateSourceRequest(BaseModel):
 
 
 class RefreshDDLRequest(BaseModel):
-    ddl: str = Field(min_length=1, max_length=10_000_000)
+    ddl: str | None = Field(default=None, max_length=10_000_000)
 
 
 @router.get("")
@@ -38,12 +39,31 @@ async def create_source(body: CreateSourceRequest, session: AsyncSession = Depen
 @router.post("/{source_id}/refresh")
 async def refresh_source(source_id: str, body: RefreshDDLRequest, session: AsyncSession = Depends(get_session)):
     try:
-        snapshot = await SourceService(session).refresh_ddl(source_id, body.ddl)
+        source = await session.get(SourceConnectionModel, source_id)
+        if source is None:
+            raise KeyError("source not found")
+        if source.kind == "mysql":
+            snapshot = await SourceService(session).refresh_mysql(source_id)
+        elif body.ddl:
+            snapshot = await SourceService(session).refresh_ddl(source_id, body.ddl)
+        else:
+            raise ValueError("ddl is required for ddl source")
     except (KeyError, ValueError) as error:
         await session.rollback()
         raise HTTPException(status_code=400, detail={"code": "source_refresh_failed", "message": str(error)}) from error
     await session.commit()
     return {"source_id": source_id, "revision": snapshot.revision, "status": snapshot.status}
+
+
+@router.post("/{source_id}/test")
+async def test_source(source_id: str, session: AsyncSession = Depends(get_session)):
+    try:
+        result = await SourceService(session).test_mysql(source_id)
+    except (KeyError, ValueError) as error:
+        await session.rollback()
+        raise HTTPException(status_code=400, detail={"code": "source_test_failed", "message": str(error)}) from error
+    await session.commit()
+    return result
 
 
 @router.get("/{source_id}/snapshots/{revision}/tables")

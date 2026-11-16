@@ -11,6 +11,7 @@ from ....infrastructure.db.models import (
     SourceConnectionModel,
 )
 from ..metadata.reader import parse_mysql_ddl
+from ..metadata.mysql import MySQLMetadataReader, MySQLSettings
 
 
 class SourceService:
@@ -31,6 +32,32 @@ class SourceService:
         await self.session.flush()
         return source
 
+    async def test_mysql(self, source_id: str):
+        source = await self.session.get(SourceConnectionModel, source_id)
+        if source is None:
+            raise KeyError("source not found")
+        if source.kind != "mysql":
+            raise ValueError("source is not mysql")
+        reader = MySQLMetadataReader(MySQLSettings.from_env(source.database_name))
+        try:
+            await reader.ping()
+        finally:
+            await reader.close()
+        source.last_status = "ok"
+        await self.session.flush()
+        return {"source_id": source_id, "status": "ok"}
+
+    async def refresh_mysql(self, source_id: str):
+        source = await self.session.get(SourceConnectionModel, source_id)
+        if source is None:
+            raise KeyError("source not found")
+        reader = MySQLMetadataReader(MySQLSettings.from_env(source.database_name))
+        try:
+            tables = await reader.read()
+        finally:
+            await reader.close()
+        return await self._persist_snapshot(source, tables)
+
     async def list_connections(self, workspace_id: str):
         return (await self.session.scalars(select(SourceConnectionModel).where(
             SourceConnectionModel.workspace_id == workspace_id,
@@ -41,15 +68,18 @@ class SourceService:
         if source is None:
             raise KeyError("source not found")
         tables = parse_mysql_ddl(ddl)
+        return await self._persist_snapshot(source, tables, ddl.encode("utf-8"))
+
+    async def _persist_snapshot(self, source, tables, source_bytes: bytes | None = None):
         previous = await self.session.scalar(select(func.max(MetadataSnapshotModel.revision)).where(
-            MetadataSnapshotModel.source_id == source_id,
+            MetadataSnapshotModel.source_id == source.id,
         ))
         revision = int(previous or 0) + 1
         snapshot = MetadataSnapshotModel(
-            source_id=source_id,
+            source_id=source.id,
             revision=revision,
             status="ready",
-            source_sha256=sha256(ddl.encode("utf-8")).hexdigest(),
+            source_sha256=sha256(source_bytes).hexdigest() if source_bytes is not None else None,
         )
         self.session.add(snapshot)
         await self.session.flush()

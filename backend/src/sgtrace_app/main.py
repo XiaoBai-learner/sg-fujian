@@ -4,7 +4,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from .api.v1.router import router as v1
-from .api.dependencies import configure_session_dependency
+from .api.dependencies import configure_session_dependency, configure_storage_dependency, get_session, get_storage
 from .config import Settings
 
 
@@ -18,7 +18,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     application.include_router(v1)
     if settings is not None:
-        configure_session_dependency(settings)
+        application.dependency_overrides[get_session] = configure_session_dependency(settings)
+        application.dependency_overrides[get_storage] = configure_storage_dependency(settings)
 
     @application.get("/api/healthz", tags=["system"])
     def health():

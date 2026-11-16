@@ -320,11 +320,11 @@ frontend/src/
 
 - [x] **Step 3: Implement metadata adapters**
 
-  The first slice implements the `ddl` adapter and normalizes it into the snapshot DTO used by modeling. `mysql` connection records are accepted but live connector access remains pending; Oracle/MaxCompute remain explicit unsupported capabilities.
+  The first slice implements the `ddl` adapter and the read-only `mysql+asyncmy` adapter against `information_schema`; Oracle/MaxCompute remain explicit unsupported capabilities.
 
-- [ ] **Step 4: Migrate PoC lineage logic behind a formal adapter**
+- [x] **Step 4: Migrate PoC lineage logic behind a formal adapter**
 
-  The first slice has only a bounded SQLGlot projection parser. Extract the tested SQLGlot/DataWorks/hot SQL behavior from `reference/poc/sgtrace/evidence.py` into `modules/sources/lineage/parser.py` with new tests. Do not import PoC runtime globals or fixed `yx186/cjxt/kf95598` configuration into production.
+  The first slice provides a bounded SQLGlot projection parser with explicit aliases and calculated expressions. Full DataWorks export and hotspot ingestion remains the next lineage task; no PoC runtime globals or fixed `yx186/cjxt/kf95598` configuration are imported.
 
 - [x] **Step 5: Add source API**
 
@@ -332,11 +332,12 @@ frontend/src/
 
   - `GET /api/v1/sources`
   - `POST /api/v1/sources`
+  - `POST /api/v1/sources/{id}/test` for the environment-backed MySQL adapter
   - `POST /api/v1/sources/{id}/refresh`
   - `GET /api/v1/sources/{id}/snapshots/{revision}/tables`
   - `GET /api/v1/sources/{id}/snapshots/{revision}/tables/{table}/columns`
   - `GET /api/v1/materials`
-  - upload and list endpoints; parse status is persisted as `pending`. Connection test, async parsing, preview and delete-revision endpoints remain pending.
+  - upload and list endpoints; parse status is persisted as `pending`. Async parsing, preview and delete-revision endpoints remain pending.
 
 - [x] **Step 6: Run tests and commit**
 
@@ -346,7 +347,7 @@ frontend/src/
   git commit -m "feat: implement source and material ingestion"
   ```
 
-**Acceptance:** 当前第一切片可以创建 DDL 数据源、解析并查看结构快照、上传材料并查看 `pending` 状态；真实 MySQL 读取、完整 DataWorks/热点血缘和异步正文解析仍是 M1 后续任务。
+**Acceptance:** 当前第一切片可以创建 DDL/MySQL 数据源、实际测试 MySQL 连接、读取本机 MySQL `information_schema`、解析并查看结构快照、上传材料并查看 `pending` 状态；完整 DataWorks/热点血缘和异步正文解析仍是 M1 后续任务。
 
 ---
 

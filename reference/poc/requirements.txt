@@ -1,0 +1,14 @@
+# 溯源服务依赖（锁定版本）。安装：uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r requirements.txt
+# OntoWing 不通过 pip 安装：以源码目录方式引用 ../ontowing/backend（可用 ONTOWING_BACKEND 覆盖），
+# 只导入其 app.domain 纯领域模块，需要 jsonschema / referencing / rdflib。
+fastapi==0.115.0
+uvicorn==0.54.0
+sqlglot==30.16.0
+rdflib==7.6.0
+jsonschema==4.26.0
+referencing==0.36.2
+PyMySQL==1.1.1
+httpx==0.28.1
+morph-kgc==2.8.1
+SQLAlchemy==2.0.36
+pytest==9.1.1

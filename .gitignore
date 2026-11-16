@@ -3,8 +3,8 @@ __pycache__/
 .venv/
 # 本地 MySQL 凭据，禁止提交
 .env
-# 沙箱库可由 python3 datagen/build.py 重建
-data/sandbox/
+# 参考引擎的沙箱可由 reference/poc/datagen/build.py 重建
+reference/poc/data/sandbox/
 # 构建产物可由服务或 sgtrace.pipeline 重建
 artifacts/
 # 公网演示访问口令，禁止提交
@@ -13,9 +13,10 @@ artifacts/
 .run/
 .app_password
 var/
-frontend/node_modules/
-frontend/dist/
-product-demo/node_modules/
-product-demo/dist/
+node_modules/
+dist/
+build/
+*.egg-info/
+.DS_Store
 dist-images/
 .env.docker

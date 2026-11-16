@@ -1,4 +1,4 @@
-import type { Editors, Source } from '../domain/types.ts'
+import type { Editors, Material, Source } from '../domain/types.ts'
 
 const column = (name: string, label: string, data_type = 'string', primary_key = false, position = 0) =>
   ({ name, label, data_type, nullable: !primary_key, primary_key, position })
@@ -16,6 +16,15 @@ export const sources: Source[] = [
     ] },
   ] },
 ]
+
+export const materials: Material[] = [
+  { id: 'ddl', name: '营销系统结构.sql', kind: 'DDL', size: 0, text: sources.flatMap(source => source.tables.map(table =>
+    `CREATE TABLE ${source.database}.${table.name} (\n${table.columns.map(column => `  ${column.name} ${column.data_type === 'integer' ? 'BIGINT' : column.data_type === 'decimal' ? 'DECIMAL(12,2)' : 'VARCHAR(255)'}${column.nullable ? '' : ' NOT NULL'} COMMENT '${column.label}'`).join(',\n')},\n  PRIMARY KEY (${table.columns.filter(column => column.primary_key).map(column => column.name).join(', ')})\n) COMMENT='${table.label}';`,
+  )).join('\n\n') },
+  { id: 'sql', name: '客户欠费汇总.sql', kind: '任务 SQL', size: 0, text: "SELECT CONS_NO, RCVBL_AMT - RCVED_AMT AS 欠费金额 FROM yx186.A_RCVBL_FLOW WHERE SETTLE_FLAG = '0';" },
+  { id: 'business-doc', name: '营销业务说明.md', kind: '业务说明', size: 0, text: '# 营销业务说明\n用电客户包括户号、客户名称、用电地址和合同容量。\n应收电费包括应收标识、应收金额、实收金额和结清标志，通过「应收客户」关联用电客户。\n欠费客户是存在未结清应收记录的用电客户。\n欠费金额为应收金额减去实收金额。' },
+]
+for (const material of materials) material.size = new TextEncoder().encode(material.text).length
 
 export const reference = (schema: string, table: string, sourceId = '1') => ({
   teiid_id: 'local-demo', data_source_id: sourceId, schema_name: schema, table_name: table,

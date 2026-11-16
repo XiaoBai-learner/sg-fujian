@@ -74,8 +74,8 @@ frontend/src/
 
 | Milestone | 可验收结果 | 主要依赖 |
 |---|---|---|
-| M0 基础平台 | 正式前后端、迁移、配置、日志、健康检查、CI 检查链可运行 | 无 |
-| M1 数据源闭环 | 用户可创建只读数据源、同步结构、上传材料、查看解析状态和血缘材料 | M0 |
+| M0 基础平台 | 正式前后端、迁移、配置、日志、健康检查、CI 检查链可运行 | 无 | **基础版本完成**
+| M1 数据源闭环 | 用户可创建只读数据源、同步结构、上传材料、查看解析状态和血缘材料 | M0 | **DDL/本地材料第一版完成；真实连接与异步解析待补**
 | M2 建模闭环 | 用户可从文档 + DDL 生成草稿、编辑本体/R2RML、校验并采用模型快照 | M1、OntoWing |
 | M3 智能体闭环 | 用户可提问字段/OCR，获得原表字段、计算口径、证据和历史结果 | M2 |
 | M4 工作台交付 | 正式前端替换 demo mock，三个模块可用同一 API 完整操作 | M1–M3 |
@@ -99,11 +99,11 @@ frontend/src/
 - Produces `make check`, `make check-web`, `make test` 三个稳定命令。
 - Produces a CI check that runs typecheck, backend unit tests, frontend build, and demo regression without starting external services.
 
-- [ ] **Step 1: 把正式目录、PoC 目录、demo 目录和文档基线写入项目说明**
+- [x] **Step 1: 把正式目录、PoC 目录、demo 目录和文档基线写入项目说明**
 
   README 必须明确：`frontend/` 和 `backend/` 是正式实现，`product-demo/` 是验收参照，`reference/poc/` 是迁移依据。写明正式业务尚未完成，避免后续把骨架当作已交付产品。
 
-- [ ] **Step 2: 为正式命令写一个失败检查**
+- [x] **Step 2: 为正式命令写一个失败检查**
 
   在 `backend/tests/test_bootstrap.py` 增加：
 
@@ -115,11 +115,11 @@ frontend/src/
 
   运行 `make test`，确认测试在当前 import 配置下先失败或暴露路径问题，再修正测试环境。
 
-- [ ] **Step 3: 固定测试路径和忽略规则**
+- [x] **Step 3: 固定测试路径和忽略规则**
 
   让 pytest 发现 `backend/tests` 和 `reference/poc/tests`；确保 `node_modules/`、`dist/`、`artifacts/`、`reference/poc/data/sandbox/`、运行密钥和上传目录不会进入 Git。
 
-- [ ] **Step 4: 增加 CI 只读检查**
+- [x] **Step 4: 增加 CI 只读检查**
 
   CI 至少执行：
 
@@ -133,7 +133,7 @@ frontend/src/
 
   CI 不读取真实凭据，不连接客户数据库，不执行公网隧道。
 
-- [ ] **Step 5: 运行全部基础检查并提交**
+- [x] **Step 5: 运行全部基础检查并提交**
 
   ```bash
   make check-web
@@ -175,23 +175,23 @@ frontend/src/
 - `JobRepository.complete(job_id, result_ref)`, `fail(job_id, code, detail)`, `cancel(job_id)`.
 - All repositories return domain DTOs, not SQLAlchemy models.
 
-- [ ] **Step 1: Write configuration failure tests**
+- [x] **Step 1: Write configuration failure tests**
 
   Cover missing `DATABASE_URL`, invalid material size, unsupported storage scheme, and valid local test settings. Assert secrets are not included in `repr(Settings)` or health response.
 
-- [ ] **Step 2: Fix the formal API prefix before adding business routes**
+- [x] **Step 2: Fix the formal API prefix before adding business routes**
 
   Change the three skeleton routers to use `/api/v1/sources`, `/api/v1/modeling` and `/api/v1/agent`. Keep `/api/healthz` and later `/api/readyz` outside the versioned business router. Register them through `api/v1/router.py`, so every later task adds endpoints to one explicit version boundary.
 
-- [ ] **Step 3: Write migration and job tests**
+- [x] **Step 3: Write migration and job tests**
 
   Use a temporary MySQL-compatible database in integration tests. Assert `jobs` has `pending/running/succeeded/failed/cancelled` states, a lease timestamp, attempt count, idempotency key, error code, and result reference. Assert a second worker cannot claim an unexpired lease.
 
-- [ ] **Step 4: Implement settings and SQLAlchemy async session**
+- [x] **Step 4: Implement settings and SQLAlchemy async session**
 
   Use SQLAlchemy 2.x AsyncEngine, explicit pool settings, `pool_pre_ping`, and `expire_on_commit=False`. Do not use Django ORM. Keep transactions in repositories and keep external calls outside transactions.
 
-- [ ] **Step 5: Implement initial schema and migration**
+- [x] **Step 5: Implement initial schema and migration**
 
   Initial tables:
 
@@ -201,18 +201,18 @@ frontend/src/
   - `jobs(id, kind, status, payload_json, result_ref, idempotency_key, lease_owner, lease_until, attempts, error_code, error_detail, created_at, updated_at)`
   - `audit_events(id, workspace_id, actor_id, event_type, object_type, object_id, payload_json, created_at)`
 
-- [ ] **Step 6: Implement worker claim protocol**
+- [x] **Step 6: Implement worker claim protocol**
 
   `claim_next` must atomically select one pending job or reclaim an expired lease. Worker execution must check cancellation before each external phase, record progress, and never retry a job after an unknown external request without reconciliation.
 
-- [ ] **Step 7: Run migration and unit/integration tests**
+- [x] **Step 7: Run migration and unit/integration tests**
 
   ```bash
   alembic upgrade head
   python -m pytest backend/tests/unit/test_config.py backend/tests/integration/test_db_bootstrap.py -q
   ```
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
   ```bash
   git add backend/src/sgtrace_app/config.py backend/src/sgtrace_app/domain/jobs.py backend/src/sgtrace_app/infrastructure backend/migrations backend/alembic.ini backend/pyproject.toml backend/tests
@@ -245,11 +245,11 @@ frontend/src/
 - `MaterialService.get_revision(material_id, revision) -> MaterialRevision`.
 - `MaterialService.mark_parsed(material_revision_id, result_ref)`.
 
-- [ ] **Step 1: Write upload and material validation tests**
+- [x] **Step 1: Write upload and material validation tests**
 
   Cover allowed TXT/MD/SQL/PDF/CSV/JSON, maximum size, normalized filename, UTF-8 text validation, checksum mismatch, duplicate content, and path traversal. Assert a material with `pending/failed` parse state cannot enter a modeling input set.
 
-- [ ] **Step 2: Define material tables**
+- [x] **Step 2: Define material tables**
 
   Add:
 
@@ -257,21 +257,21 @@ frontend/src/
   - `material_revisions(id, material_id, revision, source_sha256, size_bytes, content_uri, parse_status, parsed_uri, parse_error, created_at)`
   - unique `(material_id, revision)` and unique `(workspace_id, source_sha256, name)`.
 
-- [ ] **Step 3: Implement storage abstraction**
+- [x] **Step 3: Implement storage abstraction**
 
   Local storage uses a workspace-scoped hashed path outside the repository. A future object storage adapter must implement the same interface. Never put raw content in JSON columns or logs.
 
-- [ ] **Step 4: Implement upload lifecycle**
+- [x] **Step 4: Implement upload lifecycle**
 
   The upload endpoint accepts bounded chunks or a bounded request body, calculates SHA-256, writes to a temporary object, verifies size and digest, then atomically creates a material revision. Parsing is a job, not part of the request transaction.
 
-- [ ] **Step 5: Run tests**
+- [x] **Step 5: Run tests**
 
   ```bash
   python -m pytest backend/tests/unit/test_material_validation.py backend/tests/integration/test_material_lifecycle.py -q
   ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
   ```bash
   git add backend/src/sgtrace_app/infrastructure/storage backend/src/sgtrace_app/modules/sources/materials backend/migrations backend/tests
@@ -310,23 +310,23 @@ frontend/src/
 - `LineageParser.parse_task_sql(text) -> ParsedLineage`.
 - `SourceService.build_material_selection(workspace_id) -> list[MaterialCandidate]`.
 
-- [ ] **Step 1: Write source and metadata tests**
+- [x] **Step 1: Write source and metadata tests**
 
   Use local fake connectors and fixture DDL. Assert credentials never appear in response JSON, snapshots contain table comments, column comments, datatypes, nullable and keys, and a failed refresh leaves the previous snapshot active.
 
-- [ ] **Step 2: Implement connection records**
+- [x] **Step 2: Implement connection records**
 
   Add `source_connections` with encrypted/secret-reference credential fields, type, endpoint, database allowlist, last test status and revision. The API accepts a secret reference or environment-backed credential provider; it does not echo passwords.
 
-- [ ] **Step 3: Implement metadata adapters**
+- [x] **Step 3: Implement metadata adapters**
 
   Start with `ddl` and `mysql` adapters. Normalize both into the same snapshot DTO used by modeling. Keep Oracle/MaxCompute as explicit unsupported adapters returning a documented capability error until implemented.
 
-- [ ] **Step 4: Migrate PoC lineage logic behind a formal adapter**
+- [x] **Step 4: Migrate PoC lineage logic behind a formal adapter**
 
   Extract the tested SQLGlot/DataWorks/hot SQL behavior from `reference/poc/sgtrace/evidence.py` into `modules/sources/lineage/parser.py` with new tests. Do not import PoC runtime globals or fixed `yx186/cjxt/kf95598` configuration into production.
 
-- [ ] **Step 5: Add source API**
+- [x] **Step 5: Add source API**
 
   Implement:
 
@@ -339,7 +339,7 @@ frontend/src/
   - `GET /api/v1/materials`
   - upload, parse status, preview and delete-revision endpoints.
 
-- [ ] **Step 6: Run tests and commit**
+- [x] **Step 6: Run tests and commit**
 
   ```bash
   python -m pytest backend/tests/unit/test_metadata_normalization.py backend/tests/unit/test_lineage_parser.py backend/tests/integration/test_sources_api.py -q

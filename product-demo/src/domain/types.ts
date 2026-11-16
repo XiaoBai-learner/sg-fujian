@@ -6,7 +6,7 @@ export interface Binding { id: string; concept_id: string; schema_name: string; 
 export interface Editors { model: Model; pipeline: { format_version: string; fact_planes: Row[]; bindings: Binding[] }; rules: { format_version: string; rules: Row[]; constraints: Row[] } }
 export interface Column { name: string; label: string; data_type: string; nullable: boolean; primary_key: boolean; position: number }
 export interface Source { id: string; name: string; type: string; host: string; database: string; tables: { name: string; label: string; columns: Column[] }[] }
-export interface Material { id: string; name: string; kind: string; size: number }
+export interface Material { id: string; name: string; kind: string; size: number; text?: string }
 export interface Result { label: string; status: 'located' | 'ambiguous' | 'not_found'; kind: 'direct' | 'calculated' | 'rule'; sources: { column: string; label: string; concept: string }[]; evidence: string[]; calculation?: { formula: string; filters: string[] }; rule?: string }
 export interface Turn { id: string; question: string; ocr: string; revision: number; results: Result[] }
-export interface Workspace { sources: Source[]; materials: Material[]; editors: Editors; revision: number; active: { revision: number; editors: Editors }; turns: Turn[] }
+export interface Workspace { sources: Source[]; materials: Material[]; modeling?: { selected: string[] }; editors: Editors; revision: number; active: { revision: number; editors: Editors }; turns: Turn[] }

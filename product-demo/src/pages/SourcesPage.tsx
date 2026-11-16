@@ -1,10 +1,11 @@
-import { useRef, useState, type FormEvent } from 'react'
+import { useRef, useState, type Dispatch, type FormEvent, type SetStateAction } from 'react'
 import type { Page, Source, Workspace } from '../domain/types'
 import Icon from '../components/Icon'
 import Dialog from '../components/Dialog'
+import { readModelingFiles } from '../services/modeling'
 
 export default function SourcesPage({ state, onChange, onNavigate }: {
-  state: Workspace; onChange: (value: Workspace) => void; onNavigate: (page: Page) => void
+  state: Workspace; onChange: Dispatch<SetStateAction<Workspace>>; onNavigate: (page: Page) => void
 }) {
   const [modal, setModal] = useState(false)
   const [browse, setBrowse] = useState<Source>()
@@ -12,6 +13,7 @@ export default function SourcesPage({ state, onChange, onNavigate }: {
   const [kind, setKind] = useState('DDL')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [reading, setReading] = useState(false)
   const fileInput = useRef<HTMLInputElement>(null)
   const [form, setForm] = useState({ name: '', host: '', database: '', type: 'MySQL', port: '3306', username: '', password: '' })
   const save = (event: FormEvent) => {
@@ -22,17 +24,19 @@ export default function SourcesPage({ state, onChange, onNavigate }: {
     setForm({ name: '', host: '', database: '', type: 'MySQL', port: '3306', username: '', password: '' })
     setMessage('连接配置已保存在本地。原型未连接数据库，也未保存账号或口令。')
   }
-  const addFiles = (files: FileList | null) => {
+  const addFiles = async (files: FileList | null) => {
     if (!files?.length) return
-    const allowed = [...files].filter(file => /\.(sql|csv|json|txt|md)$/i.test(file.name) && file.size <= 5 * 1024 * 1024)
-    if (allowed.length !== files.length) setError('仅支持 SQL、CSV、JSON、TXT、MD，每份材料不超过 5 MB。')
-    else setError('')
-    onChange({ ...state, materials: [...state.materials, ...allowed.map(file => ({ id: crypto.randomUUID(), name: file.name, kind, size: file.size }))] })
-    if (allowed.length) setMessage(`已登记 ${allowed.length} 份材料；原型仅保存文件信息，未解析内容。`)
+    setReading(true); setError('')
+    try {
+      const materials = await readModelingFiles([...files])
+      onChange(current => ({ ...current, materials: [...current.materials, ...materials.map(material => ({ ...material, kind: material.kind === 'DDL' ? 'DDL' : kind }))] }))
+      setMessage('材料已加入建模材料库。文本和 DDL 可用于本地草稿预览，PDF 等待后端解析。')
+    } catch (error) { setError(error instanceof Error ? error.message : '材料读取失败。') }
+    finally { setReading(false) }
   }
   const table = browse?.tables[tableIndex]
   return <>
-    <div className="module-heading"><div><span className="eyeline">01 / DATA SOURCES</span><h1>接入你的数据</h1><p>连接数据库，补充结构与血缘材料，为本体建模准备数据。</p></div><button className="action primary" onClick={() => setModal(true)}><Icon name="plus" />添加数据源</button></div>
+    <div className="module-heading"><div><h1>数据源接入</h1><p>连接数据库，或添加已有的数据材料。</p></div><button className="action primary" onClick={() => setModal(true)}><Icon name="plus" />添加数据源</button></div>
     <section className="plain-section">
       <div className="section-title"><h2>数据源 <span>{state.sources.length}</span></h2><small>采集表结构，不读取业务数据</small></div>
       <div className="source-list">{state.sources.map(source => <article className="source-card" key={source.id}>
@@ -43,12 +47,12 @@ export default function SourcesPage({ state, onChange, onNavigate }: {
       </article>)}</div>
     </section>
     <section className="plain-section materials-section">
-      <div className="section-title"><div><h2>补充材料 <span>{state.materials.length}</span></h2><p>DDL、DataWorks 血缘、任务 SQL 或业务字段说明。</p></div><div className="compact-actions"><select aria-label="材料类型" value={kind} onChange={e => setKind(e.target.value)}>{['DDL', '血缘导出', '任务 SQL', '业务说明'].map(k => <option key={k}>{k}</option>)}</select><button className="action" onClick={() => fileInput.current?.click()}><Icon name="plus" />添加材料</button><input type="file" accept=".sql,.csv,.json,.txt,.md" multiple ref={fileInput} hidden onChange={e => { addFiles(e.target.files); e.target.value = '' }} /></div></div>
+      <div className="section-title"><div><h2>补充材料 <span>{state.materials.length}</span></h2><p>DDL 与业务文档可直接选用于本体建模。</p></div><div className="compact-actions"><select aria-label="材料类型" value={kind} onChange={e => setKind(e.target.value)}>{['DDL', '血缘导出', '任务 SQL', '业务说明'].map(k => <option key={k}>{k}</option>)}</select><button className="action" disabled={reading} onClick={() => fileInput.current?.click()}><Icon name="plus" />{reading ? '读取中…' : '添加材料'}</button><input type="file" accept=".sql,.txt,.md,.pdf,.csv,.json" multiple ref={fileInput} hidden onChange={e => { void addFiles(e.target.files); e.target.value = '' }} /></div></div>
       <div className="material-list">{state.materials.map(material => <div className="material-row" key={material.id}><Icon name="file" /><span>{material.name}</span><span className="subtle-tag">{material.kind}</span><small>{(material.size / 1024).toFixed(1)} KB</small></div>)}</div>
       {message && <p className="inline-note" role="status">{message}</p>}
       {error && <p className="error-note" role="alert">{error}</p>}
     </section>
-    <div className="next-step"><span>准备好数据后，就可以开始构建业务本体。</span><button className="action" onClick={() => onNavigate('modeling')}>前往本体建模<Icon name="arrow" /></button></div>
+    <div className="next-step"><span>数据结构已就绪？</span><button className="text-action" onClick={() => onNavigate('modeling')}>前往本体建模<Icon name="arrow" /></button></div>
     {modal && <Dialog titleId="source-title" onClose={() => setModal(false)}><form onSubmit={save}><div className="dialog-heading"><div><h2 id="source-title">添加数据源</h2><p>配置只读数据库连接。</p></div><button type="button" className="icon-button" aria-label="关闭" onClick={() => setModal(false)}>×</button></div><div className="input-grid">
       <label className="full">连接名称<input required autoFocus value={form.name} placeholder="例如：营销业务库" onChange={e => setForm({ ...form, name: e.target.value })} /></label>
       <label>数据库类型<select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}><option>MySQL</option><option>Oracle</option><option>PostgreSQL</option></select></label><label>数据库 / Schema<input required value={form.database} onChange={e => setForm({ ...form, database: e.target.value })} /></label>

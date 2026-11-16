@@ -1,13 +1,10 @@
 import type { Editors, Result, Workspace } from '../domain/types.ts'
-import { editors, sources } from './seed.ts'
+import { editors, materials, sources } from './seed.ts'
 
 export function initialWorkspace(): Workspace {
   return {
     sources: structuredClone(sources),
-    materials: [
-      { id: 'ddl', name: '营销系统结构.sql', kind: 'DDL', size: 4280 },
-      { id: 'sql', name: '客户欠费汇总.sql', kind: '任务 SQL', size: 1620 },
-    ],
+    materials: structuredClone(materials),
     editors: structuredClone(editors), revision: 1,
     active: { revision: 1, editors: structuredClone(editors) }, turns: [],
   }

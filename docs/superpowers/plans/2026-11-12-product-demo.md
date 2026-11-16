@@ -1,5 +1,7 @@
 # Standalone 1.0 Product Demo Implementation Plan
 
+> 历史方案：2026-11-16 用户将产品收敛为“数据源接入 → OntoWing 本体建模 → 字段溯源智能体”，所有人使用同一套功能。本文件中的角色分工、需求工单和审核发布工作台已废弃；以 `docs/superpowers/specs/2026-11-16-lightweight-product.md` 为准。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Build an independent, mock-driven React product frontend that demonstrates the real 1.0 trace-to-review-to-release workflow, plus a validated standalone architecture diagram.

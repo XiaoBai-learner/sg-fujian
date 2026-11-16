@@ -1,64 +1,64 @@
-import { useEffect, useState } from 'react'
-import AppShell from './components/AppShell'
-import { ErrorState, LoadingState } from './components/AsyncState'
-import { availableUsers, getSession, setDemoUser } from './services/mockService'
-import type { Session } from './domain/types'
-import WorkbenchPage from './pages/WorkbenchPage'
-import NewRequestPage from './pages/NewRequestPage'
-import RequestDetailPage from './pages/RequestDetailPage'
-import KnowledgeOverviewPage from './pages/KnowledgeOverviewPage'
-import MaterialsPage from './pages/MaterialsPage'
-import KnowledgeModelPage from './pages/KnowledgeModelPage'
-import ValidationPage from './pages/ValidationPage'
-import VersionsPage from './pages/VersionsPage'
-import ConnectionsPage from './pages/ConnectionsPage'
-import AuditPage from './pages/AuditPage'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import type { Editors, Page, Workspace } from './domain/types'
+import { initialWorkspace } from './services/workspace'
+import { installWingCatalog } from './services/wingCatalog'
+import Icon from './components/Icon'
+import SourcesPage from './pages/SourcesPage'
+import AgentPage from './pages/AgentPage'
 
-const users = availableUsers()
-
-function currentPath() {
-  return window.location.pathname || '/workbench'
+const ModelingPage = lazy(() => import('./pages/ModelingPage'))
+const STORAGE = 'sgtrace-lightweight-v1'
+const navigation: { id: Page; title: string; icon: 'source' | 'model' | 'agent' }[] = [
+  { id: 'sources', title: '数据源接入', icon: 'source' },
+  { id: 'modeling', title: '本体建模', icon: 'model' },
+  { id: 'agent', title: '字段溯源智能体', icon: 'agent' },
+]
+function pageForPath(): Page {
+  const path = window.location.pathname
+  if (path.startsWith('/sources') || path.includes('materials') || path.includes('connections')) return 'sources'
+  if (path.startsWith('/modeling') || path.startsWith('/knowledge')) return 'modeling'
+  return 'agent'
 }
 
 export default function App() {
-  const [session, setSession] = useState<Session>()
-  const [path, setPath] = useState(currentPath())
-  const [error, setError] = useState('')
-
+  const [page, setPage] = useState<Page>(pageForPath)
+  const [storageIssue, setStorageIssue] = useState('')
+  const [state, setState] = useState<Workspace>(() => {
+    try {
+      const value = localStorage.getItem(STORAGE)
+      if (value) {
+        const data = JSON.parse(value)
+        if (Array.isArray(data.sources) && data.editors?.model && data.active?.editors && Array.isArray(data.turns)) return data
+      }
+    } catch { /* 损坏的缓存不影响打开页面，下次保存会写入可用状态。 */ }
+    return initialWorkspace()
+  })
+  const latest = useRef(state)
+  latest.current = state
+  useEffect(() => installWingCatalog(() => latest.current), [])
   useEffect(() => {
-    getSession().then(setSession).catch(e => setError(e instanceof Error ? e.message : '无法加载原型会话'))
-    const onPop = () => setPath(currentPath())
-    window.addEventListener('popstate', onPop)
-    return () => window.removeEventListener('popstate', onPop)
+    try { localStorage.setItem(STORAGE, JSON.stringify(state)); setStorageIssue('') }
+    catch { setStorageIssue('浏览器存储不可用，当前操作只能在本次页面内保留。') }
+  }, [state])
+  useEffect(() => {
+    const pop = () => setPage(pageForPath())
+    window.addEventListener('popstate', pop)
+    return () => window.removeEventListener('popstate', pop)
   }, [])
-
-  const navigate = (next: string) => {
-    if (next !== window.location.pathname) window.history.pushState({}, '', next)
-    setPath(next)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const changeRole = (userId: string) => {
-    setDemoUser(userId).then(next => {
-      setSession(next)
-      if (!['analyst', 'modeler', 'reviewer', 'admin'].includes(next.user.role)) navigate('/workbench')
-    }).catch(e => setError(e instanceof Error ? e.message : '无法切换角色'))
-  }
-
-  if (error) return <ErrorState message={error} />
-  if (!session) return <LoadingState label="正在加载产品原型…" />
-
-  let page = <WorkbenchPage onNavigate={navigate} />
-  if (path === '/requests/new') page = <NewRequestPage onNavigate={navigate} />
-  else if (path.startsWith('/requests/')) page = <RequestDetailPage requestId={path.split('/')[2] || 'req-1206'} onNavigate={navigate} />
-  else if (path === '/knowledge') page = <KnowledgeOverviewPage onNavigate={navigate} />
-  else if (path === '/knowledge/materials') page = <MaterialsPage />
-  else if (path === '/knowledge/model') page = <KnowledgeModelPage />
-  else if (path === '/knowledge/validation') page = <ValidationPage onNavigate={navigate} />
-  else if (path === '/knowledge/versions') page = <VersionsPage onNavigate={navigate} />
-  else if (path === '/admin/connections') page = <ConnectionsPage />
-  else if (path === '/admin/audit') page = <AuditPage />
-  else if (path !== '/workbench') page = <div className="panel"><div className="empty-state"><strong>页面不存在</strong><p>这个原型路径还没有配置。</p><button className="btn primary" type="button" onClick={() => navigate('/workbench')}>回到工作台</button></div></div>
-
-  return <AppShell session={session} users={users} activePath={path} onNavigate={navigate} onRoleChange={changeRole}>{page}</AppShell>
+  const go = (next: Page) => { history.pushState(null, '', `/${next}`); setPage(next); window.scrollTo(0, 0) }
+  const edit = (editors: Editors) => setState(current => ({ ...current, editors, revision: current.revision === current.active.revision ? current.revision + 1 : current.revision }))
+  return <div className="light-product">
+    <header className="product-header">
+      <a href="/agent" className="product-name" onClick={e => { e.preventDefault(); go('agent') }}><span className="product-symbol"><Icon name="model" /></span><strong>字段溯源</strong><span className="domain-label">营销域</span></a>
+      <nav className="primary-navigation" aria-label="产品功能">{navigation.map((item, index) => <button key={item.id} type="button" aria-current={page === item.id ? 'page' : undefined} onClick={() => go(item.id)}><span className="nav-number">0{index + 1}</span><Icon name={item.icon} />{item.title}</button>)}</nav>
+      <span className="prototype-tag">交互原型</span>
+    </header>
+    <main className={`product-body ${page === 'modeling' ? 'wide-body' : ''}`}>
+      {storageIssue && <p className="inline-note" role="alert">{storageIssue}</p>}
+      {page === 'sources' && <SourcesPage state={state} onChange={setState} onNavigate={go} />}
+      {page === 'modeling' && <Suspense fallback={<p role="status" className="loading">正在载入 OntoWing 编辑器…</p>}><ModelingPage state={state} onEdit={edit} onChange={setState} onNavigate={go} /></Suspense>}
+      {page === 'agent' && <AgentPage state={state} onChange={setState} onNavigate={go} />}
+    </main>
+    <footer className="product-footer"><span>数据源 <span>→</span> OntoWing 本体 + R2RML <span>→</span> 字段溯源</span><span>本地模拟数据 · 所有功能统一使用</span></footer>
+  </div>
 }

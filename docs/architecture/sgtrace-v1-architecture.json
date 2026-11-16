@@ -2,60 +2,173 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "福建电力字段溯源平台 · 1.0 产品架构",
+    "title": "字段溯源 · 三层产品架构",
     "locale": "zh-CN",
     "quality_profile": "showcase",
-    "viewBox": [1420, 760],
-    "views": [
-      {
-        "id": "trace-request",
-        "label": "业务字段溯源",
-        "focus": ["business_users", "trace_frontend", "product_api", "query_service", "knowledge_store", "field_result"],
-        "note": "从业务需求到固定知识版本的字段来源清单。"
-      },
-      {
-        "id": "knowledge-release",
-        "label": "知识维护与发布",
-        "focus": ["knowledge_frontend", "product_api", "worker", "material_inputs", "source_db", "ontowing", "knowledge_store"],
-        "note": "从现场材料、结构与任务证据生成候选知识包并审核发布。"
-      }
+    "viewBox": [
+      1180,
+      530
     ]
   },
   "components": [
-    { "id": "business_users", "type": "external", "label": "业务人员", "pos": [36, 280], "size": [150, 70] },
-    { "id": "trace_frontend", "type": "frontend", "label": "字段溯源前端", "pos": [236, 280], "size": [160, 70] },
-    { "id": "knowledge_frontend", "type": "frontend", "label": "知识工作台", "pos": [236, 520], "size": [160, 70] },
-    { "id": "product_api", "type": "backend", "label": "FastAPI 产品 API", "pos": [456, 280], "size": [170, 70] },
-    { "id": "query_service", "type": "backend", "label": "查询与工具链", "pos": [700, 280], "size": [180, 70] },
-    { "id": "worker", "type": "backend", "label": "构建 / 解析 Worker", "pos": [456, 520], "size": [180, 70] },
-    { "id": "app_db", "type": "database", "label": "应用关系库", "pos": [700, 520], "size": [170, 70] },
-    { "id": "knowledge_store", "type": "database", "label": "知识包存储", "pos": [930, 520], "size": [190, 70] },
-    { "id": "ontowing", "type": "backend", "label": "OntoWing 领域库", "pos": [1170, 520], "size": [170, 70] },
-    { "id": "source_db", "type": "database", "label": "客户源系统", "pos": [1170, 650], "size": [170, 70] },
-    { "id": "material_inputs", "type": "external", "label": "现场材料", "pos": [930, 650], "size": [190, 70] },
-    { "id": "field_result", "type": "frontend", "label": "字段来源清单", "pos": [960, 280], "size": [170, 70], "tag": "可交付结果" }
-  ],
-  "boundaries": [
-    { "kind": "region", "label": "字段溯源平台内网运行区", "wraps": ["trace_frontend", "knowledge_frontend", "product_api", "query_service", "worker", "app_db", "knowledge_store", "ontowing"], "pad": 24 },
-    { "kind": "security-group", "label": "知识与结果访问控制", "wraps": ["product_api", "query_service", "app_db", "knowledge_store"], "pad": 14 }
+    {
+      "id": "source_access",
+      "type": "frontend",
+      "label": "01  数据源接入",
+      "sublabel": "连接数据库 · 补充材料",
+      "pos": [
+        50,
+        85
+      ],
+      "size": [
+        270,
+        85
+      ]
+    },
+    {
+      "id": "ontology_modeling",
+      "type": "frontend",
+      "label": "02  OntoWing 本体建模",
+      "sublabel": "对象 · 属性 · 关系 · 映射",
+      "pos": [
+        455,
+        85
+      ],
+      "size": [
+        270,
+        85
+      ]
+    },
+    {
+      "id": "trace_agent",
+      "type": "frontend",
+      "label": "03  字段溯源智能体",
+      "sublabel": "提问 · 截图文本 · 来源证据",
+      "pos": [
+        860,
+        85
+      ],
+      "size": [
+        270,
+        85
+      ]
+    },
+    {
+      "id": "metadata",
+      "type": "database",
+      "label": "结构与材料",
+      "sublabel": "DDL · 血缘 · 任务 SQL",
+      "pos": [
+        50,
+        330
+      ],
+      "size": [
+        270,
+        85
+      ]
+    },
+    {
+      "id": "semantic_package",
+      "type": "database",
+      "label": "本体与映射",
+      "sublabel": "OWL · R2RML · SWRL",
+      "pos": [
+        455,
+        330
+      ],
+      "size": [
+        270,
+        85
+      ]
+    },
+    {
+      "id": "trace_tools",
+      "type": "backend",
+      "label": "字段溯源工具",
+      "sublabel": "SemanticIndex · 血缘追溯",
+      "pos": [
+        860,
+        330
+      ],
+      "size": [
+        270,
+        85
+      ]
+    }
   ],
   "connections": [
-    { "id": "submit-request", "from": "business_users", "to": "trace_frontend", "label": "提交需求", "variant": "emphasis" },
-    { "id": "trace-api", "from": "trace_frontend", "to": "product_api", "label": "创建执行", "variant": "emphasis" },
-    { "id": "query-api", "from": "product_api", "to": "query_service", "label": "受控工具调用" },
-    { "id": "assemble-result", "from": "query_service", "to": "field_result", "label": "来源与证据", "variant": "emphasis" },
-    { "id": "pin-version", "from": "query_service", "to": "knowledge_store", "label": "固定已发布版本", "variant": "dashed", "route": "orthogonal-v" },
-    { "id": "knowledge-api", "from": "knowledge_frontend", "to": "product_api", "label": "保存草稿 / 发布", "labelAt": [350, 465] },
-    { "id": "queue-build", "from": "product_api", "to": "worker", "label": "构建任务", "variant": "dashed", "route": "orthogonal-v" },
-    { "id": "save-run", "from": "query_service", "to": "app_db", "label": "执行记录", "variant": "dashed", "route": "orthogonal-v" },
-    { "id": "read-structure", "from": "worker", "to": "source_db", "label": "只读结构采集", "variant": "security", "route": "orthogonal-v" },
-    { "id": "ingest-materials", "from": "material_inputs", "to": "worker", "label": "导入解析", "variant": "dashed", "route": "orthogonal-v" },
-    { "id": "validate-export", "from": "worker", "to": "ontowing", "label": "校验 / 导出", "fromSide": "bottom", "toSide": "right", "via": [[546, 740], [1370, 740], [1370, 555]], "labelAt": [850, 730] },
-    { "id": "write-package", "from": "worker", "to": "knowledge_store", "label": "候选知识包", "variant": "dashed", "fromSide": "bottom", "toSide": "bottom", "via": [[546, 620], [1025, 620]], "labelAt": [780, 610] }
+    {
+      "id": "source_to_model",
+      "from": "source_access",
+      "to": "ontology_modeling",
+      "label": "结构与血缘材料",
+      "variant": "emphasis"
+    },
+    {
+      "id": "model_to_agent",
+      "from": "ontology_modeling",
+      "to": "trace_agent",
+      "label": "用于字段溯源",
+      "variant": "emphasis"
+    },
+    {
+      "id": "collect",
+      "from": "source_access",
+      "to": "metadata",
+      "label": "采集与导入",
+      "labelAt": [
+        185,
+        250
+      ]
+    },
+    {
+      "id": "export",
+      "from": "ontology_modeling",
+      "to": "semantic_package",
+      "label": "校验与导出",
+      "labelAt": [
+        590,
+        250
+      ]
+    },
+    {
+      "id": "tool_call",
+      "from": "trace_agent",
+      "to": "trace_tools",
+      "label": "受控工具调用",
+      "labelAt": [
+        995,
+        250
+      ]
+    },
+    {
+      "id": "read_mapping",
+      "from": "trace_tools",
+      "to": "semantic_package",
+      "label": "只读检索"
+    }
   ],
   "cards": [
-    { "dot": "cyan", "title": "业务查询", "items": ["业务人员提交需求与 OCR 文本", "查询在开始时固定已发布知识版本", "产品接口：/api/app/*", "来源清单、计算口径和证据可导出"] },
-    { "dot": "emerald", "title": "知识发布", "items": ["结构、DDL、血缘与任务 SQL 进入异步构建", "OntoWing 负责领域校验与导出", "草稿需验证和审核后才切换线上指针"] },
-    { "dot": "rose", "title": "边界与安全", "items": ["源系统默认只读结构，不直接读取业务行", "应用库保存权限、需求、版本和审计", "历史执行固定版本，发布与回滚可追溯"] }
+    {
+      "dot": "cyan",
+      "title": "接入",
+      "items": [
+        "只读采集库表结构，补充 DDL、血缘和任务 SQL。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "建模",
+      "items": [
+        "复用 OntoWing；检查与采用在同页完成，无角色与审批分工。"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "溯源",
+      "items": [
+        "目标：基于导出的本体与 R2RML 查源字段。前端当前为本地交互原型。"
+      ]
+    }
   ]
 }

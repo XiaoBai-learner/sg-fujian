@@ -320,11 +320,11 @@ frontend/src/
 
 - [x] **Step 3: Implement metadata adapters**
 
-  Start with `ddl` and `mysql` adapters. Normalize both into the same snapshot DTO used by modeling. Keep Oracle/MaxCompute as explicit unsupported adapters returning a documented capability error until implemented.
+  The first slice implements the `ddl` adapter and normalizes it into the snapshot DTO used by modeling. `mysql` connection records are accepted but live connector access remains pending; Oracle/MaxCompute remain explicit unsupported capabilities.
 
-- [x] **Step 4: Migrate PoC lineage logic behind a formal adapter**
+- [ ] **Step 4: Migrate PoC lineage logic behind a formal adapter**
 
-  Extract the tested SQLGlot/DataWorks/hot SQL behavior from `reference/poc/sgtrace/evidence.py` into `modules/sources/lineage/parser.py` with new tests. Do not import PoC runtime globals or fixed `yx186/cjxt/kf95598` configuration into production.
+  The first slice has only a bounded SQLGlot projection parser. Extract the tested SQLGlot/DataWorks/hot SQL behavior from `reference/poc/sgtrace/evidence.py` into `modules/sources/lineage/parser.py` with new tests. Do not import PoC runtime globals or fixed `yx186/cjxt/kf95598` configuration into production.
 
 - [x] **Step 5: Add source API**
 
@@ -332,12 +332,11 @@ frontend/src/
 
   - `GET /api/v1/sources`
   - `POST /api/v1/sources`
-  - `POST /api/v1/sources/{id}/test`
   - `POST /api/v1/sources/{id}/refresh`
   - `GET /api/v1/sources/{id}/snapshots/{revision}/tables`
   - `GET /api/v1/sources/{id}/snapshots/{revision}/tables/{table}/columns`
   - `GET /api/v1/materials`
-  - upload, parse status, preview and delete-revision endpoints.
+  - upload and list endpoints; parse status is persisted as `pending`. Connection test, async parsing, preview and delete-revision endpoints remain pending.
 
 - [x] **Step 6: Run tests and commit**
 
@@ -347,7 +346,7 @@ frontend/src/
   git commit -m "feat: implement source and material ingestion"
   ```
 
-**Acceptance:** 一个用户可以连接或导入 DDL，查看快照，上传业务文档，查看解析状态；接入 DDL 可以被建模模块选中；历史快照不被刷新覆盖。
+**Acceptance:** 当前第一切片可以创建 DDL 数据源、解析并查看结构快照、上传材料并查看 `pending` 状态；真实 MySQL 读取、完整 DataWorks/热点血缘和异步正文解析仍是 M1 后续任务。
 
 ---
 

@@ -1,0 +1,412 @@
+{
+  "dataset": "marketing-trial/1",
+  "synthetic": true,
+  "schemas": [
+    "sgtrace_trial_yx186",
+    "sgtrace_trial_cjxt",
+    "sgtrace_trial_kf95598",
+    "sgtrace_trial_platform"
+  ],
+  "tables": [
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "O_ORG",
+      "columns": [
+        "ORG_NO",
+        "ORG_NAME",
+        "P_ORG_NO",
+        "ORG_TYPE",
+        "SORT_NO"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "C_CONS",
+      "columns": [
+        "CONS_ID",
+        "CONS_NO",
+        "CONS_NAME",
+        "ELEC_ADDR",
+        "ORG_NO",
+        "TRADE_CODE",
+        "ELEC_TYPE_CODE",
+        "VOLT_CODE",
+        "CONTRACT_CAP",
+        "RUN_CAP",
+        "STATUS_CODE",
+        "BUILD_DATE",
+        "CANCEL_DATE",
+        "LODE_ATTR_CODE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "C_CONTACT",
+      "columns": [
+        "CONTACT_ID",
+        "CONS_ID",
+        "CONTACT_NAME",
+        "MOBILE",
+        "OFFICE_TEL",
+        "CONTACT_MODE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "C_MP",
+      "columns": [
+        "MP_ID",
+        "MP_NO",
+        "MP_NAME",
+        "CONS_ID",
+        "MP_ADDR",
+        "VOLT_CODE",
+        "MP_ATTR_CODE",
+        "STATUS_CODE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "D_METER",
+      "columns": [
+        "METER_ID",
+        "ASSET_NO",
+        "MADE_NO",
+        "MANUFACTURER",
+        "TYPE_CODE",
+        "WIRING_MODE",
+        "T_FACTOR",
+        "INST_DATE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "C_METER_MP_RELA",
+      "columns": [
+        "RELA_ID",
+        "MP_ID",
+        "METER_ID",
+        "RELA_DATE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "R_READ",
+      "columns": [
+        "READ_ID",
+        "MP_ID",
+        "YM",
+        "LAST_READ",
+        "THIS_READ",
+        "READ_DATE",
+        "READ_TYPE_CODE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "A_RCVBL_FLOW",
+      "columns": [
+        "RCVBL_ID",
+        "CONS_NO",
+        "RCVBL_YM",
+        "T_SETTLE_PQ",
+        "RCVBL_AMT",
+        "RCVED_AMT",
+        "PENALTY",
+        "SETTLE_FLAG",
+        "REL_DATE"
+      ]
+    },
+    {
+      "schema": "yx186",
+      "local_schema": "sgtrace_trial_yx186",
+      "table": "A_PAY_FLOW",
+      "columns": [
+        "CHARGE_ID",
+        "CONS_NO",
+        "RCVBL_ID",
+        "CHARGE_DATE",
+        "RCV_AMT",
+        "PAY_MODE",
+        "ACCT_ORG_NO"
+      ]
+    },
+    {
+      "schema": "cjxt",
+      "local_schema": "sgtrace_trial_cjxt",
+      "table": "R_TMNL_RUN",
+      "columns": [
+        "TERMINAL_ID",
+        "TMNL_ASSET_NO",
+        "TMNL_TYPE_CODE",
+        "TERMINAL_ADDR",
+        "ORG_NO",
+        "RUN_STATUS",
+        "INST_DATE"
+      ]
+    },
+    {
+      "schema": "cjxt",
+      "local_schema": "sgtrace_trial_cjxt",
+      "table": "E_DATA_MP",
+      "columns": [
+        "ID",
+        "TERMINAL_ID",
+        "MP_SN",
+        "MP_ID",
+        "CONS_NO",
+        "METER_ASSET_NO",
+        "T_FACTOR"
+      ]
+    },
+    {
+      "schema": "cjxt",
+      "local_schema": "sgtrace_trial_cjxt",
+      "table": "E_MP_DAY_READ",
+      "columns": [
+        "ID",
+        "DATA_DATE",
+        "PAP_R",
+        "PRP_R",
+        "RAP_R",
+        "COL_TIME"
+      ]
+    },
+    {
+      "schema": "cjxt",
+      "local_schema": "sgtrace_trial_cjxt",
+      "table": "E_MP_DAY_ENERGY",
+      "columns": [
+        "ID",
+        "DATA_DATE",
+        "PAP_E",
+        "PRP_E",
+        "RAP_E"
+      ]
+    },
+    {
+      "schema": "cjxt",
+      "local_schema": "sgtrace_trial_cjxt",
+      "table": "E_MP_POWER_CURVE",
+      "columns": [
+        "ID",
+        "DATA_TIME",
+        "P",
+        "Q"
+      ]
+    },
+    {
+      "schema": "kf95598",
+      "local_schema": "sgtrace_trial_kf95598",
+      "table": "t_kf_workorder",
+      "columns": [
+        "APP_NO",
+        "ACCEPT_TIME",
+        "BUSI_TYPE",
+        "CUST_NO",
+        "CUST_NAME",
+        "CONTACT_TEL",
+        "ACCEPT_CONTENT",
+        "HANDLE_ORG",
+        "HANDLE_STATUS",
+        "FINISH_TIME",
+        "SATISFY_CODE"
+      ]
+    },
+    {
+      "schema": "kf95598",
+      "local_schema": "sgtrace_trial_kf95598",
+      "table": "t_kf_visit",
+      "columns": [
+        "VISIT_ID",
+        "APP_NO",
+        "VISIT_TIME",
+        "VISIT_RESULT",
+        "SATISFY_SCORE"
+      ]
+    }
+  ],
+  "views": [
+    "ods_yx186_o_org",
+    "ods_yx186_c_cons",
+    "ods_yx186_c_contact",
+    "ods_yx186_c_mp",
+    "ods_yx186_d_meter",
+    "ods_yx186_c_meter_mp_rela",
+    "ods_yx186_r_read",
+    "ods_yx186_a_rcvbl_flow",
+    "ods_yx186_a_pay_flow",
+    "ods_cjxt_r_tmnl_run",
+    "ods_cjxt_e_data_mp",
+    "ods_cjxt_e_mp_day_read",
+    "ods_cjxt_e_mp_day_energy",
+    "ods_cjxt_e_mp_power_curve",
+    "ods_kf95598_t_kf_workorder",
+    "ods_kf95598_t_kf_visit",
+    "dwd_yx_kh_jbxx",
+    "dwd_yx_jld_xx",
+    "dwd_yx_df_ysmx",
+    "dwd_yx_jf_mx",
+    "dwd_yx_cbsz",
+    "dwd_cj_rdl",
+    "dwd_cj_fhqx",
+    "dwd_cj_zd_xx",
+    "dwd_kf_gd_mx",
+    "dws_yx_kh_qf_hz",
+    "dws_yx_kh_jf_hz",
+    "dws_yx_kh_ydl_y",
+    "dws_kf_gd_tj_y",
+    "dws_cj_kh_fh_r",
+    "ads_yx_khda_cx",
+    "ads_yx_qfmx_cx",
+    "ads_yx_kh360",
+    "ads_yx_ydl_fx",
+    "ads_kf_gd_cx",
+    "ads_kf_gd_kb",
+    "ads_cj_dkh_fh"
+  ],
+  "hot_queries": [
+    {
+      "id": "Q001",
+      "exec_count_90d": 18420
+    },
+    {
+      "id": "Q002",
+      "exec_count_90d": 15233
+    },
+    {
+      "id": "Q003",
+      "exec_count_90d": 12871
+    },
+    {
+      "id": "Q004",
+      "exec_count_90d": 9655
+    },
+    {
+      "id": "Q005",
+      "exec_count_90d": 8410
+    },
+    {
+      "id": "Q006",
+      "exec_count_90d": 7302
+    },
+    {
+      "id": "Q007",
+      "exec_count_90d": 6120
+    },
+    {
+      "id": "Q008",
+      "exec_count_90d": 4980
+    },
+    {
+      "id": "Q009",
+      "exec_count_90d": 3204
+    },
+    {
+      "id": "Q010",
+      "exec_count_90d": 2877
+    },
+    {
+      "id": "Q011",
+      "exec_count_90d": 2150
+    },
+    {
+      "id": "Q012",
+      "exec_count_90d": 1990
+    },
+    {
+      "id": "Q013",
+      "exec_count_90d": 1764
+    },
+    {
+      "id": "Q014",
+      "exec_count_90d": 1530
+    },
+    {
+      "id": "Q015",
+      "exec_count_90d": 1288
+    },
+    {
+      "id": "Q016",
+      "exec_count_90d": 1102
+    },
+    {
+      "id": "Q017",
+      "exec_count_90d": 980
+    },
+    {
+      "id": "Q018",
+      "exec_count_90d": 856
+    },
+    {
+      "id": "Q019",
+      "exec_count_90d": 640
+    },
+    {
+      "id": "Q020",
+      "exec_count_90d": 512
+    },
+    {
+      "id": "Q021",
+      "exec_count_90d": 433
+    },
+    {
+      "id": "Q022",
+      "exec_count_90d": 310
+    }
+  ],
+  "reference_sha256": {
+    "reference/poc/data/inputs/ddl/mysql/yx186.sql": "94bcff38a242f7a9e4e64c18c96af913c9ea8b53d15e313721af6cb94b50e66e",
+    "reference/poc/data/inputs/ddl/mysql/cjxt.sql": "a450191b57aedbd8f72659775a6d452884a62f3a5a80213684b1cbc0ffce4a4d",
+    "reference/poc/data/inputs/ddl/mysql/kf95598.sql": "9f72f689d96b3aee1f9dc5307b04916f32ab2dd5f1db566af7194776bdbc8c45",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_yx_kh_jbxx.sql": "8ad656934dd611cfea623eb7e836439a2e43f1ef5f0e2ddb7b587b9ebb879bfa",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_yx_jld_xx.sql": "85c6e079724b9af68f0fec4018a33c4bba7b9eeb89c97962e2e4ba8c54368e9c",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_yx_df_ysmx.sql": "e14495e02ee6a6e1f50f70aa8c893d0d2a5746977bc0edc8105b6c2a984eaf53",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_yx_jf_mx.sql": "6c82dde2e5919ebf3e52f3f7eaeff49cd45c7f8539c714802bcf707218953597",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_yx_cbsz.sql": "71fae0eb7902aeac581ad7ebabe305557494a0e4a5add740d6bc392e60621046",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_cj_rdl.sql": "ad78977e1761f78aa170aee9a51987557aae594edb3ca80d1997b3df9ac5a862",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_cj_fhqx.sql": "f9fc0997b332922c3f0f02174a74b7ea38bd97afa54492798c41f1b2c0d4e2d5",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_cj_zd_xx.sql": "f25e7d69d99b949bbdc2e332ecb19ddf583ff9ab482328690db278934931b6b0",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dwd_kf_gd_mx.sql": "94d216ce7e66fa868b08bf19d24a5974af9e3db7103ef9a362fda5d58dc82b84",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dws_yx_kh_qf_hz.sql": "9290c6f60cddde22d652438131607992ee120263a51c567fb4c7136f0a93caf0",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dws_yx_kh_jf_hz.sql": "79e4ad87c61f8e063aecba04febd305f540e413065d8408f0bc492ae8d223ec1",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dws_yx_kh_ydl_y.sql": "364f7621a9f32b27580f941c82ab4a76a56f8f53e518bb041bc16686bc23c421",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dws_kf_gd_tj_y.sql": "bb8dde77fede8971b2108500bdc1fe19fd2d0f1931d45af49f179cbd9b90bea1",
+    "reference/poc/data/inputs/dataworks/tasks/sql_dws_cj_kh_fh_r.sql": "6919d0959a60f4fd9661cfce453a35e5b0c01b5db32552ef91fd0d618cec1bc2",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_yx_khda_cx.sql": "ce4aaee470eba39fb2aa53023927c62ff34abcaafe1679353785b08a38d11b6b",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_yx_qfmx_cx.sql": "6b19d264362e0b718f917d723cf1c85bf857ed7a500f11692cc027e6b9774d1b",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_yx_kh360.sql": "1b855f311d96343c0fe6f710113c3d985db0ec5b9d922a1e0731fdb096a0c759",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_yx_ydl_fx.sql": "3737826ecd10d22658d84c9d0a171b6f1077d20ee0270e7c6c54ac06100cd0ce",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_kf_gd_cx.sql": "dfed947bf301878e006cb869b5771761d06fbb9c3314f6289042f070509c2b91",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_kf_gd_kb.sql": "555c975e97de949af152b2ee430ac8fb6452cc145db88456463a6a0e90b8e56e",
+    "reference/poc/data/inputs/dataworks/tasks/sql_ads_cj_dkh_fh.sql": "afe515230612044f823bd29109621a4e7a64f5264d53a0ab1ddbb74daa56c9d4",
+    "reference/poc/data/inputs/hot_sql/query_log.csv": "646785627e367ae6e3b22271b78f821466334a8f48fa4d57ff1c57f79af919ec",
+    "reference/poc/datagen/dataplatform.py": "253b6cfee9f4baeef9795ef48ebf1361508ed8ef84d08d72c8c42d5b667478ab"
+  },
+  "gold_reference_sha256": {
+    "reference/poc/data/gold/lineage_full.csv": "9fe08796e7a1000e516cb0c6c9a8856985af03f71078cb3631f86d03d557b4cb"
+  },
+  "input_sha256": {
+    "01_source_ddl.sql": "3f5a13b8d32746530e73f86cb38153fa45b40c8c10834510d7d474c45b112468",
+    "02_lineage_views.sql": "657a21f55840e264e1dd84b69aa64a1353f4a89b918594d2b4ea38ba2166cacc",
+    "03_hot_queries.sql": "bfb8bdaca932a912a378081c43aec35fa27fba08b38b39e0984de8d69e221490",
+    "04_report_fields.sql": "1f4c1e9be4c75a2c7e793b58e10b955ea4baad6d5ddb25d3161cd85bcc7c9ffa"
+  },
+  "questions_sha256": "af00a5e4af467e114e4014003938b5aa2cf9cd782f2576b4d07e7a298898c75b",
+  "answers_sha256": "a22fc6cadc65e1da6b3c4af6634ef9425596f6fd87774828174b190b69326949",
+  "question_count": 100,
+  "counts": {
+    "tables": 16,
+    "columns": 113,
+    "views": 37,
+    "hot_queries": 22
+  }
+}

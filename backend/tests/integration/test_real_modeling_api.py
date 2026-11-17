@@ -95,3 +95,22 @@ def test_overlapping_generation_request_keys_share_one_run(tmp_path):
   async with factory() as session: assert await session.scalar(select(func.count()).select_from(ModelingRun))==1
   await engine.dispose()
  asyncio.run(concurrent())
+
+
+def test_marketing_trial_inputs_validate_without_changing_active_model(tmp_path):
+ from pathlib import Path
+ folder=Path(__file__).resolve().parents[3]/'trials/marketing_v1/inputs'
+ with client_for(tmp_path) as client:
+  refs=[upload(client,path.name,path.read_text(),'ddl' if path.name.startswith('01_') else 'sql')
+        for path in sorted(folder.glob('*.sql'))]
+  assert len(refs)==4
+  response=client.post('/api/v1/modeling/runs',json={'materials':refs,'request_key':str(uuid4()),'semantic':False})
+  assert response.status_code==201,response.text
+  run=response.json()
+  assert run['status']=='succeeded',run.get('error')
+  assert run['result']['stats']['tables']==16 and run['result']['stats']['columns']==113
+  assert not any(d['code']=='sql_unresolved' for d in run['result']['diagnostics'])
+  validation=client.post(f'/api/v1/modeling/runs/{run["id"]}/validate',json={'revision':1})
+  assert validation.status_code==200,validation.text
+  assert validation.json()['validation']['valid'],validation.text
+  assert client.get('/api/v1/modeling/active').json() is None

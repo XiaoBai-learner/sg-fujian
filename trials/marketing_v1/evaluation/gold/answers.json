@@ -1,0 +1,2294 @@
+[
+  {
+    "id": "M001",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.hh",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.CONS_NO"
+    ],
+    "expression": "c.cons_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.hh",
+        "sgtrace_trial_platform.ods_yx186_c_cons.cons_no",
+        "sgtrace_trial_yx186.C_CONS.CONS_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `hh` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `hh` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.CONS_NO"
+  },
+  {
+    "id": "M002",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.hm",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.CONS_NAME"
+    ],
+    "expression": "c.cons_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.hm",
+        "sgtrace_trial_platform.ods_yx186_c_cons.cons_name",
+        "sgtrace_trial_yx186.C_CONS.CONS_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `hm` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `hm` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.CONS_NAME"
+  },
+  {
+    "id": "M003",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.ydsz",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.ELEC_ADDR"
+    ],
+    "expression": "c.elec_addr",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.ydsz",
+        "sgtrace_trial_platform.ods_yx186_c_cons.elec_addr",
+        "sgtrace_trial_yx186.C_CONS.ELEC_ADDR"
+      ]
+    ],
+    "verification_sql": "SELECT `ydsz` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `ydsz` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.ELEC_ADDR"
+  },
+  {
+    "id": "M004",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.gddw_bm",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.ORG_NO"
+    ],
+    "expression": "c.org_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.gddw_bm",
+        "sgtrace_trial_platform.ods_yx186_c_cons.org_no",
+        "sgtrace_trial_yx186.C_CONS.ORG_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `gddw_bm` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `gddw_bm` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.ORG_NO"
+  },
+  {
+    "id": "M005",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.gddw_mc",
+    "sources": [
+      "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+    ],
+    "expression": "o.org_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.gddw_mc",
+        "sgtrace_trial_platform.ods_yx186_o_org.org_name",
+        "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `gddw_mc` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `gddw_mc` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.O_ORG.ORG_NAME"
+  },
+  {
+    "id": "M006",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.hylb",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.TRADE_CODE"
+    ],
+    "expression": "c.trade_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.hylb",
+        "sgtrace_trial_platform.ods_yx186_c_cons.trade_code",
+        "sgtrace_trial_yx186.C_CONS.TRADE_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `hylb` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `hylb` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.TRADE_CODE"
+  },
+  {
+    "id": "M007",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.ydlb",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.ELEC_TYPE_CODE"
+    ],
+    "expression": "c.elec_type_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.ydlb",
+        "sgtrace_trial_platform.ods_yx186_c_cons.elec_type_code",
+        "sgtrace_trial_yx186.C_CONS.ELEC_TYPE_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `ydlb` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `ydlb` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.ELEC_TYPE_CODE"
+  },
+  {
+    "id": "M008",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.gddy",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.VOLT_CODE"
+    ],
+    "expression": "c.volt_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.gddy",
+        "sgtrace_trial_platform.ods_yx186_c_cons.volt_code",
+        "sgtrace_trial_yx186.C_CONS.VOLT_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `gddy` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `gddy` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.VOLT_CODE"
+  },
+  {
+    "id": "M009",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.htrl",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+    ],
+    "expression": "c.contract_cap",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.htrl",
+        "sgtrace_trial_platform.ods_yx186_c_cons.contract_cap",
+        "sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+      ]
+    ],
+    "verification_sql": "SELECT `htrl` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `htrl` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+  },
+  {
+    "id": "M010",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.yhzt",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.STATUS_CODE"
+    ],
+    "expression": "c.status_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.yhzt",
+        "sgtrace_trial_platform.ods_yx186_c_cons.status_code",
+        "sgtrace_trial_yx186.C_CONS.STATUS_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `yhzt` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `yhzt` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.STATUS_CODE"
+  },
+  {
+    "id": "M011",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.lhrq",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.BUILD_DATE"
+    ],
+    "expression": "c.build_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.lhrq",
+        "sgtrace_trial_platform.ods_yx186_c_cons.build_date",
+        "sgtrace_trial_yx186.C_CONS.BUILD_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `lhrq` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `lhrq` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.BUILD_DATE"
+  },
+  {
+    "id": "M012",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_kh_jbxx.xhrq",
+    "sources": [
+      "sgtrace_trial_yx186.C_CONS.CANCEL_DATE"
+    ],
+    "expression": "c.cancel_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_cons c LEFT JOIN ods_yx186_o_org o ON o.org_no = c.org_no LEFT JOIN ods_yx186_c_contact ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01'"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.xhrq",
+        "sgtrace_trial_platform.ods_yx186_c_cons.cancel_date",
+        "sgtrace_trial_yx186.C_CONS.CANCEL_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `xhrq` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_kh_jbxx`",
+    "independent_source_sql": "SELECT `xhrq` AS answer FROM (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_CONS.CANCEL_DATE"
+  },
+  {
+    "id": "M013",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.jldbh",
+    "sources": [
+      "sgtrace_trial_yx186.C_MP.MP_NO"
+    ],
+    "expression": "m.mp_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.jldbh",
+        "sgtrace_trial_platform.ods_yx186_c_mp.mp_no",
+        "sgtrace_trial_yx186.C_MP.MP_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `jldbh` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `jldbh` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_MP.MP_NO"
+  },
+  {
+    "id": "M014",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.jldmc",
+    "sources": [
+      "sgtrace_trial_yx186.C_MP.MP_NAME"
+    ],
+    "expression": "m.mp_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.jldmc",
+        "sgtrace_trial_platform.ods_yx186_c_mp.mp_name",
+        "sgtrace_trial_yx186.C_MP.MP_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `jldmc` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `jldmc` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_MP.MP_NAME"
+  },
+  {
+    "id": "M015",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.dnbzcbh",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.ASSET_NO"
+    ],
+    "expression": "d.asset_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.dnbzcbh",
+        "sgtrace_trial_platform.ods_yx186_d_meter.asset_no",
+        "sgtrace_trial_yx186.D_METER.ASSET_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `dnbzcbh` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `dnbzcbh` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.D_METER.ASSET_NO"
+  },
+  {
+    "id": "M016",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.ccbh",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.MADE_NO"
+    ],
+    "expression": "d.made_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.ccbh",
+        "sgtrace_trial_platform.ods_yx186_d_meter.made_no",
+        "sgtrace_trial_yx186.D_METER.MADE_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `ccbh` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `ccbh` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.D_METER.MADE_NO"
+  },
+  {
+    "id": "M017",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.sccj",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.MANUFACTURER"
+    ],
+    "expression": "d.manufacturer",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.sccj",
+        "sgtrace_trial_platform.ods_yx186_d_meter.manufacturer",
+        "sgtrace_trial_yx186.D_METER.MANUFACTURER"
+      ]
+    ],
+    "verification_sql": "SELECT `sccj` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `sccj` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.D_METER.MANUFACTURER"
+  },
+  {
+    "id": "M018",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.zhbl",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.T_FACTOR"
+    ],
+    "expression": "d.t_factor",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.zhbl",
+        "sgtrace_trial_platform.ods_yx186_d_meter.t_factor",
+        "sgtrace_trial_yx186.D_METER.T_FACTOR"
+      ]
+    ],
+    "verification_sql": "SELECT `zhbl` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `zhbl` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.D_METER.T_FACTOR"
+  },
+  {
+    "id": "M019",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.zbrq",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.INST_DATE"
+    ],
+    "expression": "d.inst_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.zbrq",
+        "sgtrace_trial_platform.ods_yx186_d_meter.inst_date",
+        "sgtrace_trial_yx186.D_METER.INST_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `zbrq` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `zbrq` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.D_METER.INST_DATE"
+  },
+  {
+    "id": "M020",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jld_xx.jldzt",
+    "sources": [
+      "sgtrace_trial_yx186.C_MP.STATUS_CODE"
+    ],
+    "expression": "m.status_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_c_mp m JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela r ON r.mp_id = m.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = r.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jld_xx.jldzt",
+        "sgtrace_trial_platform.ods_yx186_c_mp.status_code",
+        "sgtrace_trial_yx186.C_MP.STATUS_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `jldzt` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jld_xx`",
+    "independent_source_sql": "SELECT `jldzt` AS answer FROM (SELECT m.mp_id AS jldbs, m.mp_no AS jldbh, m.mp_name AS jldmc, c.cons_no AS hh, d.asset_no AS dnbzcbh, d.made_no AS ccbh, d.manufacturer AS sccj, d.t_factor AS zhbl, d.inst_date AS zbrq, m.status_code AS jldzt FROM (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS r ON r.mp_id = m.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = r.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.C_MP.STATUS_CODE"
+  },
+  {
+    "id": "M021",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.ysbs",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_ID"
+    ],
+    "expression": "a.rcvbl_id",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.ysbs",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_id",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_ID"
+      ]
+    ],
+    "verification_sql": "SELECT `ysbs` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `ysbs` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_ID"
+  },
+  {
+    "id": "M022",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.dfny",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+    ],
+    "expression": "a.rcvbl_ym",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.dfny",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_ym",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+      ]
+    ],
+    "verification_sql": "SELECT `dfny` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `dfny` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+  },
+  {
+    "id": "M023",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.jsdl",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+    ],
+    "expression": "a.t_settle_pq",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.jsdl",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.t_settle_pq",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+      ]
+    ],
+    "verification_sql": "SELECT `jsdl` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `jsdl` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+  },
+  {
+    "id": "M024",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.ysje",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+    ],
+    "expression": "a.rcvbl_amt",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.ysje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `ysje` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `ysje` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+  },
+  {
+    "id": "M025",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.ssje",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+    ],
+    "expression": "a.rcved_amt",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.ssje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcved_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `ssje` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `ssje` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+  },
+  {
+    "id": "M026",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.wyj",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+    ],
+    "expression": "a.penalty",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.wyj",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.penalty",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+      ]
+    ],
+    "verification_sql": "SELECT `wyj` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `wyj` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+  },
+  {
+    "id": "M027",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.jqbz",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.SETTLE_FLAG"
+    ],
+    "expression": "a.settle_flag",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.jqbz",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.settle_flag",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.SETTLE_FLAG"
+      ]
+    ],
+    "verification_sql": "SELECT `jqbz` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `jqbz` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.SETTLE_FLAG"
+  },
+  {
+    "id": "M028",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_df_ysmx.fxrq",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.REL_DATE"
+    ],
+    "expression": "a.rel_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.fxrq",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rel_date",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.REL_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `fxrq` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `fxrq` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_RCVBL_FLOW.REL_DATE"
+  },
+  {
+    "id": "M029",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jf_mx.jfbs",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+    ],
+    "expression": "p.charge_id",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_pay_flow p LEFT JOIN ods_yx186_o_org o ON o.org_no = p.acct_org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfbs",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.charge_id",
+        "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+      ]
+    ],
+    "verification_sql": "SELECT `jfbs` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jf_mx`",
+    "independent_source_sql": "SELECT `jfbs` AS answer FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+  },
+  {
+    "id": "M030",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jf_mx.jfsj",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+    ],
+    "expression": "p.charge_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_pay_flow p LEFT JOIN ods_yx186_o_org o ON o.org_no = p.acct_org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfsj",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.charge_date",
+        "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `jfsj` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jf_mx`",
+    "independent_source_sql": "SELECT `jfsj` AS answer FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+  },
+  {
+    "id": "M031",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jf_mx.jfje",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+    ],
+    "expression": "p.rcv_amt",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_pay_flow p LEFT JOIN ods_yx186_o_org o ON o.org_no = p.acct_org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfje",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.rcv_amt",
+        "sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `jfje` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jf_mx`",
+    "independent_source_sql": "SELECT `jfje` AS answer FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+  },
+  {
+    "id": "M032",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jf_mx.jffs",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.PAY_MODE"
+    ],
+    "expression": "p.pay_mode",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_pay_flow p LEFT JOIN ods_yx186_o_org o ON o.org_no = p.acct_org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jffs",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.pay_mode",
+        "sgtrace_trial_yx186.A_PAY_FLOW.PAY_MODE"
+      ]
+    ],
+    "verification_sql": "SELECT `jffs` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jf_mx`",
+    "independent_source_sql": "SELECT `jffs` AS answer FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.A_PAY_FLOW.PAY_MODE"
+  },
+  {
+    "id": "M033",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_jf_mx.sfdw",
+    "sources": [
+      "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+    ],
+    "expression": "o.org_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_pay_flow p LEFT JOIN ods_yx186_o_org o ON o.org_no = p.acct_org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_jf_mx.sfdw",
+        "sgtrace_trial_platform.ods_yx186_o_org.org_name",
+        "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `sfdw` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_jf_mx`",
+    "independent_source_sql": "SELECT `sfdw` AS answer FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.O_ORG.ORG_NAME"
+  },
+  {
+    "id": "M034",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_cbsz.cbbs",
+    "sources": [
+      "sgtrace_trial_yx186.R_READ.READ_ID"
+    ],
+    "expression": "r.read_id",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cbbs",
+        "sgtrace_trial_platform.ods_yx186_r_read.read_id",
+        "sgtrace_trial_yx186.R_READ.READ_ID"
+      ]
+    ],
+    "verification_sql": "SELECT `cbbs` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `cbbs` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.R_READ.READ_ID"
+  },
+  {
+    "id": "M035",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_cbsz.cbny",
+    "sources": [
+      "sgtrace_trial_yx186.R_READ.YM"
+    ],
+    "expression": "r.ym",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cbny",
+        "sgtrace_trial_platform.ods_yx186_r_read.ym",
+        "sgtrace_trial_yx186.R_READ.YM"
+      ]
+    ],
+    "verification_sql": "SELECT `cbny` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `cbny` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.R_READ.YM"
+  },
+  {
+    "id": "M036",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_cbsz.sccbsz",
+    "sources": [
+      "sgtrace_trial_yx186.R_READ.LAST_READ"
+    ],
+    "expression": "r.last_read",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.sccbsz",
+        "sgtrace_trial_platform.ods_yx186_r_read.last_read",
+        "sgtrace_trial_yx186.R_READ.LAST_READ"
+      ]
+    ],
+    "verification_sql": "SELECT `sccbsz` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `sccbsz` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.R_READ.LAST_READ"
+  },
+  {
+    "id": "M037",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_cbsz.bccbsz",
+    "sources": [
+      "sgtrace_trial_yx186.R_READ.THIS_READ"
+    ],
+    "expression": "r.this_read",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.bccbsz",
+        "sgtrace_trial_platform.ods_yx186_r_read.this_read",
+        "sgtrace_trial_yx186.R_READ.THIS_READ"
+      ]
+    ],
+    "verification_sql": "SELECT `bccbsz` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `bccbsz` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.R_READ.THIS_READ"
+  },
+  {
+    "id": "M038",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_yx_cbsz.cbrq",
+    "sources": [
+      "sgtrace_trial_yx186.R_READ.READ_DATE"
+    ],
+    "expression": "r.read_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cbrq",
+        "sgtrace_trial_platform.ods_yx186_r_read.read_date",
+        "sgtrace_trial_yx186.R_READ.READ_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `cbrq` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `cbrq` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.R_READ.READ_DATE"
+  },
+  {
+    "id": "M039",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_rdl.sjrq",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.DATA_DATE"
+    ],
+    "expression": "e.data_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_day_energy e JOIN ods_cjxt_e_data_mp p ON p.id = e.id LEFT JOIN ods_cjxt_e_mp_day_read dr ON dr.id = e.id AND dr.data_date = e.data_date"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_rdl.sjrq",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_day_energy.data_date",
+        "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.DATA_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `sjrq` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_rdl`",
+    "independent_source_sql": "SELECT `sjrq` AS answer FROM (SELECT e.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, e.data_date AS sjrq, e.pap_e AS zxygdl, e.prp_e AS zxwgdl, dr.pap_r AS zxygsz FROM (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_E` AS `pap_e`, `PRP_E` AS `prp_e`, `RAP_E` AS `rap_e` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_ENERGY`) AS e JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = e.id LEFT JOIN (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_R` AS `pap_r`, `PRP_R` AS `prp_r`, `RAP_R` AS `rap_r`, `COL_TIME` AS `col_time` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_READ`) AS dr ON dr.id = e.id AND dr.data_date = e.data_date) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_DAY_ENERGY.DATA_DATE"
+  },
+  {
+    "id": "M040",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_rdl.zxygdl",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PAP_E"
+    ],
+    "expression": "e.pap_e",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_day_energy e JOIN ods_cjxt_e_data_mp p ON p.id = e.id LEFT JOIN ods_cjxt_e_mp_day_read dr ON dr.id = e.id AND dr.data_date = e.data_date"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_rdl.zxygdl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_day_energy.pap_e",
+        "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PAP_E"
+      ]
+    ],
+    "verification_sql": "SELECT `zxygdl` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_rdl`",
+    "independent_source_sql": "SELECT `zxygdl` AS answer FROM (SELECT e.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, e.data_date AS sjrq, e.pap_e AS zxygdl, e.prp_e AS zxwgdl, dr.pap_r AS zxygsz FROM (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_E` AS `pap_e`, `PRP_E` AS `prp_e`, `RAP_E` AS `rap_e` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_ENERGY`) AS e JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = e.id LEFT JOIN (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_R` AS `pap_r`, `PRP_R` AS `prp_r`, `RAP_R` AS `rap_r`, `COL_TIME` AS `col_time` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_READ`) AS dr ON dr.id = e.id AND dr.data_date = e.data_date) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PAP_E"
+  },
+  {
+    "id": "M041",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_rdl.zxwgdl",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PRP_E"
+    ],
+    "expression": "e.prp_e",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_day_energy e JOIN ods_cjxt_e_data_mp p ON p.id = e.id LEFT JOIN ods_cjxt_e_mp_day_read dr ON dr.id = e.id AND dr.data_date = e.data_date"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_rdl.zxwgdl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_day_energy.prp_e",
+        "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PRP_E"
+      ]
+    ],
+    "verification_sql": "SELECT `zxwgdl` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_rdl`",
+    "independent_source_sql": "SELECT `zxwgdl` AS answer FROM (SELECT e.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, e.data_date AS sjrq, e.pap_e AS zxygdl, e.prp_e AS zxwgdl, dr.pap_r AS zxygsz FROM (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_E` AS `pap_e`, `PRP_E` AS `prp_e`, `RAP_E` AS `rap_e` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_ENERGY`) AS e JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = e.id LEFT JOIN (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_R` AS `pap_r`, `PRP_R` AS `prp_r`, `RAP_R` AS `rap_r`, `COL_TIME` AS `col_time` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_READ`) AS dr ON dr.id = e.id AND dr.data_date = e.data_date) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_DAY_ENERGY.PRP_E"
+  },
+  {
+    "id": "M042",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_rdl.zxygsz",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_DAY_READ.PAP_R"
+    ],
+    "expression": "dr.pap_r",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_day_energy e JOIN ods_cjxt_e_data_mp p ON p.id = e.id LEFT JOIN ods_cjxt_e_mp_day_read dr ON dr.id = e.id AND dr.data_date = e.data_date"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_rdl.zxygsz",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_day_read.pap_r",
+        "sgtrace_trial_cjxt.E_MP_DAY_READ.PAP_R"
+      ]
+    ],
+    "verification_sql": "SELECT `zxygsz` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_rdl`",
+    "independent_source_sql": "SELECT `zxygsz` AS answer FROM (SELECT e.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, e.data_date AS sjrq, e.pap_e AS zxygdl, e.prp_e AS zxwgdl, dr.pap_r AS zxygsz FROM (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_E` AS `pap_e`, `PRP_E` AS `prp_e`, `RAP_E` AS `rap_e` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_ENERGY`) AS e JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = e.id LEFT JOIN (SELECT `ID` AS `id`, `DATA_DATE` AS `data_date`, `PAP_R` AS `pap_r`, `PRP_R` AS `prp_r`, `RAP_R` AS `rap_r`, `COL_TIME` AS `col_time` FROM `sgtrace_trial_cjxt`.`E_MP_DAY_READ`) AS dr ON dr.id = e.id AND dr.data_date = e.data_date) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_DAY_READ.PAP_R"
+  },
+  {
+    "id": "M043",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_fhqx.sjsj",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.DATA_TIME"
+    ],
+    "expression": "q.data_time",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_power_curve q JOIN ods_cjxt_e_data_mp p ON p.id = q.id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_fhqx.sjsj",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.data_time",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.DATA_TIME"
+      ]
+    ],
+    "verification_sql": "SELECT `sjsj` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_fhqx`",
+    "independent_source_sql": "SELECT `sjsj` AS answer FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_POWER_CURVE.DATA_TIME"
+  },
+  {
+    "id": "M044",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_fhqx.yggl",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+    ],
+    "expression": "q.p",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_power_curve q JOIN ods_cjxt_e_data_mp p ON p.id = q.id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_fhqx.yggl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.p",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+      ]
+    ],
+    "verification_sql": "SELECT `yggl` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_fhqx`",
+    "independent_source_sql": "SELECT `yggl` AS answer FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+  },
+  {
+    "id": "M045",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_fhqx.wggl",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.Q"
+    ],
+    "expression": "q.q",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_e_mp_power_curve q JOIN ods_cjxt_e_data_mp p ON p.id = q.id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_fhqx.wggl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.q",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.Q"
+      ]
+    ],
+    "verification_sql": "SELECT `wggl` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_fhqx`",
+    "independent_source_sql": "SELECT `wggl` AS answer FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.E_MP_POWER_CURVE.Q"
+  },
+  {
+    "id": "M046",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_zd_xx.zdzcbh",
+    "sources": [
+      "sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_ASSET_NO"
+    ],
+    "expression": "t.tmnl_asset_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_r_tmnl_run t LEFT JOIN ods_yx186_o_org o ON o.org_no = t.org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_zd_xx.zdzcbh",
+        "sgtrace_trial_platform.ods_cjxt_r_tmnl_run.tmnl_asset_no",
+        "sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_ASSET_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `zdzcbh` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_zd_xx`",
+    "independent_source_sql": "SELECT `zdzcbh` AS answer FROM (SELECT t.terminal_id AS zdbs, t.tmnl_asset_no AS zdzcbh, t.tmnl_type_code AS zdlx, t.terminal_addr AS zddz, o.org_name AS gddw_mc, t.run_status AS yxzt, t.inst_date AS tyrq FROM (SELECT `TERMINAL_ID` AS `terminal_id`, `TMNL_ASSET_NO` AS `tmnl_asset_no`, `TMNL_TYPE_CODE` AS `tmnl_type_code`, `TERMINAL_ADDR` AS `terminal_addr`, `ORG_NO` AS `org_no`, `RUN_STATUS` AS `run_status`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_cjxt`.`R_TMNL_RUN`) AS t LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = t.org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_ASSET_NO"
+  },
+  {
+    "id": "M047",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_zd_xx.zdlx",
+    "sources": [
+      "sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_TYPE_CODE"
+    ],
+    "expression": "t.tmnl_type_code",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_r_tmnl_run t LEFT JOIN ods_yx186_o_org o ON o.org_no = t.org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_zd_xx.zdlx",
+        "sgtrace_trial_platform.ods_cjxt_r_tmnl_run.tmnl_type_code",
+        "sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_TYPE_CODE"
+      ]
+    ],
+    "verification_sql": "SELECT `zdlx` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_zd_xx`",
+    "independent_source_sql": "SELECT `zdlx` AS answer FROM (SELECT t.terminal_id AS zdbs, t.tmnl_asset_no AS zdzcbh, t.tmnl_type_code AS zdlx, t.terminal_addr AS zddz, o.org_name AS gddw_mc, t.run_status AS yxzt, t.inst_date AS tyrq FROM (SELECT `TERMINAL_ID` AS `terminal_id`, `TMNL_ASSET_NO` AS `tmnl_asset_no`, `TMNL_TYPE_CODE` AS `tmnl_type_code`, `TERMINAL_ADDR` AS `terminal_addr`, `ORG_NO` AS `org_no`, `RUN_STATUS` AS `run_status`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_cjxt`.`R_TMNL_RUN`) AS t LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = t.org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.R_TMNL_RUN.TMNL_TYPE_CODE"
+  },
+  {
+    "id": "M048",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_zd_xx.zddz",
+    "sources": [
+      "sgtrace_trial_cjxt.R_TMNL_RUN.TERMINAL_ADDR"
+    ],
+    "expression": "t.terminal_addr",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_r_tmnl_run t LEFT JOIN ods_yx186_o_org o ON o.org_no = t.org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_zd_xx.zddz",
+        "sgtrace_trial_platform.ods_cjxt_r_tmnl_run.terminal_addr",
+        "sgtrace_trial_cjxt.R_TMNL_RUN.TERMINAL_ADDR"
+      ]
+    ],
+    "verification_sql": "SELECT `zddz` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_zd_xx`",
+    "independent_source_sql": "SELECT `zddz` AS answer FROM (SELECT t.terminal_id AS zdbs, t.tmnl_asset_no AS zdzcbh, t.tmnl_type_code AS zdlx, t.terminal_addr AS zddz, o.org_name AS gddw_mc, t.run_status AS yxzt, t.inst_date AS tyrq FROM (SELECT `TERMINAL_ID` AS `terminal_id`, `TMNL_ASSET_NO` AS `tmnl_asset_no`, `TMNL_TYPE_CODE` AS `tmnl_type_code`, `TERMINAL_ADDR` AS `terminal_addr`, `ORG_NO` AS `org_no`, `RUN_STATUS` AS `run_status`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_cjxt`.`R_TMNL_RUN`) AS t LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = t.org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.R_TMNL_RUN.TERMINAL_ADDR"
+  },
+  {
+    "id": "M049",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_zd_xx.yxzt",
+    "sources": [
+      "sgtrace_trial_cjxt.R_TMNL_RUN.RUN_STATUS"
+    ],
+    "expression": "t.run_status",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_r_tmnl_run t LEFT JOIN ods_yx186_o_org o ON o.org_no = t.org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_zd_xx.yxzt",
+        "sgtrace_trial_platform.ods_cjxt_r_tmnl_run.run_status",
+        "sgtrace_trial_cjxt.R_TMNL_RUN.RUN_STATUS"
+      ]
+    ],
+    "verification_sql": "SELECT `yxzt` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_zd_xx`",
+    "independent_source_sql": "SELECT `yxzt` AS answer FROM (SELECT t.terminal_id AS zdbs, t.tmnl_asset_no AS zdzcbh, t.tmnl_type_code AS zdlx, t.terminal_addr AS zddz, o.org_name AS gddw_mc, t.run_status AS yxzt, t.inst_date AS tyrq FROM (SELECT `TERMINAL_ID` AS `terminal_id`, `TMNL_ASSET_NO` AS `tmnl_asset_no`, `TMNL_TYPE_CODE` AS `tmnl_type_code`, `TERMINAL_ADDR` AS `terminal_addr`, `ORG_NO` AS `org_no`, `RUN_STATUS` AS `run_status`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_cjxt`.`R_TMNL_RUN`) AS t LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = t.org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.R_TMNL_RUN.RUN_STATUS"
+  },
+  {
+    "id": "M050",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_cj_zd_xx.tyrq",
+    "sources": [
+      "sgtrace_trial_cjxt.R_TMNL_RUN.INST_DATE"
+    ],
+    "expression": "t.inst_date",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_cjxt_r_tmnl_run t LEFT JOIN ods_yx186_o_org o ON o.org_no = t.org_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_cj_zd_xx.tyrq",
+        "sgtrace_trial_platform.ods_cjxt_r_tmnl_run.inst_date",
+        "sgtrace_trial_cjxt.R_TMNL_RUN.INST_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `tyrq` AS answer FROM `sgtrace_trial_platform`.`dwd_cj_zd_xx`",
+    "independent_source_sql": "SELECT `tyrq` AS answer FROM (SELECT t.terminal_id AS zdbs, t.tmnl_asset_no AS zdzcbh, t.tmnl_type_code AS zdlx, t.terminal_addr AS zddz, o.org_name AS gddw_mc, t.run_status AS yxzt, t.inst_date AS tyrq FROM (SELECT `TERMINAL_ID` AS `terminal_id`, `TMNL_ASSET_NO` AS `tmnl_asset_no`, `TMNL_TYPE_CODE` AS `tmnl_type_code`, `TERMINAL_ADDR` AS `terminal_addr`, `ORG_NO` AS `org_no`, `RUN_STATUS` AS `run_status`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_cjxt`.`R_TMNL_RUN`) AS t LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = t.org_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_cjxt.R_TMNL_RUN.INST_DATE"
+  },
+  {
+    "id": "M051",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.gdbh",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+    ],
+    "expression": "w.app_no",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.gdbh",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.app_no",
+        "sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `gdbh` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `gdbh` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+  },
+  {
+    "id": "M052",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.slsj",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+    ],
+    "expression": "w.accept_time",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.slsj",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.accept_time",
+        "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+      ]
+    ],
+    "verification_sql": "SELECT `slsj` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `slsj` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+  },
+  {
+    "id": "M053",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.ywlx",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+    ],
+    "expression": "w.busi_type",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.ywlx",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.busi_type",
+        "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+      ]
+    ],
+    "verification_sql": "SELECT `ywlx` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `ywlx` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+  },
+  {
+    "id": "M054",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.khmc",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.CUST_NAME"
+    ],
+    "expression": "w.cust_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.khmc",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.cust_name",
+        "sgtrace_trial_kf95598.t_kf_workorder.CUST_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `khmc` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `khmc` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.CUST_NAME"
+  },
+  {
+    "id": "M055",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.lxdh",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.CONTACT_TEL"
+    ],
+    "expression": "w.contact_tel",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.lxdh",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.contact_tel",
+        "sgtrace_trial_kf95598.t_kf_workorder.CONTACT_TEL"
+      ]
+    ],
+    "verification_sql": "SELECT `lxdh` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `lxdh` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.CONTACT_TEL"
+  },
+  {
+    "id": "M056",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.slnr",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_CONTENT"
+    ],
+    "expression": "w.accept_content",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.slnr",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.accept_content",
+        "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_CONTENT"
+      ]
+    ],
+    "verification_sql": "SELECT `slnr` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `slnr` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_CONTENT"
+  },
+  {
+    "id": "M057",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.cldw",
+    "sources": [
+      "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+    ],
+    "expression": "o.org_name",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.cldw",
+        "sgtrace_trial_platform.ods_yx186_o_org.org_name",
+        "sgtrace_trial_yx186.O_ORG.ORG_NAME"
+      ]
+    ],
+    "verification_sql": "SELECT `cldw` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `cldw` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_yx186.O_ORG.ORG_NAME"
+  },
+  {
+    "id": "M058",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.clzt",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.HANDLE_STATUS"
+    ],
+    "expression": "w.handle_status",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.clzt",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.handle_status",
+        "sgtrace_trial_kf95598.t_kf_workorder.HANDLE_STATUS"
+      ]
+    ],
+    "verification_sql": "SELECT `clzt` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `clzt` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.HANDLE_STATUS"
+  },
+  {
+    "id": "M059",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.bjsj",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.FINISH_TIME"
+    ],
+    "expression": "w.finish_time",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.bjsj",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.finish_time",
+        "sgtrace_trial_kf95598.t_kf_workorder.FINISH_TIME"
+      ]
+    ],
+    "verification_sql": "SELECT `bjsj` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `bjsj` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_workorder.FINISH_TIME"
+  },
+  {
+    "id": "M060",
+    "expected_status": "located",
+    "kind": "direct",
+    "target": "dwd_kf_gd_mx.hfpf",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+    ],
+    "expression": "v.satisfy_score",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_kf95598_t_kf_workorder w LEFT JOIN ods_yx186_o_org o ON o.org_no = w.handle_org LEFT JOIN ods_kf95598_t_kf_visit v ON v.app_no = w.app_no"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_kf_gd_mx.hfpf",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_visit.satisfy_score",
+        "sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+      ]
+    ],
+    "verification_sql": "SELECT `hfpf` AS answer FROM `sgtrace_trial_platform`.`dwd_kf_gd_mx`",
+    "independent_source_sql": "SELECT `hfpf` AS answer FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS gold_source",
+    "answer": "原表字段：sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+  },
+  {
+    "id": "M061",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dwd_yx_df_ysmx.qfje",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT",
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+    ],
+    "expression": "ROUND(a.rcvbl_amt - a.rcved_amt, 2)",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_a_rcvbl_flow a"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.qfje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+      ],
+      [
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.qfje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcved_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `qfje` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_df_ysmx`",
+    "independent_source_sql": "SELECT `qfje` AS answer FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT、sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+  },
+  {
+    "id": "M062",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dwd_yx_cbsz.cjdl",
+    "sources": [
+      "sgtrace_trial_yx186.D_METER.T_FACTOR",
+      "sgtrace_trial_yx186.R_READ.LAST_READ",
+      "sgtrace_trial_yx186.R_READ.THIS_READ"
+    ],
+    "expression": "ROUND((r.this_read - r.last_read) * d.t_factor, 2)",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "ods_yx186_r_read r JOIN ods_yx186_c_mp m ON m.mp_id = r.mp_id JOIN ods_yx186_c_cons c ON c.cons_id = m.cons_id LEFT JOIN ods_yx186_c_meter_mp_rela rl ON rl.mp_id = r.mp_id LEFT JOIN ods_yx186_d_meter d ON d.meter_id = rl.meter_id"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cjdl",
+        "sgtrace_trial_platform.ods_yx186_r_read.this_read",
+        "sgtrace_trial_yx186.R_READ.THIS_READ"
+      ],
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cjdl",
+        "sgtrace_trial_platform.ods_yx186_r_read.last_read",
+        "sgtrace_trial_yx186.R_READ.LAST_READ"
+      ],
+      [
+        "sgtrace_trial_platform.dwd_yx_cbsz.cjdl",
+        "sgtrace_trial_platform.ods_yx186_d_meter.t_factor",
+        "sgtrace_trial_yx186.D_METER.T_FACTOR"
+      ]
+    ],
+    "verification_sql": "SELECT `cjdl` AS answer FROM `sgtrace_trial_platform`.`dwd_yx_cbsz`",
+    "independent_source_sql": "SELECT `cjdl` AS answer FROM (SELECT r.read_id AS cbbs, m.mp_no AS jldbh, c.cons_no AS hh, r.ym AS cbny, r.last_read AS sccbsz, r.this_read AS bccbsz, ROUND((r.this_read - r.last_read) * d.t_factor, 2) AS cjdl, r.read_date AS cbrq FROM (SELECT `READ_ID` AS `read_id`, `MP_ID` AS `mp_id`, `YM` AS `ym`, `LAST_READ` AS `last_read`, `THIS_READ` AS `this_read`, `READ_DATE` AS `read_date`, `READ_TYPE_CODE` AS `read_type_code` FROM `sgtrace_trial_yx186`.`R_READ`) AS r JOIN (SELECT `MP_ID` AS `mp_id`, `MP_NO` AS `mp_no`, `MP_NAME` AS `mp_name`, `CONS_ID` AS `cons_id`, `MP_ADDR` AS `mp_addr`, `VOLT_CODE` AS `volt_code`, `MP_ATTR_CODE` AS `mp_attr_code`, `STATUS_CODE` AS `status_code` FROM `sgtrace_trial_yx186`.`C_MP`) AS m ON m.mp_id = r.mp_id JOIN (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c ON c.cons_id = m.cons_id LEFT JOIN (SELECT `RELA_ID` AS `rela_id`, `MP_ID` AS `mp_id`, `METER_ID` AS `meter_id`, `RELA_DATE` AS `rela_date` FROM `sgtrace_trial_yx186`.`C_METER_MP_RELA`) AS rl ON rl.mp_id = r.mp_id LEFT JOIN (SELECT `METER_ID` AS `meter_id`, `ASSET_NO` AS `asset_no`, `MADE_NO` AS `made_no`, `MANUFACTURER` AS `manufacturer`, `TYPE_CODE` AS `type_code`, `WIRING_MODE` AS `wiring_mode`, `T_FACTOR` AS `t_factor`, `INST_DATE` AS `inst_date` FROM `sgtrace_trial_yx186`.`D_METER`) AS d ON d.meter_id = rl.meter_id) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.D_METER.T_FACTOR、sgtrace_trial_yx186.R_READ.LAST_READ、sgtrace_trial_yx186.R_READ.THIS_READ"
+  },
+  {
+    "id": "M063",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_qf_hz.qfys",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+    ],
+    "expression": "COUNT(q.dfny)",
+    "scope": {
+      "where": "q.jqbz = '0'",
+      "group_by": "q.hh",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_qf_hz.qfys",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.dfny",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_ym",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+      ]
+    ],
+    "verification_sql": "SELECT `qfys` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_qf_hz`",
+    "independent_source_sql": "SELECT `qfys` AS answer FROM (SELECT q.hh AS hh, COUNT(q.dfny) AS qfys, ROUND(SUM(q.qfje), 2) AS ljqfje, ROUND(SUM(q.wyj), 2) AS ljwyj, MIN(q.dfny) AS zzqfny FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q WHERE q.jqbz = '0' GROUP BY q.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+  },
+  {
+    "id": "M064",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_qf_hz.ljqfje",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT",
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+    ],
+    "expression": "ROUND(SUM(q.qfje), 2)",
+    "scope": {
+      "where": "q.jqbz = '0'",
+      "group_by": "q.hh",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_qf_hz.ljqfje",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.qfje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+      ],
+      [
+        "sgtrace_trial_platform.dws_yx_kh_qf_hz.ljqfje",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.qfje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcved_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `ljqfje` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_qf_hz`",
+    "independent_source_sql": "SELECT `ljqfje` AS answer FROM (SELECT q.hh AS hh, COUNT(q.dfny) AS qfys, ROUND(SUM(q.qfje), 2) AS ljqfje, ROUND(SUM(q.wyj), 2) AS ljwyj, MIN(q.dfny) AS zzqfny FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q WHERE q.jqbz = '0' GROUP BY q.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT、sgtrace_trial_yx186.A_RCVBL_FLOW.RCVED_AMT"
+  },
+  {
+    "id": "M065",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_qf_hz.ljwyj",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+    ],
+    "expression": "ROUND(SUM(q.wyj), 2)",
+    "scope": {
+      "where": "q.jqbz = '0'",
+      "group_by": "q.hh",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_qf_hz.ljwyj",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.wyj",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.penalty",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+      ]
+    ],
+    "verification_sql": "SELECT `ljwyj` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_qf_hz`",
+    "independent_source_sql": "SELECT `ljwyj` AS answer FROM (SELECT q.hh AS hh, COUNT(q.dfny) AS qfys, ROUND(SUM(q.qfje), 2) AS ljqfje, ROUND(SUM(q.wyj), 2) AS ljwyj, MIN(q.dfny) AS zzqfny FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q WHERE q.jqbz = '0' GROUP BY q.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.PENALTY"
+  },
+  {
+    "id": "M066",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_qf_hz.zzqfny",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+    ],
+    "expression": "MIN(q.dfny)",
+    "scope": {
+      "where": "q.jqbz = '0'",
+      "group_by": "q.hh",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_qf_hz.zzqfny",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.dfny",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_ym",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+      ]
+    ],
+    "verification_sql": "SELECT `zzqfny` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_qf_hz`",
+    "independent_source_sql": "SELECT `zzqfny` AS answer FROM (SELECT q.hh AS hh, COUNT(q.dfny) AS qfys, ROUND(SUM(q.qfje), 2) AS ljqfje, ROUND(SUM(q.wyj), 2) AS ljwyj, MIN(q.dfny) AS zzqfny FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q WHERE q.jqbz = '0' GROUP BY q.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_YM"
+  },
+  {
+    "id": "M067",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_jf_hz.zjjfsj",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+    ],
+    "expression": "MAX(j.jfsj)",
+    "scope": {
+      "where": null,
+      "group_by": "j.hh",
+      "from": "dwd_yx_jf_mx j"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_jf_hz.zjjfsj",
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfsj",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.charge_date",
+        "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+      ]
+    ],
+    "verification_sql": "SELECT `zjjfsj` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_jf_hz`",
+    "independent_source_sql": "SELECT `zjjfsj` AS answer FROM (SELECT j.hh AS hh, MAX(j.jfsj) AS zjjfsj, ROUND(SUM(j.jfje), 2) AS ljjfje, COUNT(j.jfbs) AS jfcs FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS j GROUP BY j.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_DATE"
+  },
+  {
+    "id": "M068",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_jf_hz.ljjfje",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+    ],
+    "expression": "ROUND(SUM(j.jfje), 2)",
+    "scope": {
+      "where": null,
+      "group_by": "j.hh",
+      "from": "dwd_yx_jf_mx j"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_jf_hz.ljjfje",
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfje",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.rcv_amt",
+        "sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `ljjfje` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_jf_hz`",
+    "independent_source_sql": "SELECT `ljjfje` AS answer FROM (SELECT j.hh AS hh, MAX(j.jfsj) AS zjjfsj, ROUND(SUM(j.jfje), 2) AS ljjfje, COUNT(j.jfbs) AS jfcs FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS j GROUP BY j.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_PAY_FLOW.RCV_AMT"
+  },
+  {
+    "id": "M069",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_jf_hz.jfcs",
+    "sources": [
+      "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+    ],
+    "expression": "COUNT(j.jfbs)",
+    "scope": {
+      "where": null,
+      "group_by": "j.hh",
+      "from": "dwd_yx_jf_mx j"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_jf_hz.jfcs",
+        "sgtrace_trial_platform.dwd_yx_jf_mx.jfbs",
+        "sgtrace_trial_platform.ods_yx186_a_pay_flow.charge_id",
+        "sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+      ]
+    ],
+    "verification_sql": "SELECT `jfcs` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_jf_hz`",
+    "independent_source_sql": "SELECT `jfcs` AS answer FROM (SELECT j.hh AS hh, MAX(j.jfsj) AS zjjfsj, ROUND(SUM(j.jfje), 2) AS ljjfje, COUNT(j.jfbs) AS jfcs FROM (SELECT p.charge_id AS jfbs, p.cons_no AS hh, p.rcvbl_id AS ysbs, p.charge_date AS jfsj, p.rcv_amt AS jfje, p.pay_mode AS jffs, o.org_name AS sfdw FROM (SELECT `CHARGE_ID` AS `charge_id`, `CONS_NO` AS `cons_no`, `RCVBL_ID` AS `rcvbl_id`, `CHARGE_DATE` AS `charge_date`, `RCV_AMT` AS `rcv_amt`, `PAY_MODE` AS `pay_mode`, `ACCT_ORG_NO` AS `acct_org_no` FROM `sgtrace_trial_yx186`.`A_PAY_FLOW`) AS p LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = p.acct_org_no) AS j GROUP BY j.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_PAY_FLOW.CHARGE_ID"
+  },
+  {
+    "id": "M070",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_ydl_y.ydl",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+    ],
+    "expression": "ROUND(SUM(q.jsdl), 2)",
+    "scope": {
+      "where": null,
+      "group_by": "q.hh, q.dfny",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_ydl_y.ydl",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.jsdl",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.t_settle_pq",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+      ]
+    ],
+    "verification_sql": "SELECT `ydl` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_ydl_y`",
+    "independent_source_sql": "SELECT `ydl` AS answer FROM (SELECT q.hh AS hh, q.dfny AS ny, ROUND(SUM(q.jsdl), 2) AS ydl, ROUND(SUM(q.ysje), 2) AS ysdf FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q GROUP BY q.hh, q.dfny) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.T_SETTLE_PQ"
+  },
+  {
+    "id": "M071",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_yx_kh_ydl_y.ysdf",
+    "sources": [
+      "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+    ],
+    "expression": "ROUND(SUM(q.ysje), 2)",
+    "scope": {
+      "where": null,
+      "group_by": "q.hh, q.dfny",
+      "from": "dwd_yx_df_ysmx q"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_yx_kh_ydl_y.ysdf",
+        "sgtrace_trial_platform.dwd_yx_df_ysmx.ysje",
+        "sgtrace_trial_platform.ods_yx186_a_rcvbl_flow.rcvbl_amt",
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+      ]
+    ],
+    "verification_sql": "SELECT `ysdf` AS answer FROM `sgtrace_trial_platform`.`dws_yx_kh_ydl_y`",
+    "independent_source_sql": "SELECT `ysdf` AS answer FROM (SELECT q.hh AS hh, q.dfny AS ny, ROUND(SUM(q.jsdl), 2) AS ydl, ROUND(SUM(q.ysje), 2) AS ysdf FROM (SELECT a.rcvbl_id AS ysbs, a.cons_no AS hh, a.rcvbl_ym AS dfny, a.t_settle_pq AS jsdl, a.rcvbl_amt AS ysje, a.rcved_amt AS ssje, ROUND(a.rcvbl_amt - a.rcved_amt, 2) AS qfje, a.penalty AS wyj, a.settle_flag AS jqbz, a.rel_date AS fxrq FROM (SELECT `RCVBL_ID` AS `rcvbl_id`, `CONS_NO` AS `cons_no`, `RCVBL_YM` AS `rcvbl_ym`, `T_SETTLE_PQ` AS `t_settle_pq`, `RCVBL_AMT` AS `rcvbl_amt`, `RCVED_AMT` AS `rcved_amt`, `PENALTY` AS `penalty`, `SETTLE_FLAG` AS `settle_flag`, `REL_DATE` AS `rel_date` FROM `sgtrace_trial_yx186`.`A_RCVBL_FLOW`) AS a) AS q GROUP BY q.hh, q.dfny) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_yx186.A_RCVBL_FLOW.RCVBL_AMT"
+  },
+  {
+    "id": "M072",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.tjyf",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+    ],
+    "expression": "SUBSTR(g.slsj, 1, 7)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.tjyf",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.slsj",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.accept_time",
+        "sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+      ]
+    ],
+    "verification_sql": "SELECT `tjyf` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `tjyf` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_workorder.ACCEPT_TIME"
+  },
+  {
+    "id": "M073",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.gdzs",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+    ],
+    "expression": "COUNT(g.gdbh)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.gdzs",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.gdbh",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.app_no",
+        "sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `gdzs` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `gdzs` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+  },
+  {
+    "id": "M074",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.tsgds",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+    ],
+    "expression": "SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.tsgds",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.ywlx",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.busi_type",
+        "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+      ]
+    ],
+    "verification_sql": "SELECT `tsgds` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `tsgds` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+  },
+  {
+    "id": "M075",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.bxgds",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+    ],
+    "expression": "SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.bxgds",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.ywlx",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.busi_type",
+        "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+      ]
+    ],
+    "verification_sql": "SELECT `bxgds` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `bxgds` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+  },
+  {
+    "id": "M076",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.tsl",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_workorder.APP_NO",
+      "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+    ],
+    "expression": "ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.tsl",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.ywlx",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.busi_type",
+        "sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+      ],
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.tsl",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.gdbh",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_workorder.app_no",
+        "sgtrace_trial_kf95598.t_kf_workorder.APP_NO"
+      ]
+    ],
+    "verification_sql": "SELECT `tsl` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `tsl` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_workorder.APP_NO、sgtrace_trial_kf95598.t_kf_workorder.BUSI_TYPE"
+  },
+  {
+    "id": "M077",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_kf_gd_tj_y.pjmyd",
+    "sources": [
+      "sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+    ],
+    "expression": "ROUND(AVG(g.hfpf), 2)",
+    "scope": {
+      "where": null,
+      "group_by": "g.cldw, SUBSTR(g.slsj, 1, 7)",
+      "from": "dwd_kf_gd_mx g"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_kf_gd_tj_y.pjmyd",
+        "sgtrace_trial_platform.dwd_kf_gd_mx.hfpf",
+        "sgtrace_trial_platform.ods_kf95598_t_kf_visit.satisfy_score",
+        "sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+      ]
+    ],
+    "verification_sql": "SELECT `pjmyd` AS answer FROM `sgtrace_trial_platform`.`dws_kf_gd_tj_y`",
+    "independent_source_sql": "SELECT `pjmyd` AS answer FROM (SELECT g.cldw AS cldw, SUBSTRING(g.slsj, 1, 7) AS tjyf, COUNT(g.gdbh) AS gdzs, SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) AS tsgds, SUM(CASE WHEN g.ywlx = '01' THEN 1 ELSE 0 END) AS bxgds, ROUND(SUM(CASE WHEN g.ywlx = '03' THEN 1 ELSE 0 END) * 1.0 / COUNT(g.gdbh), 4) AS tsl, ROUND(AVG(g.hfpf), 2) AS pjmyd FROM (SELECT w.app_no AS gdbh, w.accept_time AS slsj, w.busi_type AS ywlx, w.cust_no AS hh, w.cust_name AS khmc, w.contact_tel AS lxdh, w.accept_content AS slnr, o.org_name AS cldw, w.handle_status AS clzt, w.finish_time AS bjsj, v.satisfy_score AS hfpf, v.visit_result AS hfjg FROM (SELECT `APP_NO` AS `app_no`, `ACCEPT_TIME` AS `accept_time`, `BUSI_TYPE` AS `busi_type`, `CUST_NO` AS `cust_no`, `CUST_NAME` AS `cust_name`, `CONTACT_TEL` AS `contact_tel`, `ACCEPT_CONTENT` AS `accept_content`, `HANDLE_ORG` AS `handle_org`, `HANDLE_STATUS` AS `handle_status`, `FINISH_TIME` AS `finish_time`, `SATISFY_CODE` AS `satisfy_code` FROM `sgtrace_trial_kf95598`.`t_kf_workorder`) AS w LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = w.handle_org LEFT JOIN (SELECT `VISIT_ID` AS `visit_id`, `APP_NO` AS `app_no`, `VISIT_TIME` AS `visit_time`, `VISIT_RESULT` AS `visit_result`, `SATISFY_SCORE` AS `satisfy_score` FROM `sgtrace_trial_kf95598`.`t_kf_visit`) AS v ON v.app_no = w.app_no) AS g GROUP BY g.cldw, SUBSTRING(g.slsj, 1, 7)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_kf95598.t_kf_visit.SATISFY_SCORE"
+  },
+  {
+    "id": "M078",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_cj_kh_fh_r.zdfh",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+    ],
+    "expression": "MAX(f.yggl)",
+    "scope": {
+      "where": null,
+      "group_by": "f.hh, SUBSTR(f.sjsj, 1, 10)",
+      "from": "dwd_cj_fhqx f"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_cj_kh_fh_r.zdfh",
+        "sgtrace_trial_platform.dwd_cj_fhqx.yggl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.p",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+      ]
+    ],
+    "verification_sql": "SELECT `zdfh` AS answer FROM `sgtrace_trial_platform`.`dws_cj_kh_fh_r`",
+    "independent_source_sql": "SELECT `zdfh` AS answer FROM (SELECT f.hh AS hh, SUBSTRING(f.sjsj, 1, 10) AS rq, MAX(f.yggl) AS zdfh, ROUND(AVG(f.yggl), 4) AS pjfh FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS f GROUP BY f.hh, SUBSTRING(f.sjsj, 1, 10)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+  },
+  {
+    "id": "M079",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "dws_cj_kh_fh_r.pjfh",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+    ],
+    "expression": "ROUND(AVG(f.yggl), 4)",
+    "scope": {
+      "where": null,
+      "group_by": "f.hh, SUBSTR(f.sjsj, 1, 10)",
+      "from": "dwd_cj_fhqx f"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.dws_cj_kh_fh_r.pjfh",
+        "sgtrace_trial_platform.dwd_cj_fhqx.yggl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.p",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+      ]
+    ],
+    "verification_sql": "SELECT `pjfh` AS answer FROM `sgtrace_trial_platform`.`dws_cj_kh_fh_r`",
+    "independent_source_sql": "SELECT `pjfh` AS answer FROM (SELECT f.hh AS hh, SUBSTRING(f.sjsj, 1, 10) AS rq, MAX(f.yggl) AS zdfh, ROUND(AVG(f.yggl), 4) AS pjfh FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS f GROUP BY f.hh, SUBSTRING(f.sjsj, 1, 10)) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+  },
+  {
+    "id": "M080",
+    "expected_status": "located",
+    "kind": "calculated",
+    "target": "ads_cj_dkh_fh.fzl",
+    "sources": [
+      "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P",
+      "sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+    ],
+    "expression": "ROUND(f.zdfh / k.htrl, 4)",
+    "scope": {
+      "where": null,
+      "group_by": null,
+      "from": "dws_cj_kh_fh_r f JOIN dwd_yx_kh_jbxx k ON k.hh = f.hh"
+    },
+    "lineage_paths": [
+      [
+        "sgtrace_trial_platform.ads_cj_dkh_fh.fzl",
+        "sgtrace_trial_platform.dws_cj_kh_fh_r.zdfh",
+        "sgtrace_trial_platform.dwd_cj_fhqx.yggl",
+        "sgtrace_trial_platform.ods_cjxt_e_mp_power_curve.p",
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.P"
+      ],
+      [
+        "sgtrace_trial_platform.ads_cj_dkh_fh.fzl",
+        "sgtrace_trial_platform.dwd_yx_kh_jbxx.htrl",
+        "sgtrace_trial_platform.ods_yx186_c_cons.contract_cap",
+        "sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+      ]
+    ],
+    "verification_sql": "SELECT `fzl` AS answer FROM `sgtrace_trial_platform`.`ads_cj_dkh_fh`",
+    "independent_source_sql": "SELECT `fzl` AS answer FROM (SELECT f.hh AS hh, k.hm AS hm, k.gddw_mc AS gddw, k.htrl AS htrl, f.rq AS rq, f.zdfh AS zdfh, f.pjfh AS pjfh, ROUND(f.zdfh / k.htrl, 4) AS fzl FROM (SELECT f.hh AS hh, SUBSTRING(f.sjsj, 1, 10) AS rq, MAX(f.yggl) AS zdfh, ROUND(AVG(f.yggl), 4) AS pjfh FROM (SELECT q.id AS cldbs, p.cons_no AS hh, p.meter_asset_no AS dnbzcbh, q.data_time AS sjsj, q.p AS yggl, q.q AS wggl FROM (SELECT `ID` AS `id`, `DATA_TIME` AS `data_time`, `P` AS `p`, `Q` AS `q` FROM `sgtrace_trial_cjxt`.`E_MP_POWER_CURVE`) AS q JOIN (SELECT `ID` AS `id`, `TERMINAL_ID` AS `terminal_id`, `MP_SN` AS `mp_sn`, `MP_ID` AS `mp_id`, `CONS_NO` AS `cons_no`, `METER_ASSET_NO` AS `meter_asset_no`, `T_FACTOR` AS `t_factor` FROM `sgtrace_trial_cjxt`.`E_DATA_MP`) AS p ON p.id = q.id) AS f GROUP BY f.hh, SUBSTRING(f.sjsj, 1, 10)) AS f JOIN (SELECT c.cons_id AS khbs, c.cons_no AS hh, c.cons_name AS hm, c.elec_addr AS ydsz, c.org_no AS gddw_bm, o.org_name AS gddw_mc, c.trade_code AS hylb, c.elec_type_code AS ydlb, c.volt_code AS gddy, c.contract_cap AS htrl, c.status_code AS yhzt, c.build_date AS lhrq, c.cancel_date AS xhrq, ct.contact_name AS lxr, ct.mobile AS lxdh FROM (SELECT `CONS_ID` AS `cons_id`, `CONS_NO` AS `cons_no`, `CONS_NAME` AS `cons_name`, `ELEC_ADDR` AS `elec_addr`, `ORG_NO` AS `org_no`, `TRADE_CODE` AS `trade_code`, `ELEC_TYPE_CODE` AS `elec_type_code`, `VOLT_CODE` AS `volt_code`, `CONTRACT_CAP` AS `contract_cap`, `RUN_CAP` AS `run_cap`, `STATUS_CODE` AS `status_code`, `BUILD_DATE` AS `build_date`, `CANCEL_DATE` AS `cancel_date`, `LODE_ATTR_CODE` AS `lode_attr_code` FROM `sgtrace_trial_yx186`.`C_CONS`) AS c LEFT JOIN (SELECT `ORG_NO` AS `org_no`, `ORG_NAME` AS `org_name`, `P_ORG_NO` AS `p_org_no`, `ORG_TYPE` AS `org_type`, `SORT_NO` AS `sort_no` FROM `sgtrace_trial_yx186`.`O_ORG`) AS o ON o.org_no = c.org_no LEFT JOIN (SELECT `CONTACT_ID` AS `contact_id`, `CONS_ID` AS `cons_id`, `CONTACT_NAME` AS `contact_name`, `MOBILE` AS `mobile`, `OFFICE_TEL` AS `office_tel`, `CONTACT_MODE` AS `contact_mode` FROM `sgtrace_trial_yx186`.`C_CONTACT`) AS ct ON ct.cons_id = c.cons_id AND ct.contact_mode = '01') AS k ON k.hh = f.hh) AS gold_source",
+    "answer": "按任务表达式及完整 JOIN/过滤/分组口径计算；来源：sgtrace_trial_cjxt.E_MP_POWER_CURVE.P、sgtrace_trial_yx186.C_CONS.CONTRACT_CAP"
+  },
+  {
+    "id": "M081",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.C_CONS.CONS_NO"
+      ],
+      [
+        "sgtrace_trial_yx186.A_RCVBL_FLOW.CONS_NO"
+      ],
+      [
+        "sgtrace_trial_yx186.A_PAY_FLOW.CONS_NO"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_DATA_MP.CONS_NO"
+      ],
+      [
+        "sgtrace_trial_kf95598.t_kf_workorder.CUST_NO"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M082",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.C_CONTACT.MOBILE"
+      ],
+      [
+        "sgtrace_trial_kf95598.t_kf_workorder.CONTACT_TEL"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M083",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.C_CONS.CONS_ID"
+      ],
+      [
+        "sgtrace_trial_yx186.C_CONTACT.CONS_ID"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M084",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.D_METER.ASSET_NO"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_DATA_MP.METER_ASSET_NO"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M085",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.C_MP.MP_ID"
+      ],
+      [
+        "sgtrace_trial_yx186.C_METER_MP_RELA.MP_ID"
+      ],
+      [
+        "sgtrace_trial_yx186.R_READ.MP_ID"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_DATA_MP.MP_ID"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M086",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_cjxt.E_DATA_MP.ID"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_MP_DAY_READ.ID"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.ID"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_MP_POWER_CURVE.ID"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M087",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_cjxt.E_MP_DAY_READ.DATA_DATE"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_MP_DAY_ENERGY.DATA_DATE"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M088",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.O_ORG.ORG_NO"
+      ],
+      [
+        "sgtrace_trial_yx186.C_CONS.ORG_NO"
+      ],
+      [
+        "sgtrace_trial_cjxt.R_TMNL_RUN.ORG_NO"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M089",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.D_METER.T_FACTOR"
+      ],
+      [
+        "sgtrace_trial_cjxt.E_DATA_MP.T_FACTOR"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M090",
+    "expected_status": "ambiguous",
+    "alternatives": [
+      [
+        "sgtrace_trial_yx186.C_CONS.STATUS_CODE"
+      ],
+      [
+        "sgtrace_trial_yx186.C_MP.STATUS_CODE"
+      ]
+    ],
+    "answer": "不能唯一定位。应保留以下候选并要求补充系统或页面，不能任意选一个。",
+    "sources": [],
+    "reason": "同名业务字段或技术列在多个原表存在。"
+  },
+  {
+    "id": "M091",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M092",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M093",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M094",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M095",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M096",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M097",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M098",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M099",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  },
+  {
+    "id": "M100",
+    "expected_status": "not_found",
+    "sources": [],
+    "answer": "本次材料没有提供可验证来源；应未找到或请求补充材料，不能编造表字段。"
+  }
+]

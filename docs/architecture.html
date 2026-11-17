@@ -169,7 +169,7 @@
       <header class="module-head"><span class="module-number">02</span><div><h2 id="modeling-title">OntoWing 本体建模</h2><p>让业务概念与物理表字段建立明确联系</p></div></header>
       <div class="features">
         <article class="feature"><div class="feature-title"><i></i><h3>多材料识别与草稿</h3></div><p>文档与 DDL 组合生成对象、属性和关系候选。</p><div class="method"><strong>双向对齐</strong>：文档自上而下识别业务语义，DDL 自下而上约束结构；候选附带原文依据。</div></article>
-        <article class="feature"><div class="feature-title"><i></i><h3>业务本体编辑</h3></div><p>对象、属性、层次、关系、同义叫法与业务规则。</p><div class="method"><strong>复用 OntoWing</strong>：识别结果先预览再追加，保留已有定义；在对象目录和关系图中核对修订。</div></article>
+        <article class="feature"><div class="feature-title"><i></i><h3>业务本体编辑</h3></div><p>全量本体图，点选类、属性和关系编辑详情。</p><div class="method"><strong>稳定标识与领域校验</strong>：图与详情联动，维护继承、关系方向与基数；草稿变更使检查失效，采用时接入 OntoWing 校验与导出。</div></article>
         <article class="feature"><div class="feature-title"><i></i><h3>R2RML 数据映射</h3></div><p>数据表对齐、实体键、属性列与关系 JOIN 编辑。</p><div class="method"><strong>语义落到物理列</strong>：概念绑定表、属性映射列、关系配置 JOIN；键与字段类型必须一致。</div></article>
         <article class="feature"><div class="feature-title"><i></i><h3>模型检查与采用</h3></div><p>本体、映射、规则检查，通过后用于字段溯源。</p><div class="method"><strong>三重核验</strong>：OntoWing 领域校验、Morph-KGC 映射实跑、SWRL 与独立 SQL 对账；采用后固定快照。</div></article>
       </div>
@@ -195,7 +195,7 @@
   <details>
     <summary>实现依据与当前交付边界</summary>
     <div class="implementation">
-      <p><strong>本图描述目标产品的功能架构。</strong>当前独立前端为交互原型：已具备三模块工作台、材料组合选择、基本文本与 DDL 预览、OntoWing 编辑器及本地快照。PDF 解析、真实文档识别和服务联通仍待完成。</p>
+      <p><strong>本图描述目标产品的功能架构。</strong>正式前端已接通真实 MySQL DDL / SQL 的结构与依赖解析、证据草稿、服务端编辑、OntoWing 静态校验 / OWL 与 R2RML 导出、快照采用和语义索引溯源。PDF、多方言、映射实跑与效果评测仍待完成。</p>
       <p><strong>现有引擎依据：</strong><code>reference/poc/sgtrace/metadata.py</code> 与 <code>evidence.py</code> 提供结构和 SQL 血缘；<code>wing.py</code>、<code>verify.py</code>、<code>reason.py</code> 提供领域校验、映射实跑与规则核对；<code>semantic.py</code>、<code>qa.py</code>、<code>agent.py</code> 提供语义索引与受控溯源。新版工作台尚未全部接上这些服务。</p>
       <p><strong>文档建模参考：</strong>OntoWing 的 MaterialDock、材料输入集合、实体 / 关系识别与数据表对齐流程。业务输入按现有一期范围约束，真实生产资料与模型生成仍需集成验收。</p>
       <p><a href="product.md">查看已确认的产品功能说明</a></p>

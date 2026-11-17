@@ -17,8 +17,8 @@
 - `backend/`：正式 FastAPI 应用包 `sgtrace_app`。`modules/{sources,modeling,agent}` 与前端对应，`integrations` 放外部适配，`infrastructure` 放持久化和任务设施。
 - `product-demo/` 保留作交互参照；其 localStorage、模拟目录、词汇匹配和 DDL 简化解析不得冒充正式业务服务。
 - `reference/poc/` 保存可复用引擎、生成数据与回归测试，不是正式服务入口。提取能力时携带测试，移除固定库名、演示全局状态与自动数据初始化依赖。
-- 正式服务骨架只提供 `/api/healthz`；这是进程存活检查。业务接口实现前不返回假成功，不自动执行 PoC 构建、读取合成数据或创建数据库。
-- 当前阶段只完成工程准备，不等于正式业务、容器部署或客户环境验收完成。
+- 正式服务提供 `/api/v1/sources`、`materials`、`modeling`。`/api/healthz` 仅检查存活。未实现的操作不返回假成功，不自动运行 PoC 或读取合成数据。
+- 真实 DDL / SQL 建模、草稿、静态校验 / 导出、采用和字段查找已接通；不等于完整产品、容器部署或客户环境验收完成。
 
 ## 业务规则
 
@@ -34,7 +34,7 @@
 
 - 原型编辑器通过源码引用相邻 `../ontowing/frontend/src`，可用 `ONTOWING_FRONTEND` 覆盖。
 - 参考引擎只导入相邻 `../ontowing/backend` 的 `app.domain.modeling_profiles` 与 `app.domain.modeling_artifacts.projection`，可用 `ONTOWING_BACKEND` 覆盖；这些领域模块不需要 Django、业务数据库或 HTTP 服务。
-- 文档识别需要单独完成服务集成，不能把 OntoWing 编辑器已加载当作材料解析或大模型识别已接通。
+- 正式适配以子进程调用领域校验和导出。DDL / SQL 路径由 AST 解析；可选 LLM 语义增强只允许已知候选 ID、候选自身名称依据和可定位原文，新语义假设不能自动转为事实。
 - 保留 OWL、R2RML、SWRL 产物语义。R2RML 表名缺少库名时，用管道绑定的 `schema_name` 补回。
 - 实体键不能为可空列；关联 JOIN 完整覆盖父绑定键；属性只能映射到自身概念或祖先绑定；同一表列不能对应冲突的 datatype。
 - 映射在沙箱用 Morph-KGC 实跑，事实规则推理与独立 SQL 核对。建议规则、导出损失与未验证项明确说明。

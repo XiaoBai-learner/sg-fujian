@@ -15,6 +15,7 @@ test:
 	$(PYTHON) -m pytest -q
 
 check-web:
+	npm --prefix frontend test
 	npm --prefix frontend run build
 
 check-demo:

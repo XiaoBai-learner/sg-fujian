@@ -1,0 +1,145 @@
+.ontology-explorer { margin: 0 22px 24px; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: white; }
+.ontology-explorer-heading { padding: 18px 20px; display: flex; justify-content: space-between; gap: 14px; align-items: center; }
+.ontology-explorer-heading h3 { font-size: 15px; }
+.ontology-explorer-heading p { font-size: 11px; margin: 7px 0 0; }
+.ontology-explorer-heading p > span { margin-left: 12px; color: var(--purple); }
+.ontology-explorer-heading .button { font-size: 11px; min-height: 35px; padding: 7px 10px; }
+.ontology-editor-layout { display: grid; grid-template-columns: minmax(0, 1fr) 315px; border-top: 1px solid var(--line); }
+.ontology-canvas-panel { min-width: 0; background: #fafcff; display: flex; flex-direction: column; }
+.ontology-canvas-toolbar { min-height: 52px; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid #e7edf5; background: #f9fbff; }
+.ontology-canvas-toolbar > div:first-child { display: flex; align-items: center; gap: 7px; color: #59708c; font-size: 10px; white-space: nowrap; }
+.legend-dot { width: 7px; height: 7px; border: 1px solid #9c80c7; background: #eee6f9; border-radius: 2px; }
+.legend-line { width: 15px; height: 0; border-top: 2px solid #6f91bc; margin-left: 7px; }
+.legend-line.pending { border-top: 2px dashed #b88a3c; }
+.graph-tools { display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+.graph-tools button { border: 1px solid #dbe4ef; border-radius: 5px; background: #fff; min-width: 29px; min-height: 29px; color: #526e94; }
+.graph-tools button:hover:not(:disabled) { background: var(--blue-tint); }
+.graph-tools output { color: #617691; min-width: 38px; text-align: center; font: 10px ui-monospace, monospace; }
+.graph-tools .fit-button { margin-left: 4px; padding: 4px 8px; font-size: 10px; }
+.ontology-canvas { min-height: 480px; flex: 1; overflow: hidden; background: radial-gradient(#d1dcea .8px, transparent .8px) 0 0 / 17px 17px #fafcff; cursor: grab; touch-action: pan-y; }
+.ontology-canvas:active { cursor: grabbing; }
+.ontology-canvas svg { display: block; min-height: 480px; user-select: none; }
+.ontology-canvas svg [role=button] { cursor: pointer; outline: none; }
+.class-frame { fill: #fff; stroke: #c6b4e2; stroke-width: 1.4; filter: drop-shadow(0 4px 7px #2b467609); }
+.class-frame.is-selected { stroke: #7652b6; stroke-width: 2.8; }
+.node-hit { fill: #f4f0fc; stroke: none; }
+.node-kind { fill: #7d659f; font-size: 11px; letter-spacing: .6px; }
+.node-name { fill: #44305f; font-size: 19px; font-weight: 600; }
+.node-edit-icon { fill: #8c6faf; font-size: 19px; }
+.class-heading:hover .node-hit, .class-heading:focus-visible .node-hit { fill: #e8def9; }
+.class-heading:focus-visible .node-hit { stroke: #456ec8; stroke-width: 3px; }
+.graph-class.color-1 .class-frame { stroke: #91c6b8; }
+.graph-class.color-1 .class-frame.is-selected { stroke: #1d7c66; }
+.graph-class.color-1 .node-hit { fill: #eaf6f0; }
+.graph-class.color-1 .node-name { fill: #215d4e; }
+.graph-class.color-1 .node-kind, .graph-class.color-1 .node-edit-icon { fill: #4d8778; }
+.graph-class.color-1 .class-heading:hover .node-hit { fill: #dbefe6; }
+.graph-class.color-2 .class-frame { stroke: #a7bfdc; }
+.graph-class.color-2 .class-frame.is-selected { stroke: #3e6ba9; }
+.graph-class.color-2 .node-hit { fill: #eef4fc; }
+.graph-class.color-2 .node-name { fill: #34567f; }
+.graph-class.color-2 .node-kind, .graph-class.color-2 .node-edit-icon { fill: #6681a8; }
+.graph-class.color-2 .class-heading:hover .node-hit { fill: #dfeafa; }
+.graph-property rect { fill: transparent; }
+.graph-property text { fill: #40576e; font-size: 13px; }
+.graph-property .property-type { fill: #688097; font-size: 11px; text-anchor: end; }
+.graph-property:hover rect, .graph-property:focus-visible rect { fill: #eaf2ff; }
+.graph-property.is-selected rect { fill: #e5efff; stroke: #8caee0; }
+.graph-property:focus-visible rect { stroke: #456ec8; stroke-width: 2px; }
+.graph-property.is-excluded text { fill: #7c8794; text-decoration: line-through; }
+.node-empty { fill: #7c8aa0; font-size: 12px; }
+.edge-hit-area { stroke: transparent; stroke-width: 20px; fill: none; }
+.edge-visible { stroke: #7c9abd; stroke-width: 1.7px; fill: none; }
+.edge-label-bg { fill: #fff; stroke: #d8e3f0; stroke-width: 1px; }
+.edge-name { fill: #496a91; font-size: 13px; text-anchor: middle; }
+.edge-meta { fill: #667b95; font-size: 10px; text-anchor: middle; }
+.graph-relation.is-pending .edge-visible { stroke: #b98c48; stroke-dasharray: 6 4; }
+.graph-relation.is-pending .edge-name { fill: #926327; }
+.graph-relation.is-pending .edge-label-bg { fill: #fffaf0; stroke: #e3d1b5; }
+.graph-relation.is-selected .edge-visible, .graph-relation:hover .edge-visible { stroke: #3569bb; stroke-width: 3px; }
+.graph-relation.is-selected .edge-label-bg, .graph-relation:hover .edge-label-bg, .graph-relation:focus-visible .edge-label-bg { stroke: #5684c9; stroke-width: 2px; fill: #edf4ff; }
+.graph-relation:focus-visible .edge-visible { stroke: #3569bb; stroke-width: 3px; }
+.graph-parent path { stroke: #9d86bd; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.graph-parent text { fill: #896ba6; font-size: 12px; }
+.graph-parent:focus-visible path, .graph-parent:hover path { stroke: #426ec3; stroke-width: 3px; }
+.unassigned-properties > rect { fill: #fffaf0; stroke: #e7d7b9; stroke-dasharray: 5 4; }
+.unassigned-item rect { fill: transparent; }
+.unassigned-item:hover rect, .unassigned-item:focus-visible rect { fill: #faedce; stroke: #c39b56; }
+.unassigned-item text { fill: #91632a; font-size: 14px; }
+.unassigned-item .unassigned-caption { font-size: 12px; fill: #9b7d51; }
+.canvas-hint { padding: 12px 17px; display: flex; align-items: flex-start; gap: 7px; font-size: 10px; line-height: 1.8; color: #617993; border-top: 1px solid #e7edf5; }
+.canvas-hint svg { margin-top: 2px; }
+.ontology-inspector { min-width: 0; max-height: 760px; overflow-y: auto; border-left: 1px solid var(--line); background: #fff; padding: 19px 18px; }
+.inspector-title { display: flex; align-items: flex-start; gap: 9px; border-bottom: 1px solid var(--line); padding-bottom: 15px; }
+.inspector-title > div { min-width: 0; flex: 1; }
+.inspector-title > div > span { color: #7d6996; font-size: 10px; letter-spacing: .7px; }
+.inspector-title h3 { font-size: 16px; margin-top: 5px; overflow-wrap: anywhere; }
+.inspector-title > .badge { padding: 3px 5px; font-size: 9px; }
+.ontology-form > label, .form-columns label { display: block; font-size: 12px; color: #556a83; margin: 16px 0 7px; }
+.ontology-form input:not([type=checkbox]), .ontology-form textarea, .ontology-form select { width: 100%; min-height: 37px; padding: 8px 10px; font-size: 12px; border: 1px solid #d3ddea; border-radius: 6px; background: #fff; }
+.ontology-form textarea { line-height: 1.8; }
+.ontology-form select { appearance: auto; }
+.form-columns { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; }
+.inspector-associated { padding: 12px; margin-top: 17px; border: 1px solid #e7ecf3; border-radius: 7px; background: #fafcfe; }
+.inspector-associated h4 { font-size: 11px; color: #60718d; font-weight: 500; margin-bottom: 9px; }
+.inspector-associated code { display: block; font-size: 10px; color: #42638a; margin: 7px 0; line-height: 1.8; }
+.inspector-associated p { font-size: 11px; line-height: 1.8; }
+.relation-direction { margin-top: 18px; padding: 10px; background: #f3f7fd; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; font-size: 10px; color: #526e93; }
+.relation-direction .text-button { font-size: 10px; }
+.relation-characteristics { border: 0; padding: 0; margin: 18px 0 10px; display: grid; gap: 11px; }
+.relation-characteristics legend { font-size: 12px; margin-bottom: 12px; color: #556a83; }
+.relation-characteristics label { display: flex; align-items: center; gap: 9px; font-size: 12px; cursor: pointer; }
+.inspector-help { font-size: 10px; color: #687c94; line-height: 1.8; }
+.ontology-save { display: flex; gap: 9px; padding: 18px 0 3px; }
+.ontology-save .button { flex: 1; font-size: 11px; padding: 8px; min-height: 38px; }
+.ontology-form > .message { margin: 15px 0 0; font-size: 11px; }
+.inspector-provenance { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 17px; }
+.inspector-provenance summary { font-size: 11px; color: #61718a; cursor: pointer; }
+.inspector-provenance summary > span { float: right; font-size: 10px; }
+.inspector-provenance > div { margin-top: 15px; }
+.inspector-provenance strong { font-size: 11px; font-weight: 500; color: #52667e; }
+.inspector-provenance small { display: block; font-size: 10px; color: #70839b; margin-top: 5px; }
+.inspector-provenance blockquote { font: 10px/1.85 ui-monospace, monospace; color: #69587e; border-left: 2px solid #dbceed; background: #fcfaff; padding: 8px 10px; margin: 7px 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.inspector-provenance > code { display: block; margin-top: 13px; font-size: 10px; }
+.inspector-provenance p { font-size: 10px; }
+.edit-provenance { color: #8a672e; }
+.ontology-editor-note { padding: 13px 18px; border-top: 1px solid var(--line); margin: 0; display: flex; gap: 8px; align-items: flex-start; font-size: 10px; background: #fdfdfe; }
+.ontology-editor-note svg { margin-top: 2px; }
+.ontology-catalog { border-top: 1px solid var(--line); padding: 0 20px; background: #fcfdff; }
+.ontology-catalog summary { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 11px; color: #5b7495; }
+.ontology-catalog > input { width: 100%; font-size: 12px; margin: 0 0 10px; }
+.ontology-catalog > div { display: flex; gap: 7px; flex-wrap: wrap; padding-bottom: 16px; }
+.ontology-catalog > div > button { border: 1px solid #e0e7f3; color: #4e668a; background: #fff; padding: 8px 10px; border-radius: 6px; font-size: 11px; }
+.ontology-catalog > div > button:hover, .ontology-catalog > div > button[aria-pressed=true] { background: #edf4ff; border-color: #9db9e0; }
+.ontology-catalog small { font-size: 9px; color: #866b9f; margin-right: 6px; }
+.ontology-catalog p { font-size: 11px; }
+.unsaved-selection { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 13px 18px; border-top: 1px solid #ebdaba; background: #fff7e9; color: #86602c; font-size: 11px; }
+.unsaved-selection .button { min-height: 34px; font-size: 11px; }
+.ontology-explorer:fullscreen { border-radius: 0; margin: 0; width: 100vw; height: 100dvh; overflow: auto; }
+.ontology-explorer:fullscreen .ontology-editor-layout { grid-template-columns: minmax(0, 1fr) 345px; min-height: calc(100dvh - 160px); }
+.ontology-explorer:fullscreen .ontology-inspector { max-height: calc(100dvh - 160px); overflow-y: auto; }
+@media (max-width: 1200px) {
+  .ontology-editor-layout { grid-template-columns: minmax(0, 1fr) 290px; }
+  .ontology-canvas-toolbar { flex-wrap: wrap; }
+  .ontology-canvas-toolbar > div:first-child { flex: 1; }
+}
+@media (max-width: 1024px) {
+  .ontology-editor-layout { grid-template-columns: 1fr; }
+  .ontology-inspector { max-height: none; overflow-y: visible; border-left: 0; border-top: 1px solid var(--line); }
+  .ontology-canvas, .ontology-canvas svg { min-height: 400px; }
+}
+@media (max-width: 760px) {
+  .ontology-explorer { margin-inline: 13px; }
+  .ontology-explorer-heading { padding: 16px 14px; }
+  .ontology-explorer-heading p { font-size: 10px; }
+  .ontology-explorer-heading p span { margin-left: 5px; }
+  .ontology-explorer-heading .button { font-size: 10px; padding: 6px 8px; }
+  .ontology-canvas, .ontology-canvas svg { min-height: 310px; }
+  .ontology-catalog { padding-inline: 14px; }
+  .ontology-canvas-toolbar { padding-inline: 10px; gap: 12px; }
+  .ontology-inspector { padding-inline: 16px; }
+  .ontology-form input:not([type=checkbox]), .ontology-form textarea, .ontology-form select { font-size: 16px; }
+  .ontology-explorer:fullscreen .ontology-editor-layout { grid-template-columns: 1fr; }
+  .ontology-explorer:fullscreen .ontology-inspector { max-height: none; }
+  .ontology-canvas-toolbar .graph-tools button { min-height: 34px; min-width: 32px; }
+}

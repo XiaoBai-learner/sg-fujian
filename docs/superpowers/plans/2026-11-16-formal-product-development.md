@@ -353,6 +353,8 @@ frontend/src/
 
 ### Task 5: 实现 OntoWing 适配、材料输入集合和识别任务
 
+**2026-11-17 实施记录：** 已先落地 DDL / SQL 证据驱动切片：`modules/modeling/engine.py`、`service.py`、`runner.py`、`integrations/ontowing` 及迁移 `0004_modeling_runs`，真实接口与前端已接通。包含可选、候选绑定的 LLM 语义建议。使用隔离、限时的请求执行；完整异步调度 / 取消 / 自动恢复仍未完成，不据此勾选整项。Task 6 的草稿修订、静态校验、OWL/R2RML 与不可变快照已先实现；物化实跑与完整规则路径仍待补。功能证据见本地忽略目录 `artifacts/modeling-validation/result.json`，不作为算法效果报告。
+
 **Files:**
 
 - Create: `backend/src/sgtrace_app/integrations/ontowing/adapter.py`

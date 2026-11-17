@@ -15,6 +15,10 @@ dependencies = [
   "asyncmy==0.2.9",
   "greenlet==3.1.1",
   "sqlglot==30.16.0",
+  "rdflib>=7,<8",
+  "jsonschema>=4.23,<5",
+  "httpx==0.28.1",
+  "python-dotenv>=1,<2",
 ]
 
 [project.optional-dependencies]

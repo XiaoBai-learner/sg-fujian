@@ -41,7 +41,13 @@ Makefile                          统一开发与检查命令
 pytest.ini                        正式服务 + 参考引擎的测试发现
 ```
 
-正式前端目前提供三个模块的工程入口和服务连通检查，正式后端提供应用装配和健康接口。它们是开发骨架，业务操作尚未实现；完整交互以 `product-demo/` 为验收参照。正式入口不使用 demo 的 localStorage 模拟服务，也不自动加载合成数据或运行 PoC 流水线。
+正式前端已接通真实 DDL / SQL 建模闭环：上传材料 → 结构与 SQL 证据分析 → 本体草稿 → OntoWing 静态校验与导出 → 采用快照 → 字段溯源。材料、任务、草稿和快照由正式后端持久化；刷新可恢复最新成功任务和采用模型。`product-demo/` 继续保留为独立交互参照，不参与正式计算。
+
+在 `/modeling` 上传 UTF-8 SQL / TXT / Markdown，至少提供一份含 `schema.TABLE` 或 `USE` 的 MySQL DDL；可组合 SELECT、CTE、CREATE VIEW 和 INSERT…SELECT 任务。系统按 AST 提取实际列、别名、计算表达式、完整查询口径、外键与 JOIN；不执行上传 SQL。完整本体图可点击类、属性和关系编辑，改动保存到服务端并使旧检查失效。缺主键、未知列、冲突任务或解析失败会明确报告。
+
+“模型语义增强”默认关闭；开启后选定材料发送到 `.env` 配置的模型服务。模型只能对已有候选的有依据名称给出建议，不创造物理字段；新叫法和业务推断需人工核对。结构路径与增强路径都不能证明业务概念世界完整。PDF、动态 SQL、其他方言、增量调度、图中新增 / 删除对象及效果评测尚未完成。
+
+字段来源从已采用 OWL / R2RML 解析，计算字段通过依赖清单核对导出的实际列；多种计算口径保持歧义。校验页可下载采用版本的 OWL / R2RML。当前执行了 OntoWing 静态检查，**未执行本轮 Morph-KGC 实跑或业务口径 SQL 对账**；不能将“校验通过”当作准确率。合成示例仍可显式载入，和真实服务模式隔离。
 
 ## 开发环境
 
@@ -54,7 +60,7 @@ npm --prefix frontend ci
 npm --prefix product-demo ci
 ```
 
-产品原型引用相邻 `../ontowing/frontend/src` 的编辑器，`ONTOWING_FRONTEND` 可覆盖该位置。参考引擎引用相邻 `../ontowing/backend` 的纯领域模块，`ONTOWING_BACKEND` 可覆盖。正式服务骨架不要求 OntoWing、MySQL 或模型服务已经运行。
+产品原型引用相邻 `../ontowing/frontend/src` 的编辑器，`ONTOWING_FRONTEND` 可覆盖该位置。参考引擎引用相邻 `../ontowing/backend` 的纯领域模块，`ONTOWING_BACKEND` 可覆盖。真实校验需要该 OntoWing 领域库；LLM 仅在启用语义增强时调用。OntoWing 在子进程内导入，不修改 HTTP 进程的全局导入路径。
 
 ## 常用命令
 
@@ -63,12 +69,14 @@ make api                 # 正式后端：127.0.0.1:8765
 make web                 # 正式前端：127.0.0.1:5173；/api 代理到 8765
 make demo                # 已确认原型：127.0.0.1:4180
 make test                # 正式后端与参考引擎全部测试，包含 R2RML 实跑
-make check-web           # 正式前端类型检查与构建
+make check-web           # 正式前端行为检查、类型检查与构建
 make check-demo          # 已确认原型测试与构建，包含架构文档打包
 make check               # 上述全部检查
 ```
 
-这些命令按需执行，项目整理不会自动启动服务。`/api/healthz` 仅检查进程存活，不代表数据库、本体或模型服务已就绪。尚未实现的业务接口返回 404，不返回模拟成功。
+正式服务 `make api` 从项目根目录 `.env` 读取配置（不覆盖已注入的环境变量）：`DATABASE_URL`、`STORAGE_ROOT`、`MYSQL_*`，可选 `LLM_BASE_URL` / `LLM_MODEL` / `LLM_API_KEY`。本机产品库为 `sgtrace_product`，与只读源库分开。新环境先执行 `DATABASE_URL=... .venv/bin/python -m alembic -c backend/alembic.ini upgrade head`；不用把密码写入 Git。
+
+这些命令按需执行，不会自动对外开放。`/api/healthz` 仅检查进程存活，不代表数据库、本体或模型服务已就绪。尚未实现的业务接口返回 404，不返回模拟成功。
 
 ## 开发顺序
 

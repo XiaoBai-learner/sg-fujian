@@ -39,7 +39,7 @@ class MySQLMetadataReader:
             password=settings.password,
             host=settings.host,
             port=settings.port,
-        ), pool_pre_ping=True)
+        ), pool_pre_ping=True, connect_args={"connect_timeout":5,"read_timeout":15})
 
     async def close(self) -> None:
         await self.engine.dispose()
@@ -108,3 +108,32 @@ class MySQLMetadataReader:
                     unique_keys=uniques,
                 ))
             return definitions
+
+    async def databases(self) -> list[str]:
+        async with self.engine.connect() as connection:
+            rows=(await connection.execute(text('SHOW DATABASES'))).scalars().all()
+        return sorted(name for name in rows if name.lower() not in {'information_schema','performance_schema','mysql','sys'})
+
+    async def export_ddl(self, databases: list[str]) -> str:
+        visible=set(await self.databases())
+        if not databases or not set(databases)<=visible:
+            raise ValueError('请选择当前连接可访问的数据库')
+        def quote(value): return '`'+value.replace('`','``')+'`'
+        output=[]
+        async with self.engine.connect() as connection:
+            for schema in databases:
+                output.append('USE '+quote(schema)+';')
+                rows=(await connection.execute(text("SELECT TABLE_NAME,TABLE_TYPE FROM information_schema.TABLES WHERE TABLE_SCHEMA=:schema ORDER BY TABLE_NAME"),{'schema':schema})).all()
+                for name,kind in rows:
+                    # Metadata only: never execute uploaded or business SQL.
+                    row=(await connection.execute(text('SHOW CREATE '+('VIEW ' if kind=='VIEW' else 'TABLE ')+quote(schema)+'.'+quote(name)))).first()
+                    if row:
+                        ddl=str(row[1])
+                        if kind=='VIEW':
+                            import re
+                            ddl=re.sub(r'^CREATE\s+.*?\bVIEW\b','CREATE VIEW',ddl,count=1,flags=re.I|re.S)
+                        output.append(ddl+';')
+        if len(output)==len(databases): raise ValueError('所选数据库没有可采集的表或视图')
+        body='\n\n'.join(output)
+        if len(body.encode())>2_000_000: raise ValueError('结构超过 2 MB，请减少所选数据库')
+        return body

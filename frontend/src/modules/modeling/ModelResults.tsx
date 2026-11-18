@@ -3,9 +3,9 @@ import Icon from '../../shared/Icon'
 import type { WorkspaceAction, WorkspaceState } from './state'
 import OntologyExplorer from './OntologyExplorer'
 
-export default function ModelResults({ state, dispatch }: { state: WorkspaceState; dispatch: Dispatch<WorkspaceAction> }) {
+export default function ModelResults({ state, dispatch, compact = false }: { state: WorkspaceState; dispatch: Dispatch<WorkspaceAction>; compact?: boolean }) {
   const [selected, setSelected] = useState('')
-  const [view, setView] = useState<'fields' | 'ontology' | 'mapping'>('ontology')
+  const [view, setView] = useState<'fields' | 'ontology' | 'mapping'>(compact ? 'mapping' : 'ontology')
   if (!state.draft) return null
   const items = state.draft.items
   const current = items.find(item => item.id === selected) ?? items[0]
@@ -17,11 +17,11 @@ export default function ModelResults({ state, dispatch }: { state: WorkspaceStat
     {state.live && <details className="live-diagnostics"><summary>解析与方法诊断 · {state.live.diagnostics.length} 项</summary><p>{state.live.stats.tables} 张表 · {state.live.stats.columns} 个字段 · {state.live.stats.queries_parsed} 条查询已解析 · {state.live.method}</p>{state.live.diagnostics.map((d,i) => <p key={i}><code>{d.code}</code> {d.message}</p>)}</details>}
     <div className="result-toolbar"><h2>本体与映射</h2>
       <div className="segmented" aria-label="结果视图">
-        {([['ontology', '完整本体'], ['fields', '字段与证据'], ['mapping', '数据映射']] as const).map(([id, label]) =>
+        {([['ontology', '完整本体'], ['fields', '字段与证据'], ['mapping', '数据映射']] as const).filter(([id]) => !compact || id !== 'ontology').map(([id, label]) =>
           <button key={id} onClick={() => setView(id)} aria-pressed={view === id}>{label}</button>)}
       </div>
     </div>
-    {view === 'fields' && <div className="candidate-workspace">
+    {view === 'fields' && current && <div className="candidate-workspace">
       <div className="candidate-list" aria-label="字段候选">
         {items.map(item => <button key={item.id} onClick={() => setSelected(item.id)} aria-pressed={current.id === item.id}>
           <span className={`candidate-icon ${item.uncertain ? 'amber' : item.kind === 'calculated' ? 'purple' : 'blue'}`}><Icon name={item.uncertain ? 'info' : item.kind === 'calculated' ? 'code' : 'model'} /></span>
@@ -50,7 +50,7 @@ export default function ModelResults({ state, dispatch }: { state: WorkspaceStat
               {current.excluded ? '重新纳入' : '暂不采用此字段'}</button></div>}
       </article>
     </div>}
-    <div hidden={view !== 'ontology'}><OntologyExplorer state={state} dispatch={dispatch} /></div>
+    {!compact && <div hidden={view !== 'ontology'}><OntologyExplorer state={state} dispatch={dispatch} onEvidence={() => setView('fields')} /></div>}
     {view === 'mapping' && <section className="mapping-view">
       <p className="mapping-intro">本体属性与源列绑定；计算指标保留依赖列和表达式。</p>
       <div className="table-scroll"><table><thead><tr><th>业务对象 / 属性</th><th>物理来源</th><th>映射方式</th><th>采用范围</th></tr></thead>

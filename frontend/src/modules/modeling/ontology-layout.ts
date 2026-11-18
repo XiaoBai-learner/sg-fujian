@@ -1,12 +1,24 @@
 import type { OntologyDraft } from './state'
 
-export function layoutOntology(draft: OntologyDraft) {
-  const nodeWidth = 240
-  const positions = new Map(draft.classes.map((cls, index) => {
-    const x = draft.classes.length <= 3 ? index === 0 ? 30 : 545 : 30 + (index % 3) * 280
-    const y = draft.classes.length <= 3 ? index === 0 ? 205 : 50 + (index - 1) * 295 : 45 + Math.floor(index / 3) * 245
-    const attributes = draft.items.filter(item => item.conceptId === cls.id)
-    return [cls.id, { x, y, attributes, height: 83 + Math.max(1, attributes.length) * 34 }]
+export function layoutOntology(draft: OntologyDraft, {showProperties = true}: {showProperties?: boolean} = {}) {
+  const nodeWidth = 260
+  const columns = Math.min(3, Math.max(1, draft.classes.length))
+  const nodes = draft.classes.map(cls => {
+    const properties = draft.items.filter(item => item.conceptId === cls.id)
+    const attributes = showProperties ? properties : []
+    return {id:cls.id, attributes, propertyCount:properties.length, height:showProperties ? 84 + Math.max(1, attributes.length) * 34 : 104}
+  })
+  const rowTops: number[] = []
+  let top = 48
+  for (let start = 0; start < nodes.length; start += columns) {
+    rowTops.push(top)
+    top += Math.max(...nodes.slice(start, start + columns).map(node => node.height)) + 130
+  }
+  const positions = new Map(nodes.map((node,index) => {
+    const compact = nodes.length <= 3
+    const x = compact ? index === 0 ? 40 : 610 : 40 + index % columns * 470
+    const y = compact ? index === 0 ? 180 : 48 + (index - 1) * (Math.max(...nodes.map(node => node.height)) + 95) : rowTops[Math.floor(index / columns)]
+    return [node.id, {...node,x,y}]
   }))
   const groups = new Map<string, string[]>()
   for (const relation of draft.relations) {
@@ -30,9 +42,14 @@ export function layoutOntology(draft: OntologyDraft) {
       labelY: self ? startY - 12 : (startY + endY) / 2 + offset,
       rightExtent: self ? startX + reach : Math.max(startX, endX) }]
   })
-  const graphWidth = Math.max(draft.classes.length <= 3 ? 820 : 850,
+  const graphWidth = Math.max(600, ...[...positions.values()].map(node => node.x + nodeWidth + 50),
     ...edges.map(edge => Math.max(edge.rightExtent, edge.labelX + 87) + 28))
-  const graphHeight = Math.max(565, ...[...positions.values()].map(item => item.y + item.height + 55),
+  const graphHeight = Math.max(400, ...[...positions.values()].map(item => item.y + item.height + 55),
     ...edges.map(edge => edge.labelY + 50))
   return { nodeWidth, positions, graphWidth, graphHeight, edges }
+}
+
+/** Automatic fit is separate from absolute zoom so dense models remain readable. */
+export function canvasScale(graphWidth: number, graphHeight: number, width: number, height: number, manual: number | null) {
+  return manual ?? Math.max(.01, Math.min((width - 48) / graphWidth, (height - 48) / graphHeight, 1))
 }

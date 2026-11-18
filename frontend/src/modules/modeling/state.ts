@@ -1,7 +1,7 @@
 /** Formal workspace contracts and local edit validation; facts come from the API. */
 export type Material = {
   id: string; name: string; kind: 'DDL' | '热点 SQL' | '任务 SQL' | '业务说明' | 'PDF'
-  origin: 'upload'; body: string; size: number; remoteRevision?: number
+  origin: 'upload'; body: string; size: number; remoteRevision?: number; source_kind?: 'model_context'
 }
 export type Evidence = { materialId: string; label: string; quote: string }
 export type Candidate = {
@@ -23,7 +23,7 @@ export type OntologyDraft = { revision: number; items: Candidate[]; classes: Ont
 export type Snapshot = { snapshotId?: string; version: number; items: Candidate[]; classes: OntologyClass[]; relations: OntologyRelation[] }
 export type TraceResult = {
   field: string; status: 'located' | 'not_found' | 'ambiguous'; kind?: Candidate['kind']
-  sources: string[]; item?: Candidate
+  sources: string[]; item?: Candidate; confidence?: number; confidence_label?: string; confidence_basis?: string; candidates?: TraceResult[]
 }
 export type ValidationCase = { field: string; expected: string[]; actual: string[]; passed: boolean; skipped: boolean; note: string }
 export type WorkspaceState = {
@@ -89,11 +89,9 @@ export function workspaceReducer(state: WorkspaceState, action: WorkspaceAction)
   switch (action.type) {
     case 'add-materials':
       return { ...base, materials: [...state.materials, ...action.materials],
-        selected: [...state.selected, ...action.materials.map(item => item.id)], draft: null, validation: null,
-        notice: '材料已读取，保存后参与服务端建模。' }
+        selected: [...state.selected, ...action.materials.map(item => item.id)], notice: '材料已读取，保存后参与服务端建模。' }
     case 'toggle-material':
-      return { ...base, selected: state.selected.includes(action.id) ? state.selected.filter(id => id !== action.id) : [...state.selected, action.id],
-        draft: null, validation: null }
+      return { ...base, selected: state.selected.includes(action.id) ? state.selected.filter(id => id !== action.id) : [...state.selected, action.id] }
     case 'edit-class':
     case 'edit-property':
     case 'edit-relation': {

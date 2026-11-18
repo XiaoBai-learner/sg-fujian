@@ -2,8 +2,8 @@ import type { Material, WorkspaceState, Snapshot } from './state'
 import { apiFetch } from '../../shared/api/session'
 
 export type LiveRun = {
-  id: string; status: string; revision: number; error: string | null
-  result: { draft: NonNullable<WorkspaceState['draft']>; materials: { id: string; name: string; revision: number; body: string; category: string; size: number }[]
+  id: string; model_id?: string | null; status: string; revision: number; error: string | null
+  result: { draft: NonNullable<WorkspaceState['draft']>; materials: { id: string; name: string; revision: number; body: string; category: string; size: number; source_kind?: 'model_context' }[]
     stats: Record<string, number>; diagnostics: { code: string; message: string; materialId?: string }[]; method: string; semantic?: {accepted: number} } | null
   validation: { valid: boolean; revision: number; problems: {code: string; message: string}[]; reports: Record<string, {diagnostics: {severity: string; message: string}[]}>
     verification: {static: string; materialization: string; business_semantics: string}; losses: string[] } | null
@@ -21,7 +21,7 @@ export function liveState(run: LiveRun, previous: WorkspaceState): WorkspaceStat
   if (run.status !== 'succeeded' || !run.result) throw new Error(run.error || `任务状态：${run.status}；请读取原任务，不要重复请求模型。`)
   const materials: Material[] = run.result.materials.map(item => ({...item, origin:'upload', remoteRevision:item.revision,
     kind: item.category === 'ddl' ? 'DDL' : item.category === 'sql' ? '热点 SQL' : '业务说明'}))
-  return {...previous, materials, selected:materials.map(item => item.id), draft:run.result.draft, validation:null,
+  return {...previous, materials, selected:materials.filter(item => item.source_kind !== 'model_context').map(item => item.id), draft:run.result.draft, validation:null,
     live:{runId:run.id, stats:run.result.stats, diagnostics:run.result.diagnostics, method:run.result.method, check:run.validation},
     error:'', notice:run.validation ? `服务端校验${run.validation.valid ? '通过' : '存在问题'}，结果绑定草稿 r${run.revision}。` : '真实材料已完成结构与 SQL 分析，草稿已保存到后端。'}
 }

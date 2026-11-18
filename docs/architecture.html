@@ -7,8 +7,8 @@
   <title>字段溯源工作台 · 产品功能架构</title>
   <style>
     :root {
-      --ink: #172f4b; --body: #3e5570; --muted: #5b7089;
-      --line: #dce5f0; --surface: #fff; --page: #f5f8fc;
+      --ink: #18181b; --body: #3f3f46; --muted: #71717a;
+      --line: #e4e4e7; --surface: #fff; --page: #fff;
       --teal: #087a6c; --teal-bg: #edf9f5; --teal-line: #c8e6dc;
       --violet: #7044b2; --violet-bg: #f6f1fc; --violet-line: #ddd0f1;
       --blue: #285fc8; --blue-bg: #eef4ff; --blue-line: #cadbf8;
@@ -169,7 +169,7 @@
       <header class="module-head"><span class="module-number">02</span><div><h2 id="modeling-title">OntoWing 本体建模</h2><p>让业务概念与物理表字段建立明确联系</p></div></header>
       <div class="features">
         <article class="feature"><div class="feature-title"><i></i><h3>多材料识别与草稿</h3></div><p>文档与 DDL 组合生成对象、属性和关系候选。</p><div class="method"><strong>双向对齐</strong>：文档自上而下识别业务语义，DDL 自下而上约束结构；候选附带原文依据。</div></article>
-        <article class="feature"><div class="feature-title"><i></i><h3>业务本体编辑</h3></div><p>全量本体图，点选类、属性和关系编辑详情。</p><div class="method"><strong>稳定标识与领域校验</strong>：图与详情联动，维护继承、关系方向与基数；草稿变更使检查失效，采用时接入 OntoWing 校验与导出。</div></article>
+        <article class="feature"><div class="feature-title"><i></i><h3>业务本体编辑</h3></div><p>模型按分组进入，顶部工具栏下全幅画布，点选类、属性和关系弹出编辑。</p><div class="method"><strong>稳定标识与领域校验</strong>：图与详情联动，维护继承、关系方向与基数；草稿变更使检查失效，采用时接入 OntoWing 校验与导出。</div></article>
         <article class="feature"><div class="feature-title"><i></i><h3>R2RML 数据映射</h3></div><p>数据表对齐、实体键、属性列与关系 JOIN 编辑。</p><div class="method"><strong>语义落到物理列</strong>：概念绑定表、属性映射列、关系配置 JOIN；键与字段类型必须一致。</div></article>
         <article class="feature"><div class="feature-title"><i></i><h3>模型检查与采用</h3></div><p>本体、映射、规则检查，通过后用于字段溯源。</p><div class="method"><strong>三重核验</strong>：OntoWing 领域校验、Morph-KGC 映射实跑、SWRL 与独立 SQL 对账；采用后固定快照。</div></article>
       </div>
@@ -191,14 +191,18 @@
   <section class="evidence-relation" aria-label="接入模块为智能体补充证据">
     <strong>数据源接入</strong><svg viewBox="0 0 35 14" aria-hidden="true"><path d="M0 7h32m-6-5 7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg><b>血缘 / 任务 SQL / 计算口径 / JOIN 证据</b><svg viewBox="0 0 35 14" aria-hidden="true"><path d="M0 7h32m-6-5 7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg><strong>字段溯源智能体</strong><span>补充实际来源判断，源字段候选仍受本体与 R2RML 约束。</span>
   </section>
+  <div class="foundation"><span><b>工作台入口</b><span>数据源 / 文档材料</span><span>本体模型分组 / 全画布点击编辑</span><span>溯源问答 / 模型选择 / 截图附件</span></span></div>
   <div class="foundation"><span><b>贯穿三个模块</b><span>账户登录 / 会话鉴权 / CSRF</span><span>统一材料与来源引用</span><span>草稿与已采用模型隔离</span><span>问答结果绑定模型快照</span><span>未覆盖字段提示补材料或维护本体</span></span></div>
   <details>
     <summary>实现依据与当前交付边界</summary>
     <div class="implementation">
+      <p><strong>当前交互基线：2026-11-18 用户已确认正式工作台。</strong>以下区分现有能力与目标方法，下一轮保持单侧栏、统一材料接入及卡片本体画布。</p>
       <p><strong>本图描述目标产品的功能架构。</strong>正式前端已接通真实 MySQL DDL / SQL 的结构与依赖解析、证据草稿、服务端编辑、OntoWing 静态校验 / OWL 与 R2RML 导出、快照采用和语义索引溯源。PDF、多方言、映射实跑与效果评测仍待完成。</p>
+      <p><strong>本轮交付范围：</strong>统一单一左侧功能菜单、双排轻工具栏与卡片式本体画布；去除固定领域标签和重复全部模型入口；白色界面，深色正文、蓝紫强调色；连接编辑与测试、多库选择、真实 DDL 采集；文档在数据源接入统一新建，弹窗上传 / 粘贴与逐行列表；模型内只选已有材料，另有按模型保存的业务流程说明；多个具名模型和分组、独立草稿与采用版本；全主区画布，点击类 / 属性 / 关系弹出编辑窗口；问答按采用模型返回规则置信评分。截图已支持鉴权上传及预览，自动读图和自由问题理解仍待接入；规则评分不是效果准确率，问答历史仅当前页面会话。</p>
       <p><strong>工作区账户：</strong>首次由用户创建账户，没有默认口令；支持新增、启停、改名、本人改密与退出。所有成员权限相同。密码使用 Argon2id，数据库会话通过 HttpOnly Cookie 与 CSRF 令牌验证；业务接口和导出均需登录。正式应用无预制模型、问题或模拟查询。</p>
       <p><strong>现有引擎依据：</strong><code>reference/poc/sgtrace/metadata.py</code> 与 <code>evidence.py</code> 提供结构和 SQL 血缘；<code>wing.py</code>、<code>verify.py</code>、<code>reason.py</code> 提供领域校验、映射实跑与规则核对；<code>semantic.py</code>、<code>qa.py</code>、<code>agent.py</code> 提供语义索引与受控溯源。新版工作台尚未全部接上这些服务。</p>
       <p><strong>文档建模参考：</strong>OntoWing 的 MaterialDock、材料输入集合、实体 / 关系识别与数据表对齐流程。业务输入按现有一期范围约束，真实生产资料与模型生成仍需集成验收。</p>
+      <p><strong>下一轮重点：</strong>业务流程 / 文档与 DDL / SQL 多证据建模、自然语言受控问答及永久历史、正式映射实跑与独立效果评测。上述尚未全部实现，具体待办和验收边界见产品文档。</p>
       <p><a href="product.md">查看已确认的产品功能说明</a></p>
     </div>
   </details>

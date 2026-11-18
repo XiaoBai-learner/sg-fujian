@@ -38,5 +38,12 @@ def trace(artifacts,snapshot,field):
             known={s for ss in index.values() for s in ss}
             sources=item['sources'] if set(item['sources'])<=known else []
         if sources: candidates.append({'field':field,'kind':item['kind'],'sources':sorted(set(sources)),'item':item})
-    if len(candidates)==1: return {**candidates[0],'status':'located'}
-    return {'field':field,'status':'ambiguous' if candidates else 'not_found','sources':[], 'candidates':candidates}
+    if len(candidates)==1:
+        candidate=candidates[0]
+        exact=field.strip()==candidate['item']['name']
+        # Rule evidence score, not a calibrated probability of business correctness.
+        score=.9 if exact else .8
+        if candidate['kind']=='calculated': score-=.1
+        return {**candidate,'status':'located','confidence':score,'confidence_label':'规则证据评分',
+                'confidence_basis':('属性名称精确匹配' if exact else '已采用同义名称匹配')+'；物理来源已在采用版本 R2RML 中核对。评分未经过业务准确率校准。'}
+    return {'field':field,'status':'ambiguous' if candidates else 'not_found','sources':[], 'candidates':candidates,'confidence':None,'confidence_label':'证据不足','confidence_basis':'存在多个候选，无法确定唯一归属。' if candidates else '已采用本体中没有匹配的字段与映射。'}

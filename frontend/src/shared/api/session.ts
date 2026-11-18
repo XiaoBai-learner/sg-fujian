@@ -20,6 +20,6 @@ export async function api<T>(path: string, body?: unknown, method = 'POST'): Pro
     method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
   })
   const value = response.status === 204 ? null : await response.json().catch(() => null)
-  if (!response.ok) throw new Error(value?.detail?.message || '请求失败，请稍后重试')
+  if (!response.ok) throw new Error(value?.detail?.message || (typeof value?.detail === 'string' ? value.detail : '请求失败，请稍后重试'))
   return value as T
 }

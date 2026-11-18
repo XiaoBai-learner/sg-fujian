@@ -11,6 +11,7 @@ from .api.v1.router import router as v1
 from .api.dependencies import configure_session_dependency, configure_storage_dependency, get_session, get_storage
 from .config import Settings
 from .modules.identity.security import current_user
+from .modules.agent.models import TraceAttachment
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:

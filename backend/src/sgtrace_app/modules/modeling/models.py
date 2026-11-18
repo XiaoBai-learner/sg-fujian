@@ -9,6 +9,7 @@ class ModelingRun(Base):
     __tablename__='modeling_runs'
     id: Mapped[str]=mapped_column(String(36),primary_key=True,default=lambda:str(uuid4()))
     workspace_id: Mapped[str]=mapped_column(String(36),nullable=False)
+    model_id: Mapped[str | None]=mapped_column(String(36),index=True)
     request_key: Mapped[str]=mapped_column(String(36),unique=True,nullable=False)
     input_sha256: Mapped[str]=mapped_column(String(64),nullable=False)
     status: Mapped[str]=mapped_column(String(30),nullable=False)
@@ -28,3 +29,14 @@ class AdoptedModel(Base):
     snapshot_json: Mapped[dict]=mapped_column(JSON,nullable=False)
     artifacts_json: Mapped[dict]=mapped_column(JSON,nullable=False)
     created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True).with_variant(DATETIME(fsp=6),"mysql"),server_default=func.now(),nullable=False)
+
+class OntologyModel(Base):
+    __tablename__='ontology_models'
+    id: Mapped[str]=mapped_column(String(36),primary_key=True,default=lambda:str(uuid4()))
+    workspace_id: Mapped[str]=mapped_column(String(36),nullable=False,index=True)
+    name: Mapped[str]=mapped_column(String(160),nullable=False)
+    group_name: Mapped[str]=mapped_column(String(160),nullable=False,default='未分组')
+    business_context: Mapped[str | None]=mapped_column(Text)
+    current_run_id: Mapped[str | None]=mapped_column(String(36))
+    adopted_id: Mapped[str | None]=mapped_column(String(36))
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)

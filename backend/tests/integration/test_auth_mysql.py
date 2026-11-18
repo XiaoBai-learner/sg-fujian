@@ -60,5 +60,20 @@ def test_mysql_account_creation_login_logout_and_duplicates(tmp_path):
                                     headers={"X-Requested-With": "SGTrace"})
             assert logged_in.status_code == 200, logged_in.text
             assert len(client.get("/api/v1/accounts").json()["items"]) == 2
+            client.headers['X-CSRF-Token'] = logged_in.json()['csrf_token']
+            model = client.post('/api/v1/modeling/models', json={'name': 'MySQL 持久化验证', 'group': '验证'})
+            assert model.status_code == 201, model.text
+            assert model.json()['created_at']
+            saved_context=client.post('/api/v1/modeling/models/'+model.json()['id']+'/context',json={'text':'先建档，再关联设备。'})
+            assert saved_context.status_code==200,saved_context.text
+            assert client.get('/api/v1/modeling/models/'+model.json()['id']).json()['business_context']=='先建档，再关联设备。'
+            source = client.post('/api/v1/sources', json={
+                'name': '本机结构连接', 'kind': 'mysql', 'host': os.environ.get('MYSQL_HOST', '127.0.0.1'),
+                'port': int(os.environ.get('MYSQL_PORT', '3306')), 'username': os.environ['MYSQL_USER'],
+                'password': os.environ.get('MYSQL_PASSWORD', ''), 'databases': ['sgtrace_trial_yx186'],
+            })
+            assert source.status_code == 201, source.text
+            assert client.get('/api/v1/modeling/models').json()['items'][0]['id'] == model.json()['id']
+            assert client.post('/api/v1/sources/' + source.json()['id'] + '/test').status_code == 200
     finally:
         asyncio.run(database(False))

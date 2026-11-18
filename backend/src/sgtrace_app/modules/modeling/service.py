@@ -16,7 +16,7 @@ from ...integrations.ontowing.adapter import compile_model
 from ..sources.materials.models import MaterialModel, MaterialRevisionModel
 from .runner import analyze
 from .semantic_index import trace, source_index
-from .models import ModelingRun, AdoptedModel
+from .models import ModelingRun, AdoptedModel, OntologyModel
 
 WORKSPACE='local-workspace'
 
@@ -111,15 +111,27 @@ class ModelingService:
                            'category':material.category,'sha256':revision.source_sha256,'size':len(raw)})
         return result
 
-    async def generate(self,refs,key,semantic=False):
-        fingerprint=digest({'materials':sorted(refs,key=lambda r:r['id']),'semantic':semantic,'method':'schema-sql-evidence/1'})
+    async def generate(self,refs,key,semantic=False,model_id=None):
+        model=await self.model(model_id) if model_id else None
+        context=(model.business_context or '') if model else ''
+        fingerprint=digest({'materials':sorted(refs,key=lambda r:r['id']),'semantic':semantic,'method':'schema-sql-evidence/1',**({'model_id':model_id} if model_id else {}),**({'business_context':context} if context else {})})
         prior=await self.session.scalar(select(ModelingRun).where(ModelingRun.request_key==key,ModelingRun.workspace_id==WORKSPACE))
         if prior:
             if prior.input_sha256!=fingerprint: raise Conflict('同一请求标识不能用于不同材料')
             return prior
         material_inputs=await self.materials(refs)
+        if context:
+            if len(material_inputs)>=30: raise ValueError('补充业务流程时，最多选择 29 份文档材料')
+            raw=context.encode('utf-8')
+            material_inputs.append({'id':'context-'+model.id[:24], 'revision':1,
+                                   'name':'业务流程说明.md','body':context,'category':'document',
+                                   'source_kind':'model_context','sha256':sha256(raw).hexdigest(),'size':len(raw)})
+        if model is None:
+            model=OntologyModel(id=str(uuid4()),workspace_id=WORKSPACE,name='材料模型 '+key[:8],group_name='未分组')
+            self.session.add(model)
+            model_id=model.id
         run=ModelingRun(id=str(uuid4()),workspace_id=WORKSPACE,request_key=key,input_sha256=fingerprint,status='running',revision=1,
-                        input_json={'materials':refs,'semantic':semantic})
+                        input_json={'materials':refs,'semantic':semantic,**({'business_context':context} if context else {})},model_id=model_id)
         self.session.add(run)
         try: await self.session.commit()
         except IntegrityError:
@@ -132,6 +144,9 @@ class ModelingService:
             result=await run_in_threadpool(analyze,material_inputs,semantic)
             result['materials']=material_inputs
             run.result_json=result; run.status='succeeded'
+            if model:
+                # A new generation is a separate version; no existing draft is overwritten.
+                model.current_run_id=run.id
             for ref in refs:
                 await self.session.execute(update(MaterialRevisionModel).where(MaterialRevisionModel.material_id==ref['id'],MaterialRevisionModel.revision==ref['revision']).values(parse_status='succeeded',parse_error=None))
         except ValueError as error:
@@ -188,8 +203,17 @@ class ModelingService:
                   'classes':draft['classes'],'relations':[r for r in draft['relations'] if not r.get('uncertain')]}
         artifacts={**check['artifacts'],'pipeline':check['pipeline']}
         adopted=AdoptedModel(workspace_id=WORKSPACE,run_id=run.id,revision=revision,snapshot_json=snapshot,artifacts_json=artifacts,created_at=datetime.now(timezone.utc))
-        self.session.add(adopted); await self.session.commit(); await self.session.refresh(adopted)
+        self.session.add(adopted); await self.session.flush()
+        if run.model_id:
+            model=await self.model(run.model_id)
+            model.adopted_id=adopted.id
+        await self.session.commit(); await self.session.refresh(adopted)
         return adopted
+
+    async def model(self, model_id):
+        model=await self.session.scalar(select(OntologyModel).where(OntologyModel.id==model_id,OntologyModel.workspace_id==WORKSPACE))
+        if model is None: raise KeyError('本体模型不存在')
+        return model
 
     async def active(self):
         return await self.session.scalar(select(AdoptedModel).where(AdoptedModel.workspace_id==WORKSPACE).order_by(AdoptedModel.created_at.desc(),AdoptedModel.id.desc()).limit(1))
@@ -202,7 +226,7 @@ class ModelingService:
 
 
 def run_view(run):
-    return {'id':run.id,'status':run.status,'revision':run.revision,'result':run.result_json,'validation':run.validation_json,'error':run.error}
+    return {'id':run.id,'model_id':run.model_id,'status':run.status,'revision':run.revision,'result':run.result_json,'validation':run.validation_json,'error':run.error}
 
 def snapshot_view(snapshot):
     return None if snapshot is None else {'id':snapshot.id,'run_id':snapshot.run_id,'version':snapshot.revision,**snapshot.snapshot_json}

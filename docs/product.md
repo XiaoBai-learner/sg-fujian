@@ -25,7 +25,9 @@
 
 验证边界：本轮已实测 MySQL 持久化、真实 HTTP、配置的模型语义建议、OntoWing 静态校验与导出及前端刷新恢复；这些属于功能验证，不是效果准确率。Morph-KGC 物化、业务 SQL 对账和 PUDL / SimBench / CIMHub / 客户留出集评测尚未执行。PDF、其他 SQL 方言、动态 SQL、异步调度与自动恢复尚未接通。分析在隔离子进程中有 90 秒上限；失败 / 未知的模型调用不会自动重试。
 
-合成示例保留为显式交互模式；真实材料不会使用示例结果。示例修改只在页面内存中，真实任务和采用快照从后端恢复。
+正式运行入口移除了内置示例材料、固定问题、模拟查询与模拟校验。空数据库从创建账户、上传材料开始；展示的材料、草稿和采用模型全部由正式后端持久化并恢复。合成夹具保留在测试目录，独立原型不参与正式运行。
+
+登录与账户管理作为工作区基础功能：首次使用创建首个账户，没有默认账号口令。成员可新增账户、修改名称、启用或停用其他账户，修改自己的密码并退出登录。所有账户共享营销域工作区与相同功能，包含账户管理；不增加业务角色、审批或工单。账户不能停用自身，避免把所有成员锁在工作区之外。密码采用 Argon2id 散列存储，随机会话令牌只在 Cookie 中传递，数据库存储令牌摘要；会话 12 小时到期。业务接口、文档和导出均验证会话；状态、登录、首次初始化和健康检查为明确公共入口。写入接口校验 CSRF 令牌和来源，失败登录按账户与本机来源计数限流；账户变更写审计事件。停用、退出和改密会撤销对应会话。当前不提供自助注册、邮箱找回、SSO 或复杂权限矩阵。
 
 “完整本体”展示当前草稿全部类、属性及关系，包含待确认的孤立属性和关联候选。点击类节点、属性行、关系连线或名称，右侧打开对应详情：类可维护名称、说明、同义叫法和父类；属性可维护名称、归属、类型、单位和同义叫法；关系可维护名称、说明、起点 / 终点、方向、基数、对称 / 传递 / 至多一个终点特性。支持缩放、平移、适应画布、全屏、对象目录搜索和键盘选择。
 
@@ -100,5 +102,5 @@
 - 本体校验与导出：`reference/poc/sgtrace/wing.py`、`reference/poc/sgtrace/verify.py`、`reference/poc/sgtrace/reason.py`。
 - 语义候选与问答：`reference/poc/sgtrace/semantic.py`、`reference/poc/sgtrace/qa.py`、`reference/poc/sgtrace/agent.py`。
 - 前端材料与草稿：`product-demo/src/components/ModelingMaterials.tsx`、`product-demo/src/services/modeling.ts`。
-- 当前交互与状态隔离：`frontend/src/modules/modeling/`、`frontend/tests/modeling-preview.test.ts`；合成样例只在显式载入后使用。
+- 当前交互与状态隔离：`frontend/src/modules/modeling/`；历史合成夹具移至 `frontend/tests/fixtures/`，不进入正式应用。
 - OntoWing 参考：`../ontowing/frontend/src/product/documents.tsx`、`modeling-input-set.ts`、`modeling-editors/reference-inputs.tsx`。

@@ -47,7 +47,9 @@ pytest.ini                        正式服务 + 参考引擎的测试发现
 
 “模型语义增强”默认关闭；开启后选定材料发送到 `.env` 配置的模型服务。模型只能对已有候选的有依据名称给出建议，不创造物理字段；新叫法和业务推断需人工核对。结构路径与增强路径都不能证明业务概念世界完整。PDF、动态 SQL、其他方言、增量调度、图中新增 / 删除对象及效果评测尚未完成。
 
-字段来源从已采用 OWL / R2RML 解析，计算字段通过依赖清单核对导出的实际列；多种计算口径保持歧义。校验页可下载采用版本的 OWL / R2RML。当前执行了 OntoWing 静态检查，**未执行本轮 Morph-KGC 实跑或业务口径 SQL 对账**；不能将“校验通过”当作准确率。合成示例仍可显式载入，和真实服务模式隔离。
+字段来源从已采用 OWL / R2RML 解析，计算字段通过依赖清单核对导出的实际列；多种计算口径保持歧义。校验页可下载采用版本的 OWL / R2RML。当前执行了 OntoWing 静态检查，**未执行本轮 Morph-KGC 实跑或业务口径 SQL 对账**；不能将“校验通过”当作准确率。正式应用没有内置示例材料、模拟查询或固定推荐问题；测试夹具仅位于测试目录，不进入构建包。
+
+打开工作台后必须登录。空数据库首次打开时由用户创建首个账户，不提供默认账号口令；登录后左下角进入账户管理，可新增账户、修改名称、启停其他账户及修改自己的密码。所有成员共享同一工作区和相同功能，包括账户管理，不设置角色。密码使用 Argon2id 散列；会话存于数据库，浏览器使用 HttpOnly / SameSite=Strict Cookie，写接口校验会话绑定的 CSRF 令牌。退出、改密和停用会使相应会话失效；修改密码会注销所有设备。
 
 真实操作试用材料见 [营销域试用包](trials/marketing_v1/README.md)：16 张源表 DDL、任务血缘及 22 条热点 SQL，配套本地隔离 MySQL 合成数据、100 道独立存放的问题和标准答案。上传时只选择试用包 `inputs/` 中的四份文件；建模采用后可运行只读批量评测。试用包 SQL 等价核对与正式建模映射物化是不同检查。
 
@@ -76,7 +78,7 @@ make check-demo          # 已确认原型测试与构建，包含架构文档�
 make check               # 上述全部检查
 ```
 
-正式服务 `make api` 从项目根目录 `.env` 读取配置（不覆盖已注入的环境变量）：`DATABASE_URL`、`STORAGE_ROOT`、`MYSQL_*`，可选 `LLM_BASE_URL` / `LLM_MODEL` / `LLM_API_KEY`。本机产品库为 `sgtrace_product`，与只读源库分开。新环境先执行 `DATABASE_URL=... .venv/bin/python -m alembic -c backend/alembic.ini upgrade head`；不用把密码写入 Git。
+正式服务 `make api` 从项目根目录 `.env` 读取配置（不覆盖已注入的环境变量）：`DATABASE_URL`、`STORAGE_ROOT`、`MYSQL_*`，可选 `LLM_BASE_URL` / `LLM_MODEL` / `LLM_API_KEY`。当前本机运行使用空白产品库 `sgtrace_product_local` 与 `var/product-local/storage`；旧 `sgtrace_product` 保留此前测试记录，与源库分开。新环境先执行 `DATABASE_URL=... .venv/bin/python -m alembic -c backend/alembic.ini upgrade head`，迁移到 `0005_identity`；不用把密码写入 Git。HTTPS 部署须设置 `SGTRACE_COOKIE_SECURE=1`，首次账户初始化仅在受控部署入口进行；当前只在本机开放。
 
 这些命令按需执行，不会自动对外开放。`/api/healthz` 仅检查进程存活，不代表数据库、本体或模型服务已就绪。尚未实现的业务接口返回 404，不返回模拟成功。
 

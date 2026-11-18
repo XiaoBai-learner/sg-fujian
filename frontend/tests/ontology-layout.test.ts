@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { initialPreview, previewReducer } from '../src/modules/modeling/preview.ts'
+import { initialPreview, previewReducer } from './fixtures/modeling-preview.ts'
 import { layoutOntology } from '../src/modules/modeling/ontology-layout.ts'
 
 test('fit bounds include self-relation labels on rightmost classes', () => {

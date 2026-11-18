@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sgtrace_app.main import create_app
 from sgtrace_app.config import Settings
 from sgtrace_app.infrastructure.db.models import Base
+from auth_helpers import sign_in
 
 DDL="""CREATE TABLE grid.SUBSTATION (ID BIGINT NOT NULL PRIMARY KEY COMMENT '站点标识', NAME VARCHAR(40) COMMENT '站点名称') COMMENT='变电站';
 CREATE TABLE grid.READING (ID BIGINT NOT NULL PRIMARY KEY, STATION_ID BIGINT NOT NULL, MW DECIMAL(12,2) COMMENT '有功功率', FOREIGN KEY (STATION_ID) REFERENCES grid.SUBSTATION(ID)) COMMENT='负荷记录';"""
@@ -17,7 +18,7 @@ def client_for(tmp_path):
   async with engine.begin() as c: await c.run_sync(Base.metadata.create_all)
   await engine.dispose()
  asyncio.run(init())
- return TestClient(create_app(settings))
+ return sign_in(TestClient(create_app(settings)))
 
 def upload(client,name,body,category):
  response=client.post('/api/v1/materials',content=body.encode(),headers={'X-Material-Name':name,'X-Material-Category':category})

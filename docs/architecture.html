@@ -191,11 +191,12 @@
   <section class="evidence-relation" aria-label="接入模块为智能体补充证据">
     <strong>数据源接入</strong><svg viewBox="0 0 35 14" aria-hidden="true"><path d="M0 7h32m-6-5 7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg><b>血缘 / 任务 SQL / 计算口径 / JOIN 证据</b><svg viewBox="0 0 35 14" aria-hidden="true"><path d="M0 7h32m-6-5 7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg><strong>字段溯源智能体</strong><span>补充实际来源判断，源字段候选仍受本体与 R2RML 约束。</span>
   </section>
-  <div class="foundation"><span><b>贯穿三个模块</b><span>统一材料与来源引用</span><span>草稿与已采用模型隔离</span><span>问答结果绑定模型快照</span><span>未覆盖字段提示补材料或维护本体</span></span></div>
+  <div class="foundation"><span><b>贯穿三个模块</b><span>账户登录 / 会话鉴权 / CSRF</span><span>统一材料与来源引用</span><span>草稿与已采用模型隔离</span><span>问答结果绑定模型快照</span><span>未覆盖字段提示补材料或维护本体</span></span></div>
   <details>
     <summary>实现依据与当前交付边界</summary>
     <div class="implementation">
       <p><strong>本图描述目标产品的功能架构。</strong>正式前端已接通真实 MySQL DDL / SQL 的结构与依赖解析、证据草稿、服务端编辑、OntoWing 静态校验 / OWL 与 R2RML 导出、快照采用和语义索引溯源。PDF、多方言、映射实跑与效果评测仍待完成。</p>
+      <p><strong>工作区账户：</strong>首次由用户创建账户，没有默认口令；支持新增、启停、改名、本人改密与退出。所有成员权限相同。密码使用 Argon2id，数据库会话通过 HttpOnly Cookie 与 CSRF 令牌验证；业务接口和导出均需登录。正式应用无预制模型、问题或模拟查询。</p>
       <p><strong>现有引擎依据：</strong><code>reference/poc/sgtrace/metadata.py</code> 与 <code>evidence.py</code> 提供结构和 SQL 血缘；<code>wing.py</code>、<code>verify.py</code>、<code>reason.py</code> 提供领域校验、映射实跑与规则核对；<code>semantic.py</code>、<code>qa.py</code>、<code>agent.py</code> 提供语义索引与受控溯源。新版工作台尚未全部接上这些服务。</p>
       <p><strong>文档建模参考：</strong>OntoWing 的 MaterialDock、材料输入集合、实体 / 关系识别与数据表对齐流程。业务输入按现有一期范围约束，真实生产资料与模型生成仍需集成验收。</p>
       <p><a href="product.md">查看已确认的产品功能说明</a></p>

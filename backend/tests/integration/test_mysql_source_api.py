@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sgtrace_app.config import Settings
 from sgtrace_app.infrastructure.db.models import Base
 from sgtrace_app.main import create_app
+from auth_helpers import sign_in
 
 
 pytestmark = pytest.mark.skipif(
@@ -36,6 +37,7 @@ async def _run(tmp_path, monkeypatch):
     await engine.dispose()
     app = create_app(settings)
     with TestClient(app) as client:
+        sign_in(client)
         created = client.post("/api/v1/sources", json={
             "name": "本机 MySQL",
             "kind": "mysql",

@@ -21,6 +21,7 @@ const paths = {
   info: 'M12 11v6m0-10h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   play: 'm9 5 11 7-11 7V5',
   expand: 'M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5',
+  logout: 'M9 3H4v18h5m5-14 5 5-5 5M8 12h11',
 } as const
 export type IconName = keyof typeof paths
 export default function Icon({ name, size = 20 }: { name: IconName; size?: number }) {

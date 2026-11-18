@@ -9,6 +9,7 @@ from sgtrace_app.main import app
 from sgtrace_app.api.dependencies import get_session
 from sgtrace_app.infrastructure.storage.local import LocalStorage
 from sgtrace_app.api.dependencies import get_storage
+from auth_helpers import sign_in
 
 
 def test_ddl_source_refresh_and_schema_browser(tmp_path):
@@ -30,6 +31,7 @@ async def _run(tmp_path):
     ddl = "CREATE TABLE yx186.C_CONS (CONS_ID BIGINT NOT NULL COMMENT '客户标识', CONS_NO VARCHAR(30) COMMENT '户号', PRIMARY KEY (CONS_ID)) COMMENT='用电客户';"
     try:
         with TestClient(app) as client:
+            sign_in(client)
             created = client.post("/api/v1/sources", json={"name": "DDL 文件", "kind": "ddl", "database": "yx186"})
             assert created.status_code == 201
             source_id = created.json()["id"]

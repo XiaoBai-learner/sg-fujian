@@ -1,4 +1,4 @@
-import type { OntologyDraft } from './preview'
+import type { OntologyDraft } from './state'
 
 export function layoutOntology(draft: OntologyDraft) {
   const nodeWidth = 240

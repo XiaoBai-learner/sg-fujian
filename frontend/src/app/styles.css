@@ -76,9 +76,9 @@ textarea { resize: vertical; line-height: 1.7; }
 .topbar > div > span { color: #65758a; }
 .topbar strong { color: #43556d; font-weight: 500; }
 .expand-control { display: none; }
-.preview-badge { display: inline-flex; align-items: center; gap: 6px; color: #5c6b81; font-size: 11px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; background: #fff; }
-.preview-badge > span { width: 5px; height: 5px; border-radius: 50%; background: #7094d8; }
-.preview-badge:hover { border-color: #a7bee3; }
+.product-status { display: inline-flex; align-items: center; gap: 6px; color: #5c6b81; font-size: 11px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; background: #fff; }
+.product-status > span { width: 5px; height: 5px; border-radius: 50%; background: #7094d8; }
+.product-status:hover { border-color: #a7bee3; }
 .page-body { width: min(1180px, 100%); padding: 32px 38px 28px; margin: 0 auto; }
 .page-body:focus { outline: none; }
 .page-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 32px; }
@@ -123,7 +123,6 @@ textarea { resize: vertical; line-height: 1.7; }
 .upload-zone p { font-size: 12px; line-height: 1.9; margin: 8px 0 20px; }
 .upload-zone .button { padding-inline: 23px; }
 .upload-zone > small { font-size: 10px; color: #63758e; margin: 12px 0 19px; }
-.example-link { font-size: 11px; }
 .material-library { min-width: 0; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .section-heading h2 > span { background: #edf2f9; border-radius: 5px; color: #59718e; font-size: 11px; display: inline-block; margin-left: 9px; padding: 1px 6px; }
@@ -288,7 +287,7 @@ td code { display: block; font-size: 11px; margin-bottom: 6px; }
 .suggested-fields { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .suggested-fields button { display: flex; align-items: center; gap: 19px; padding: 8px 13px; border: 1px solid #e5e9f1; background: #fff; border-radius: 7px; font-size: 11px; color: #546e92; }
 .suggested-fields button:hover:not(:disabled) { background: #eff5ff; }
-.agent-preview-note { text-align: center; font-size: 10px; color: #677b94; margin-top: 24px; }
+.agent-source-note { text-align: center; font-size: 10px; color: #677b94; margin-top: 24px; }
 .agent-footnote { font-size: 10px; text-align: center; color: #72849c; padding: 15px 0 3px; margin-top: auto; }
 .has-results .agent-stage { margin-block: 0; padding-top: 25px; }
 .question-bubble { background: #eef3fc; border: 1px solid #e2eafa; border-radius: 13px 13px 3px 13px; padding: 15px 21px; max-width: 85%; width: fit-content; margin: 0 0 28px auto; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
@@ -463,6 +462,32 @@ td code { display: block; font-size: 11px; margin-bottom: 6px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 .workspace-controls { border: 0; padding: 0; margin: 0; min-width: 0; }
+.session-loading { min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+.login-page { min-height: 100dvh; padding: 36px 24px; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 12% 8%, #e9f2ff, transparent 55%), #fffefa; }
+.login-brand { align-self: flex-start; display: flex; align-items: center; gap: 10px; color: #285aab; }
+.login-brand strong { font-size: 23px; color: var(--ink); }
+.login-brand > span { border-left: 1px solid #cbd8e8; margin-left: 8px; padding-left: 17px; font-size: 13px; color: var(--muted); }
+.login-card { width: min(440px, 100%); margin: auto; padding: 36px; border: 1px solid #dde6f2; border-radius: 18px; background: #fff; box-shadow: 0 12px 48px #27486c08; }
+.login-mark { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; color: var(--blue); background: var(--blue-tint); margin-bottom: 20px; }
+.login-card h1 { font-size: 26px; }
+.login-card > p { font-size: 13px; margin: 10px 0 26px; }
+.login-card fieldset, .account-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 9px; }
+.login-card label, .account-form label { color: #344c69; font-size: 13px; margin-top: 9px; }
+.login-card input, .account-form input { width: 100%; min-height: 44px; }
+.login-card small, .account-form small { color: var(--muted); font-size: 11px; }
+.login-card form .button { width: 100%; margin-top: 17px; }
+.login-card .login-help { font-size: 12px; margin: 24px 0 0; }
+.login-card .message { margin: 8px 0 0; }
+.login-footer { font-size: 12px; margin-top: 30px; }
+.sidebar-bottom .text-button { font-size: 11px; padding: 0; justify-content: flex-start; }
+.account-list { border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.account-list td small { display: block; font-size: 11px; color: var(--muted); }
+.account-form { border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 25px; margin: 24px 0; }
+.account-form fieldset { max-width: 480px; margin-top: 10px; }
+.account-form label { display: grid; gap: 8px; }
+.account-form .footer-actions, .password-form .button { margin-top: 17px; }
+.password-form > p { font-size: 12px; }
+@media (max-width: 600px) { .login-page { padding: 24px 18px; } .login-card { padding: 27px 23px; margin-block: 36px 0; } .login-brand > span { font-size: 12px; } .login-footer { margin-top: auto; padding-top: 24px; } }
 .semantic-options { padding: 0 28px 20px; }
 .semantic-options label { display: flex; gap: 8px; align-items: center; font-size: 12px; }
 .semantic-options p { font-size: 11px; max-width: 720px; }

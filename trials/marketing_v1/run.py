@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from hashlib import sha256
 import json
+from getpass import getpass
 from pathlib import Path
 import sys
 
@@ -148,6 +149,13 @@ def score_answer(gold, actual):
             "formula_scope_verified": False if gold.get("kind") == "calculated" else None}
 
 
+def authenticate(client, username, password):
+    response = client.post("/api/v1/auth/login", json={"username": username, "password": password},
+                           headers={"X-Requested-With": "SGTrace"})
+    response.raise_for_status()
+    client.headers["X-CSRF-Token"] = response.json()["csrf_token"]
+
+
 def evaluate(client, questions, gold, snapshot_id=None):
     """Only field names and a frozen snapshot ID leave this process."""
     if not snapshot_id:
@@ -200,6 +208,7 @@ def main():
     parser.add_argument("command", choices=["install-mysql", "verify-mysql", "evaluate"])
     parser.add_argument("--base-url", default="http://127.0.0.1:8765")
     parser.add_argument("--snapshot-id")
+    parser.add_argument("--username", help="平台账号；密码将隐藏输入，不从命令行读取")
     args = parser.parse_args()
     if args.command == "install-mysql":
         report = asyncio.run(install_mysql())
@@ -212,8 +221,12 @@ def main():
         if httpx.URL(args.base_url).host not in {"127.0.0.1", "localhost", "::1"}:
             parser.error("评测脚本默认只允许本机平台")
         with httpx.Client(base_url=args.base_url, timeout=90, trust_env=False) as client:
-            report = evaluate(client, read_json(PACKAGE / "evaluation/questions.json"),
-                              read_json(PACKAGE / "evaluation/gold/answers.json"), args.snapshot_id)
+            authenticate(client, args.username or input("平台账号：").strip(), getpass("平台密码："))
+            try:
+                report = evaluate(client, read_json(PACKAGE / "evaluation/questions.json"),
+                                  read_json(PACKAGE / "evaluation/gold/answers.json"), args.snapshot_id)
+            finally:
+                client.post("/api/v1/auth/logout")
         report.update(dataset=manifest["dataset"], questions_sha256=manifest["questions_sha256"],
                       answers_sha256=manifest["answers_sha256"], evaluated_at=datetime.now(timezone.utc).isoformat())
         save_report("evaluation-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".json", report)

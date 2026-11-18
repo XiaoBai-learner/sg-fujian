@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import Icon from '../../shared/Icon'
 import { cardinalities, datatypes, type OntologySelection } from './OntologyGraph'
-import type { Candidate, OntologyDraft, OntologyRelation, PreviewAction, Material } from './preview'
+import type { Candidate, OntologyDraft, OntologyRelation, WorkspaceAction, Material } from './state'
 
 type FormValues = {
   name: string; description: string; aliases: string; parentId: string; conceptId: string; datatype: Candidate['datatype']; unit: string
@@ -9,7 +9,7 @@ type FormValues = {
 }
 export default function OntologyInspector({ draft, selection, materials, onSave, onDirty }: {
   draft: OntologyDraft; selection: OntologySelection; materials: Material[]
-  onSave: (action: PreviewAction) => string | null; onDirty: (dirty: boolean) => void
+  onSave: (action: WorkspaceAction) => string | null; onDirty: (dirty: boolean) => void
 }) {
   const cls = selection.kind === 'class' ? draft.classes.find(item => item.id === selection.id) : undefined
   const property = selection.kind === 'property' ? draft.items.find(item => item.id === selection.id) : undefined
@@ -33,7 +33,7 @@ export default function OntologyInspector({ draft, selection, materials, onSave,
   const aliases = () => [...new Set(form.aliases.split(/[、,，;\n]/).map(text => text.trim()).filter(Boolean))]
   const save = (event: FormEvent) => {
     event.preventDefault()
-    let action: PreviewAction
+    let action: WorkspaceAction
     if (cls) action = { type: 'edit-class', value: { ...cls, name: form.name, description: form.description, aliases: aliases(), parentId: form.parentId || null } }
     else if (property) action = { type: 'edit-property', value: { ...property, name: form.name, description: form.description, aliases: aliases(),
       conceptId: form.conceptId || null, datatype: form.datatype, unit: form.unit } }

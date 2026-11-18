@@ -1,9 +1,9 @@
 import { useRef, useState, type Dispatch } from 'react'
 import Icon from '../../shared/Icon'
-import type { Material, PreviewAction, PreviewState } from './preview'
+import type { Material, WorkspaceAction, WorkspaceState } from './state'
 
 export function MaterialInput({ state, dispatch, compact = false }: {
-  state: PreviewState; dispatch: Dispatch<PreviewAction>; compact?: boolean
+  state: WorkspaceState; dispatch: Dispatch<WorkspaceAction>; compact?: boolean
 }) {
   const input = useRef<HTMLInputElement>(null)
   const [error, setError] = useState('')
@@ -18,7 +18,7 @@ export function MaterialInput({ state, dispatch, compact = false }: {
       const materials: Material[] = []
       for (const file of files) {
         if (!/\.(sql|txt|md|pdf)$/i.test(file.name)) throw new Error(`${file.name}：请使用 SQL、TXT、Markdown 或文本 PDF。`)
-        if (file.size > 2 * 1024 * 1024) throw new Error(`${file.name}：交互预览每份材料最多 2 MB。`)
+        if (file.size > 2 * 1024 * 1024) throw new Error(`${file.name}：每份材料最多 2 MB。`)
         const pdf = /\.pdf$/i.test(file.name)
         let body = ''
         if (!pdf) {
@@ -47,15 +47,12 @@ export function MaterialInput({ state, dispatch, compact = false }: {
       <input ref={input} type="file" className="visually-hidden" tabIndex={-1} accept=".sql,.txt,.md,.pdf" multiple
         aria-label="选择建模材料" onChange={event => void readFiles([...event.target.files ?? []])} />
       <small>支持拖拽 · SQL / TXT / MD / PDF · 每份 2 MB</small>
-      <button className="text-button example-link" disabled={busy} onClick={() => dispatch({ type: 'load-example' })}>
-        <Icon name="play" size={15} />用一组示例体验完整流程<Icon name="arrow" size={16} />
-      </button>
     </div>
     <div className="material-library">
       <div className="section-heading"><h2>本次使用的材料<span>{state.materials.length}</span></h2>
         <span className="subtle">{state.selected.length} 份已选</span></div>
       {!state.materials.length ? <div className="material-empty"><Icon name="folder" size={28} />
-        <p>上传材料，或载入合成示例</p><span>已接入的结构也会在这里统一选用</span></div> :
+        <p>还没有建模材料</p><span>上传你的 DDL、SQL 或业务文档开始建模</span></div> :
         <ul className="material-list">{state.materials.map(material => <li key={material.id}>
           <div className={`material-row ${state.selected.includes(material.id) ? 'selected' : ''}`}>
             <label>
@@ -65,8 +62,8 @@ export function MaterialInput({ state, dispatch, compact = false }: {
                 <Icon name={material.kind.includes('SQL') || material.kind === 'DDL' ? 'code' : 'file'} />
               </span>
               <span className="material-label"><strong>{material.name}</strong><small>{material.kind} · {Math.max(1, Math.ceil(material.size / 1024))} KB
-                <span className={material.origin === 'example' ? 'good-text' : ''}>
-                  {material.origin === 'example' ? '合成示例' : material.kind === 'PDF' ? '待后端解析' : material.remoteRevision ? '已保存 · r'+material.remoteRevision : '正文已读取'}
+                <span>
+                  {material.kind === 'PDF' ? '待后端解析' : material.remoteRevision ? '已保存 · r'+material.remoteRevision : '正文已读取'}
                 </span></small></span>
             </label>
             <button className="icon-button" aria-label={`查看 ${material.name}`} aria-expanded={expanded === material.id}

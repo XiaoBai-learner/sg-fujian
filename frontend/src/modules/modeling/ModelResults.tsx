@@ -1,10 +1,10 @@
 import { useState, type Dispatch } from 'react'
 import Icon from '../../shared/Icon'
-import type { PreviewAction, PreviewState } from './preview'
+import type { WorkspaceAction, WorkspaceState } from './state'
 import OntologyExplorer from './OntologyExplorer'
 
-export default function ModelResults({ state, dispatch }: { state: PreviewState; dispatch: Dispatch<PreviewAction> }) {
-  const [selected, setSelected] = useState('cons-no')
+export default function ModelResults({ state, dispatch }: { state: WorkspaceState; dispatch: Dispatch<WorkspaceAction> }) {
+  const [selected, setSelected] = useState('')
   const [view, setView] = useState<'fields' | 'ontology' | 'mapping'>('ontology')
   if (!state.draft) return null
   const items = state.draft.items
@@ -12,7 +12,7 @@ export default function ModelResults({ state, dispatch }: { state: PreviewState;
   return <>
     <div className="result-overview"><div className="round-icon mint"><Icon name="check" /></div>
       <div><strong>语义与来源，一起生成</strong><p>{state.draft.classes.length} 个类 · {state.draft.relations.length} 条关系 · {items.filter(item => !item.uncertain && !item.excluded).length} 个可用字段 · {items.filter(item => item.uncertain).length} 个待确认字段</p></div>
-      <span className="badge purple">{state.live ? '真实材料分析' : '示例分析结果'}</span>
+      <span className="badge purple">材料分析结果</span>
     </div>
     {state.live && <details className="live-diagnostics"><summary>解析与方法诊断 · {state.live.diagnostics.length} 项</summary><p>{state.live.stats.tables} 张表 · {state.live.stats.columns} 个字段 · {state.live.stats.queries_parsed} 条查询已解析 · {state.live.method}</p>{state.live.diagnostics.map((d,i) => <p key={i}><code>{d.code}</code> {d.message}</p>)}</details>}
     <div className="result-toolbar"><h2>本体与映射</h2>
@@ -57,13 +57,13 @@ export default function ModelResults({ state, dispatch }: { state: PreviewState;
         <tbody>{items.map(item => <tr key={item.id}><td><strong>{item.name}</strong><small>{item.concept}</small></td>
           <td>{item.sources.map(source => <code key={source}>{source}</code>)}</td><td>{item.kind === 'calculated' ? '派生依赖' : '属性 → 物理列'}</td>
           <td><span className={`badge ${item.uncertain ? 'amber' : item.excluded ? '' : 'mint'}`}>{item.uncertain ? '待确认' : item.excluded ? '已排除' : '可纳入'}</span></td></tr>)}</tbody>
-      </table></div><p className="small-note">{state.live ? '校验时调用 OntoWing，采用后导出 OWL / R2RML；计算字段保留依赖清单，映射实跑尚未执行。' : '此处为示例交互，未执行真实校验。'}</p>
+      </table></div><p className="small-note">校验时调用 OntoWing，采用后导出 OWL / R2RML；计算字段保留依赖清单，映射实跑尚未执行。</p>
     </section>}
-    <details className="analysis-details"><summary><Icon name="clock" size={17} />查看分析过程与建模方法<span>{state.live ? '结构分析方法' : '示例过程'}</span></summary>
+    <details className="analysis-details"><summary><Icon name="clock" size={17} />查看分析过程与建模方法<span>结构分析方法</span></summary>
       <ol>{[
         ['读取材料', '按 DDL、SQL、文档分别处理，保留原始来源。'],
         ['发现语义', '从字段注释、投影别名与计算表达式形成候选；查询频率只影响优先级。'],
-        ['对齐与消歧', '合并有证据的同义叫法，区分业务标识和技术主键，保留电话字段歧义。'],
+        ['对齐与消歧', '合并有证据的同义叫法，区分业务标识和技术主键，保留无法确认的候选。'],
         ['建立本体与映射', '业务属性绑定物理列；计算字段携带表达式、条件与粒度。'],
       ].map(([title, text]) => <li key={title}><Icon name="check" size={16} /><div><strong>{title}</strong><p>{text}</p></div></li>)}</ol>
     </details>

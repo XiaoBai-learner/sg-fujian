@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState, type Dispatch } from 'react'
 import Icon from '../../shared/Icon'
 import OntologyGraph, { type OntologySelection } from './OntologyGraph'
 import OntologyInspector from './OntologyInspector'
-import { previewReducer, type PreviewAction, type PreviewState } from './preview'
+import { workspaceReducer, type WorkspaceAction, type WorkspaceState } from './state'
 import './ontology.css'
 
-export default function OntologyExplorer({ state, dispatch }: { state: PreviewState; dispatch: Dispatch<PreviewAction> }) {
+export default function OntologyExplorer({ state, dispatch }: { state: WorkspaceState; dispatch: Dispatch<WorkspaceAction> }) {
   const [selected, setSelected] = useState<OntologySelection>({ kind: 'class', id: state.draft?.classes[0]?.id ?? '' })
   const [dirty, setDirty] = useState(false)
   const [pending, setPending] = useState<OntologySelection | null>(null)
@@ -37,8 +37,8 @@ export default function OntologyExplorer({ state, dispatch }: { state: PreviewSt
     if (dirty) { setPending(value); return }
     setSelected(value); setPending(null)
   }
-  const save = (action: PreviewAction) => {
-    const next = previewReducer(state, action)
+  const save = (action: WorkspaceAction) => {
+    const next = workspaceReducer(state, action)
     if (next.error) return next.error
     dispatch(action)
     return null
@@ -73,6 +73,6 @@ export default function OntologyExplorer({ state, dispatch }: { state: PreviewSt
       <OntologyInspector key={`${selected.kind}:${selected.id}`} draft={draft} selection={selected}
         materials={state.materials} onSave={save} onDirty={onDirty} />
     </div>
-    <p className="ontology-editor-note"><Icon name="shield" size={15} />全部对象来自当前草稿，待确认属性和关系也会显示。保存后重新检查，再采用为溯源版本。{state.live ? '当前编辑已保存到后端。' : '示例编辑仅保留在本次页面。'}</p>
+    <p className="ontology-editor-note"><Icon name="shield" size={15} />全部对象来自当前草稿，待确认属性和关系也会显示。保存后重新检查，再采用为溯源版本。修改由服务端保存。</p>
   </section>
 }

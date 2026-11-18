@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { initialPreview, previewReducer, tracePreview } from '../src/modules/modeling/preview.ts'
+import { initialPreview, previewReducer, tracePreview } from './fixtures/modeling-preview.ts'
 
 const prepared = () => previewReducer(previewReducer(initialPreview(), { type: 'load-example' }), { type: 'generate' })
 

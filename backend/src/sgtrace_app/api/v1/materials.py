@@ -9,6 +9,7 @@ from ..dependencies import get_session, get_storage
 from ...infrastructure.storage import Storage
 from ...modules.sources.materials.models import MaterialModel, MaterialRevisionModel
 from ...modules.sources.materials.service import MaterialService
+from ...modules.identity.security import current_user
 
 router = APIRouter(prefix="/materials", tags=["materials"])
 
@@ -32,6 +33,7 @@ async def upload_material(
     x_material_category: str = Header(default="document"),
     session: AsyncSession = Depends(get_session),
     storage: Storage = Depends(get_storage),
+    user=Depends(current_user),
 ):
     content_length = request.headers.get("content-length")
     if content_length and content_length.isdigit() and int(content_length) > 20 * 1024 * 1024:
@@ -39,7 +41,7 @@ async def upload_material(
     try:
         revision = await MaterialService(session, storage, 20 * 1024 * 1024).create_material(
             "local-workspace",
-            "local-user",
+            user.id,
             unquote(x_material_name),
             x_material_category,
             BytesIO(await request.body()),

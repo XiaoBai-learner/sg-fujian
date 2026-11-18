@@ -145,3 +145,21 @@ def test_evaluator_counts_failed_requests_and_missing_context_as_failures():
         result = tool.evaluate(client, questions, gold, "snapshot")
     assert result["total"] == 2 and result["correct"] == 0
     assert result["categories"]["direct"] == {"correct": 0, "total": 2}
+
+
+def test_evaluator_logs_in_and_uses_session_cookie_and_csrf():
+    tool = load_tool("run")
+
+    def handle(request):
+        if request.url.path.endswith("/auth/login"):
+            assert request.headers["x-requested-with"] == "SGTrace"
+            assert json.loads(request.content) == {"username": "tester", "password": "trial-password"}
+            return httpx.Response(200, json={"csrf_token": "csrf-test"},
+                                  headers={"Set-Cookie": "sgtrace_session=cookie-test; Path=/; HttpOnly"})
+        assert request.headers["x-csrf-token"] == "csrf-test"
+        assert "cookie-test" in request.headers["cookie"]
+        return httpx.Response(204)
+
+    with httpx.Client(base_url="http://localhost", transport=httpx.MockTransport(handle)) as client:
+        tool.authenticate(client, "tester", "trial-password")
+        assert client.post("/api/v1/auth/logout").status_code == 204

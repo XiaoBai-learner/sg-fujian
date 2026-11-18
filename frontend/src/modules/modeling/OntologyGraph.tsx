@@ -1,6 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState } from 'react'
 import Icon from '../../shared/Icon'
-import type { OntologyDraft } from './preview'
+import type { OntologyDraft } from './state'
 import { layoutOntology } from './ontology-layout'
 
 export type OntologySelection = { kind: 'class' | 'property' | 'relation'; id: string }

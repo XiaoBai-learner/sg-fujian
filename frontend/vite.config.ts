@@ -7,7 +7,8 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 5173,
     strictPort: true,
-    proxy: { '/api': 'http://127.0.0.1:8765' },
+    // Preserve the browser-facing Host so backend Origin/CSRF checks see the same origin.
+    proxy: { '/api': { target: 'http://127.0.0.1:8765', changeOrigin: false } },
   },
   preview: { host: '127.0.0.1', port: 5173, strictPort: true },
 })
